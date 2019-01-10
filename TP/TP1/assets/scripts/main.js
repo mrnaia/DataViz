@@ -109,7 +109,6 @@
     /* TODO : mettre en forme les informations pertinentes du cercle pointé
        Vous pouvez utiliser la balise <br> pour faire revenir le texte à la ligne
      */
-
   }
 
   var tip = d3.tip()
@@ -122,10 +121,10 @@
          2) La position du cercle
          3) La couleur du cercle
        */
-
-      var radius ;
-      var position ;
-      var color ;
+      var circle = d3.select(this);
+      var radius = circle.attr("r");
+      var position = [circle.attr("cx"),circle.attr("cy")];
+      var color = circle.attr("fill");
       return textTip(radius, position, color);
     });
 
