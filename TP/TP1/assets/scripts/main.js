@@ -7,7 +7,8 @@
   /* TODO : trouver la fonction dans D3 permettant de trouver tous les cercles se trouvant dans l'élément
             SVG puis stocker le résultat dans la variable "circles".
   */
-  var circles ;
+  var circles = svg.selectAll("circle");
+
 
   d3.select("#create-circles-button")
     .on("click", createCircles);
@@ -24,6 +25,9 @@
        1) Mettre à jour la variable circles
        2) Mettre à jour le texte indiquant le nombre de cercles présents dans l'élément SVG
      */
+     circles = svg.selectAll("circle");
+     d3.select("#circles-count").text(circles.size());
+
 
   }
 
