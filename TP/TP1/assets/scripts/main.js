@@ -112,8 +112,8 @@
     /* TODO : mettre en forme les informations pertinentes du cercle pointé
        Vous pouvez utiliser la balise <br> pour faire revenir le texte à la ligne
      */
-     var text = `<span class = 'radius'>Rayon</span> du cercle : <span class='radius'>${radius}</span><br>`;
-     text+=`<span class = 'position'>Centre</span> du cercle : (<span class='position'>${position[0]}</span>,<span class='position'>${position[1]}</span>)<br>`;
+     var text = `<span class = 'radius'>Rayon</span> du cercle : <span class='radius'>${Math.floor(radius)}</span><br>`;
+     text+=`<span class = 'position'>Centre</span> du cercle : (<span class='position'>${Math.floor(position[0])}</span>,<span class='position'>${Math.floor(position[1])}</span>)<br>`;
      text +=`<span class = 'color'>Couleur</span> du cercle : <span class='color'>${color}</span>`;
      return text;
 
@@ -129,10 +129,10 @@
          2) La position du cercle
          3) La couleur du cercle
        */
-
-      var radius = ;
-      var position ;
-      var color ;
+      var circle = d3.select(this);
+      var radius = circle.attr("r");
+      var position = [circle.attr("cx"),circle.attr("cy")];
+      var color = circle.attr("fill");
       return textTip(radius, position, color);
     });
 
