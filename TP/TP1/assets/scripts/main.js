@@ -39,6 +39,13 @@
        4) Si cette valeur n'est pas correcte, créer une alerte informant l'utilisateur.
     */
 
+    var qtyToCreate = d3.select("#quantity").property("value");
+    if (+qtyToCreate >= 1) {
+      for (let i=0 ; i<qtyToCreate ; i++) {
+        generateRandomCircle();
+      }
+    } else alert("Le nombre de cercles à créer n'est pas valide.");
+
   }
 
   /**
