@@ -43,6 +43,13 @@
        4) Si cette valeur n'est pas correcte, créer une alerte informant l'utilisateur.
     */
 
+    var qtyToCreate = d3.select("#quantity").property("value");
+    if (+qtyToCreate >= 1) {
+      for (let i=0 ; i<qtyToCreate ; i++) {
+        generateRandomCircle();
+      }
+    } else alert("Le nombre de cercles à créer n'est pas valide.");
+
   }
 
   /**
@@ -53,7 +60,10 @@
 	   1) Afficher une boîte de confirmation afin de confirmer si l'utilisateur souhaite supprimer tous les cercles.
 	   2) Supprimer tous les cercles si l'utilisateur souhaite les supprimer, sinon ne rien faire.
     */
-
+    if(window.confirm("Voulez-vous vraiment effacer les cercles?")){
+      d3.selectAll("svg circle").remove();
+      update();
+    }
   }
 
   /**
