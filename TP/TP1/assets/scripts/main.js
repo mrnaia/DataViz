@@ -43,6 +43,9 @@
        4) Si cette valeur n'est pas correcte, créer une alerte informant l'utilisateur.
     */
 
+
+
+
     var qtyToCreate = d3.select("#quantity").property("value");
     if (+qtyToCreate >= 1) {
       for (let i=0 ; i<qtyToCreate ; i++) {
@@ -109,6 +112,10 @@
     /* TODO : mettre en forme les informations pertinentes du cercle pointé
        Vous pouvez utiliser la balise <br> pour faire revenir le texte à la ligne
      */
+     var text = `<span class = 'radius'>Rayon</span> du cercle : <span class='radius'>${radius}</span><br>`;
+     text+=`<span class = 'position'>Centre</span> du cercle : (<span class='position'>${position[0]}</span>,<span class='position'>${position[1]}</span>)<br>`;
+     text +=`<span class = 'color'>Couleur</span> du cercle : <span class='color'>${color}</span>`;
+     return text;
 
   }
 
@@ -123,7 +130,7 @@
          3) La couleur du cercle
        */
 
-      var radius ;
+      var radius = ;
       var position ;
       var color ;
       return textTip(radius, position, color);
