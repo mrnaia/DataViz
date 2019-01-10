@@ -49,7 +49,10 @@
 	   1) Afficher une boîte de confirmation afin de confirmer si l'utilisateur souhaite supprimer tous les cercles.
 	   2) Supprimer tous les cercles si l'utilisateur souhaite les supprimer, sinon ne rien faire.
     */
-
+    if(window.confirm("Voulez-vous vraiment effacer les cercles?")){
+      d3.selectAll("svg circle").remove();
+      update();
+    }
   }
 
   /**
