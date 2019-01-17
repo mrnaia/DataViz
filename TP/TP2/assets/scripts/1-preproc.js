@@ -70,7 +70,6 @@ function domainX(xFocus, xContext, data) {
   // TODO: Préciser les domaines pour les variables "xFocus" et "xContext" pour l'axe X.
   let minX = d3.min(data, d => d.Date);
   let maxX = d3.max(data, d => d.Date);
-  console.log(minX, maxX)
   xFocus.domain([minX, maxX]);
   xContext.domain([minX, maxX]);
 }
