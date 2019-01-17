@@ -22,9 +22,15 @@ function domainColor(color, data) {
  * @param data    Données provenant du fichier CSV.
  * @see https://www.w3schools.com/jsref/jsref_obj_date.asp
  */
-function parseDate(data) {
-  // TODO: Convertir les dates du fichier CSV en objet de type Date.
 
+
+function parseDate(data) {
+    // TODO: Convertir les dates du fichier CSV en objet de type Date.
+  var parseTime = d3.timeParse("%d/%m/%y");
+  data=data.map(el=>{
+    el.Date = parseTime(el.Date);
+    return el;
+  });
 }
 
 /**
@@ -79,7 +85,10 @@ function createSources(color, data) {
  */
 function domainX(xFocus, xContext, data) {
   // TODO: Préciser les domaines pour les variables "xFocus" et "xContext" pour l'axe X.
-
+  let minX = sources.min(d => d.values.min(val => val.date));
+  let maxX = sources.max(d => d.values.max(val => val.date));
+  xFocus.domain([minX, maxX]);
+  xContext.domain([minX, maxX]);
 }
 
 /**
@@ -91,5 +100,8 @@ function domainX(xFocus, xContext, data) {
  */
 function domainY(yFocus, yContext, sources) {
   // TODO: Préciser les domaines pour les variables "yFocus" et "yContext" pour l'axe Y.
-
+  let minY = sources.min(d => d.values.min(val => val.count));
+  let maxY = sources.max(d => d.values.max(val => val.count));
+  yFocus.domain([minY, maxY]);
+  yContext.domain([minY, maxY]);
 }
