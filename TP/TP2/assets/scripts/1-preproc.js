@@ -27,10 +27,12 @@ function domainColor(color, data) {
 function parseDate(data) {
     // TODO: Convertir les dates du fichier CSV en objet de type Date.
   var parseTime = d3.timeParse("%d/%m/%y");
+  var columns = data.columns;
   data=data.map(el=>{
     el.Date = parseTime(el.Date);
     return el;
   });
+  data.columns = columns;
 }
 
 /**
@@ -57,6 +59,23 @@ function parseDate(data) {
 function createSources(color, data) {
   // TODO: Retourner l'objet ayant le format demandé.
 
+  var streets = data.columns.slice(1)
+  var dicco = [];
+  var nbSt = streets.length;
+  data.forEach(el=>{
+    for (var i = 0; i < nbSt; i++) {
+      let street = streets[i];
+      if(dicco[street] && dicco[street].values){
+        dicco[streets[i]].values.push({"date":el.Date,"count":el[street]})
+      }else{
+        dicco[street] = {"values": [{"date":el.Date,"count":el[street]}]}
+      }
+    }
+  });
+  return streets.map(el => {
+    let values = dicco[el];
+    return {"name":el, values}
+  })
 }
 
 /**
@@ -68,8 +87,8 @@ function createSources(color, data) {
  */
 function domainX(xFocus, xContext, data) {
   // TODO: Préciser les domaines pour les variables "xFocus" et "xContext" pour l'axe X.
-  let minX = data.min(d => d.values.min(val => val.date));
-  let maxX = data.max(d => d.values.max(val => val.date));
+  let minX = d3.min(data, d => d.Date);
+  let maxX = d3.max(data, d => d.Date);
   xFocus.domain([minX, maxX]);
   xContext.domain([minX, maxX]);
 }
@@ -83,8 +102,8 @@ function domainX(xFocus, xContext, data) {
  */
 function domainY(yFocus, yContext, sources) {
   // TODO: Préciser les domaines pour les variables "yFocus" et "yContext" pour l'axe Y.
-  let minY = sources.min(d => d.values.min(val => val.count));
-  let maxY = sources.max(d => d.values.max(val => val.count));
+  let minY = d3.min(sources, d => d3.min(d.values, val => val.count));
+  let maxY = d3.max(sources, d => d3.max(d.values, val => val.count));
   yFocus.domain([minY, maxY]);
   yContext.domain([minY, maxY]);
 }
