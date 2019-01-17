@@ -68,8 +68,8 @@ function createSources(color, data) {
  */
 function domainX(xFocus, xContext, data) {
   // TODO: Préciser les domaines pour les variables "xFocus" et "xContext" pour l'axe X.
-  let minX = sources.min(d => d.values.min(val => val.date));
-  let maxX = sources.max(d => d.values.max(val => val.date));
+  let minX = data.min(d => d.values.min(val => val.date));
+  let maxX = data.max(d => d.values.max(val => val.date));
   xFocus.domain([minX, maxX]);
   xContext.domain([minX, maxX]);
 }
