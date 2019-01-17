@@ -73,7 +73,7 @@ function createSources(color, data) {
     }
   });
   return streets.map(el => {
-    let values = dicco[el];
+    let values = dicco[el].values;
     return {"name":el, values}
   })
 }

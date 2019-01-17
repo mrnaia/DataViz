@@ -17,10 +17,14 @@
  */
 function createLine(x, y) {
   // TODO: Retourner une ligne SVG (voir "d3.line"). Pour l'option curve, utiliser un curveBasisOpen.
-  //return d3.svg.line()
-  //    .x(function(d, i) { return x; })
-  //    .y(function(d) { return y; })
-  //    .curve(d3.curveBasisOpen);
+  return d3.line()
+      .x(function(d) {
+        return x(d.date); })
+      .y(function(d) {
+        console.log(y(d.count));
+         return y(d.count);
+       })
+      .curve(d3.curveBasisOpen);
 }
 
 /**
@@ -34,6 +38,20 @@ function createLine(x, y) {
 function createFocusLineChart(g, sources, line, color) {
   // TODO: Dessiner le graphique focus dans le groupe "g".
   // Pour chacun des "path" que vous allez dessiner, spécifier l'attribut suivant: .attr("clip-path", "url(#clip)").
+  sources.forEach((rue) => {
+
+    g.selectAll("path")
+    .data([rue.values])
+    .enter()
+    .append("path")
+    .attr("d",line)
+    .attr("fill", "none")
+    .attr("stroke", function(el){
+      return color(rue.name);
+    })
+    .attr("stroke-width", 2)
+    .attr("clip-path", "url(#clip)");
+  })
 
 }
 
@@ -46,6 +64,18 @@ function createFocusLineChart(g, sources, line, color) {
  * @param color     L'échelle de couleurs ayant une couleur associée à un nom de rue.
  */
 function createContextLineChart(g, sources, line, color) {
+
+  g.selectAll("path")
+  .data(sources)
+  .enter()
+  .append("path")
+  .attr("d",line)
+  .attr("fill", "none")
+  .attr("stroke", function(d){
+    return color(d.name);
+  })
+  .attr("stroke-width", 2)
+  .attr("clip-path", "url(#clip)");
   // TODO: Dessiner le graphique contexte dans le groupe "g".
 
 }
