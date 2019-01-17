@@ -13,7 +13,7 @@
  */
 function domainColor(color, data) {
   // TODO: Définir le domaine de la variable "color" en associant un nom de rue à une couleur.
-
+  color.domain(data.columns.slice(1));
 }
 
 /**
