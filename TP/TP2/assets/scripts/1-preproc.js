@@ -27,10 +27,12 @@ function domainColor(color, data) {
 function parseDate(data) {
     // TODO: Convertir les dates du fichier CSV en objet de type Date.
   var parseTime = d3.timeParse("%d/%m/%y");
+  var columns = data.columns;
   data=data.map(el=>{
     el.Date = parseTime(el.Date);
     return el;
   });
+  data.columns = columns;
 }
 
 /**
@@ -70,7 +72,7 @@ function createSources(color, data) {
       }
     }
   });
-  return = streets.map(el => {
+  return streets.map(el => {
     let values = dicco[el];
     return {"name":el, values}
   })
