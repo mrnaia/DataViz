@@ -83,7 +83,9 @@ function domainX(xFocus, xContext, data) {
  */
 function domainY(yFocus, yContext, sources) {
   // TODO: Préciser les domaines pour les variables "yFocus" et "yContext" pour l'axe Y.
-  let minY = data.min(d => d.values.count);
+  let minY = d3.min(sources, function(d){
+    return d.values.date;
+  })
   let maxY = data.max(d => d.values.count);
   yFocus.domain([minY, maxY]);
   yContext.domain([minY, maxY]);
