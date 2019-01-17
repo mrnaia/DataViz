@@ -22,9 +22,15 @@ function domainColor(color, data) {
  * @param data    Données provenant du fichier CSV.
  * @see https://www.w3schools.com/jsref/jsref_obj_date.asp
  */
-function parseDate(data) {
-  // TODO: Convertir les dates du fichier CSV en objet de type Date.
 
+
+function parseDate(data) {
+    // TODO: Convertir les dates du fichier CSV en objet de type Date.
+  var parseTime = d3.timeParse("%d/%m/%y");
+  data=data.map(el=>{
+    el.Date = parseTime(el.Date);
+    return el;
+  });
 }
 
 /**
