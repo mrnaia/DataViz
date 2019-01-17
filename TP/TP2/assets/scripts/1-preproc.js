@@ -51,6 +51,23 @@ function parseDate(data) {
 function createSources(color, data) {
   // TODO: Retourner l'objet ayant le format demandé.
 
+  var streets = data.columns.slice(1)
+  var dicco = [];
+  var nbSt = streets.length;
+  data.forEach(el=>{
+    for (var i = 0; i < nbSt; i++) {
+      let street = streets[i];
+      if(dicco[street] && dicco[street].values){
+        dicco[streets[i]].values.push({"date":el.Date,"count":el[street]})
+      }else{
+        dicco[street] = {"values": [{"date":el.Date,"count":el[street]}]}
+      }
+    }
+  });
+  return = streets.map(el => {
+    let values = dicco[el];
+    return {"name":el, values}
+  })
 }
 
 /**
