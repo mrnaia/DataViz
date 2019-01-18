@@ -38,20 +38,19 @@ function createLine(x, y) {
 function createFocusLineChart(g, sources, line, color) {
   // TODO: Dessiner le graphique focus dans le groupe "g".
   // Pour chacun des "path" que vous allez dessiner, spécifier l'attribut suivant: .attr("clip-path", "url(#clip)").
-  sources.forEach((rue) => {
-
     g.selectAll("path")
-    .data([rue.values])
+    .data(sources.map(x=>x.values))
     .enter()
     .append("path")
     .attr("d",line)
     .attr("fill", "none")
-    .attr("stroke", function(el){
-      return color(rue.name);
+    .attr("stroke", function(el,i){
+      console.log(el);
+      return color(sources[i].name);
     })
     .attr("stroke-width", 2)
     .attr("clip-path", "url(#clip)");
-  })
+
 
 }
 
@@ -65,20 +64,17 @@ function createFocusLineChart(g, sources, line, color) {
  */
 function createContextLineChart(g, sources, line, color) {
 
-  sources.forEach((rue) => {
-
-    g.selectAll("path")
-    .data([rue.values])
-    .enter()
-    .append("path")
-    .attr("d",line)
-    .attr("fill", "none")
-    .attr("stroke", function(el){
-      return color(rue.name);
-    })
-    .attr("stroke-width", 2)
-    .attr("clip-path", "url(#clip)");
   // TODO: Dessiner le graphique contexte dans le groupe "g".
-
-})
+  g.selectAll("path")
+  .data(sources.map(x=>x.values))
+  .enter()
+  .append("path")
+  .attr("d",line)
+  .attr("fill", "none")
+  .attr("stroke", function(el,i){
+    console.log(el);
+    return color(sources[i].name);
+  })
+  .attr("stroke-width", 2)
+  .attr("clip-path", "url(#clip)");
 }
