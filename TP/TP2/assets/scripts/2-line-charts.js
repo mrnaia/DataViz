@@ -21,7 +21,7 @@ function createLine(x, y) {
       .x(function(d) {
         return x(d.date); })
       .y(function(d) {
-        console.log(y(d.count));
+        //console.log(y(d.count));
          return y(d.count);
        })
       .curve(d3.curveBasisOpen);
@@ -65,17 +65,20 @@ function createFocusLineChart(g, sources, line, color) {
  */
 function createContextLineChart(g, sources, line, color) {
 
-  g.selectAll("path")
-  .data(sources)
-  .enter()
-  .append("path")
-  .attr("d",line)
-  .attr("fill", "none")
-  .attr("stroke", function(d){
-    return color(d.name);
-  })
-  .attr("stroke-width", 2)
-  .attr("clip-path", "url(#clip)");
+  sources.forEach((rue) => {
+
+    g.selectAll("path")
+    .data([rue.values])
+    .enter()
+    .append("path")
+    .attr("d",line)
+    .attr("fill", "none")
+    .attr("stroke", function(el){
+      return color(rue.name);
+    })
+    .attr("stroke-width", 2)
+    .attr("clip-path", "url(#clip)");
   // TODO: Dessiner le graphique contexte dans le groupe "g".
 
+})
 }
