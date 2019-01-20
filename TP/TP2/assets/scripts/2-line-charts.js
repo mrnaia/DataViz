@@ -45,7 +45,6 @@ function createFocusLineChart(g, sources, line, color) {
     .attr("d",line)
     .attr("fill", "none")
     .attr("stroke", function(el,i){
-      console.log(el);
       return color(sources[i].name);
     })
     .attr("stroke-width", 2)
@@ -72,7 +71,6 @@ function createContextLineChart(g, sources, line, color) {
   .attr("d",line)
   .attr("fill", "none")
   .attr("stroke", function(el,i){
-    console.log(el);
     return color(sources[i].name);
   })
   .attr("stroke-width", 2)
