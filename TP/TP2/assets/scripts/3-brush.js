@@ -21,5 +21,35 @@
  */
 function brushUpdate(brush, g, line, xFocus, xContext, xAxis, yAxis) {
   // TODO: Redessiner le graphique focus en fonction de la zone sélectionnée dans le graphique contexte.
+  /*domainX(xFocus, xContext, data);
+  domainY(yFocus, yContext, sources);*/
 
+  console.log(brush.move);
+
+  var selectedRange = d3.event.selection;
+  xFocus.domain(selectedRange.map(xContext.invert, xContext));
+  //console.log(selectedRange.map(xContext.invert, xContext));
+  //xAxis = d3.axisBottom(xFocus).tickFormat(localization.getFormattedDate);
+
+  g.select(".x.axis")
+    .transition()
+    .duration(500)
+    .call(xAxis);
+
+  g.selectAll("path")
+    .data(sources.map(x=>x.values))
+    .transition()
+    .duration(500)
+    .attr("d",line)
+    .attr("fill", "none")
+    .attr("stroke", function(el,i){
+      return color(sources[i].name);
+    })
+    .attr("stroke-width", 2)
+    .attr("clip-path", "url(#clip)");
+
+  g.select(".y.axis")
+    .transition()
+    .duration(500)
+    .call(yAxis);
 }

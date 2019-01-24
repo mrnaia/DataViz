@@ -68,7 +68,7 @@ function createFocusLineChart(g, sources, line, color) {
 function createContextLineChart(g, sources, line, color) {
 
   // TODO: Dessiner le graphique contexte dans le groupe "g".
-  console.log(sources)
+  //console.log(sources)
   g.selectAll("path")
   .data(sources.map(x=>x.values))
   .enter()
