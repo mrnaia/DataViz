@@ -65,6 +65,18 @@ function legend(svg, sources, color) {
  * @param color     Échelle de 10 couleurs.
  */
 function displayLine(element, color) {
-  // TODO: Compléter le code pour faire afficher ou disparaître une ligne en fonction de l'élément cliqué.
-  console.log(element.select("text").text());
+  var stName = element.select("text").text();
+
+  var display = d3.selectAll("."+stName).attr("display")
+  if(display!="none"){
+    d3.selectAll("."+stName).attr("display","none")
+    element.select("rect").style("fill","white");
+  } else{
+    d3.selectAll("."+stName).attr("display","initial")
+    element.select("rect").style("fill",(d, i) => {
+      if (stName === "Moyenne") return "black";
+      else return color(stName);
+    });
+  }
+
 }
