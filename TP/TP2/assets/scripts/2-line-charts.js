@@ -40,6 +40,7 @@ function createFocusLineChart(g, sources, line, color) {
   // Pour chacun des "path" que vous allez dessiner, spécifier l'attribut suivant: .attr("clip-path", "url(#clip)").
     g.selectAll("path")
     .data(sources.map(x=>x.values))
+    .attr("class", "paths")
     .enter()
     .append("path")
     .attr("d", line)
