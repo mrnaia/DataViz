@@ -42,12 +42,16 @@ function createFocusLineChart(g, sources, line, color) {
     .data(sources.map(x=>x.values))
     .enter()
     .append("path")
-    .attr("d",line)
+    .attr("d", line)
     .attr("fill", "none")
-    .attr("stroke", function(el,i){
-      return color(sources[i].name);
+    .attr("stroke", (el,i) => {
+      if (sources[i].name === "Moyenne") return "black";
+      else return color(sources[i].name);
     })
-    .attr("stroke-width", 2)
+    .attr("stroke-width", (el,i) => {
+      if (sources[i].name === "Moyenne") return 2;
+      else return 1;
+    })
     .attr("clip-path", "url(#clip)");
 
 
@@ -64,15 +68,20 @@ function createFocusLineChart(g, sources, line, color) {
 function createContextLineChart(g, sources, line, color) {
 
   // TODO: Dessiner le graphique contexte dans le groupe "g".
+  console.log(sources)
   g.selectAll("path")
   .data(sources.map(x=>x.values))
   .enter()
   .append("path")
   .attr("d",line)
   .attr("fill", "none")
-  .attr("stroke", function(el,i){
-    return color(sources[i].name);
+  .attr("stroke", (el,i) => {
+    if (sources[i].name === "Moyenne") return "black";
+    else return color(sources[i].name);
   })
-  .attr("stroke-width", 2)
+  .attr("stroke-width", (el,i) => {
+    if (sources[i].name === "Moyenne") return 2;
+    else return 1;
+  })
   .attr("clip-path", "url(#clip)");
 }
