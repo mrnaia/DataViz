@@ -48,7 +48,7 @@ function legend(svg, sources, color) {
       });
 
       legLine.on("click", function(){
-        return displayLine(this, "blue")}
+        return displayLine(d3.select(this), color)}
       );
   })
 
@@ -66,5 +66,5 @@ function legend(svg, sources, color) {
  */
 function displayLine(element, color) {
   // TODO: Compléter le code pour faire afficher ou disparaître une ligne en fonction de l'élément cliqué.
-  console.log(element.select("rect"));
+  console.log(element.select("text").text());
 }
