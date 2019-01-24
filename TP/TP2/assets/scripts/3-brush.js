@@ -21,13 +21,9 @@
  */
 function brushUpdate(brush, g, line, xFocus, xContext, xAxis, yAxis) {
   // TODO: Redessiner le graphique focus en fonction de la zone sélectionnée dans le graphique contexte.
-  /*domainX(xFocus, xContext, data);
-  domainY(yFocus, yContext, sources);*/
 
   var selectedRange = d3.event.selection;
   xFocus.domain(selectedRange.map(xContext.invert, xContext));
-
-  //xAxis = d3.axisBottom(xFocus).tickFormat(localization.getFormattedDate);
 
   g.select(".x.axis")
     .call(xAxis);
