@@ -43,6 +43,9 @@ function createFocusLineChart(g, sources, line, color) {
     .enter()
     .append("path")
     .attr("d", line)
+    .attr("class",(el,i) => {
+      return sources[i].name
+    })
     .attr("fill", "none")
     .attr("stroke", (el,i) => {
       if (sources[i].name === "Moyenne") return "black";
@@ -73,6 +76,9 @@ function createContextLineChart(g, sources, line, color) {
   .enter()
   .append("path")
   .attr("d",line)
+  .attr("class",(el,i) => {
+    return sources[i].name
+  })
   .attr("fill", "none")
   .attr("stroke", (el,i) => {
     if (sources[i].name === "Moyenne") return "black";
