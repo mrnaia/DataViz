@@ -21,7 +21,6 @@ function createLine(x, y) {
       .x(function(d) {
         return x(d.date); })
       .y(function(d) {
-        //console.log(y(d.count));
          return y(d.count);
        })
       .curve(d3.curveBasisOpen);
@@ -68,7 +67,6 @@ function createFocusLineChart(g, sources, line, color) {
 function createContextLineChart(g, sources, line, color) {
 
   // TODO: Dessiner le graphique contexte dans le groupe "g".
-  console.log(sources)
   g.selectAll("path")
   .data(sources.map(x=>x.values))
   .enter()
