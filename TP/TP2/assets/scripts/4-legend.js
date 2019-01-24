@@ -25,7 +25,7 @@ function legend(svg, sources, color) {
 
   sources.forEach((el,i) => {
     let legLine = leg.append("g")
-      //.attr("class", "legLine")
+      .style("cursor", "pointer")
 
     legLine.append('rect')
       .attr("x", legGapToYAxis)
@@ -47,9 +47,9 @@ function legend(svg, sources, color) {
         return el.name;
       });
 
-      legLine.on("click", function(){
-        return displayLine(d3.select(this), color)}
-      );
+    legLine.on("click", function(){
+      return displayLine(d3.select(this), color)}
+    );
   })
 
 
