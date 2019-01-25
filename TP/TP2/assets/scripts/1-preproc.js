@@ -26,12 +26,12 @@ function domainColor(color, data) {
 
 function parseDate(data) {
     // TODO: Convertir les dates du fichier CSV en objet de type Date.
-  var parseTime = d3.timeParse("%d/%m/%y");
+  var parseTime = d3.timeParse("%d/%m/%y"); //format de la date
   var columns = data.columns;
   data=data.map(el=>{
     el.Date = parseTime(el.Date);
     return el;
-  });
+  }); // on remplace chaque element de data par sa version en format date
   data.columns = columns;
 }
 
@@ -87,9 +87,9 @@ function createSources(color, data) {
  */
 function domainX(xFocus, xContext, data) {
   // TODO: Préciser les domaines pour les variables "xFocus" et "xContext" pour l'axe X.
-  let minX = d3.min(data, d => d.Date);
-  let maxX = d3.max(data, d => d.Date);
-  xFocus.domain([minX, maxX]);
+  let minX = d3.min(data, d => d.Date); //la plus petite date des datas
+  let maxX = d3.max(data, d => d.Date); // la date la plus récente
+  xFocus.domain([minX, maxX]); //input domain
   xContext.domain([minX, maxX]);
 }
 
@@ -102,8 +102,8 @@ function domainX(xFocus, xContext, data) {
  */
 function domainY(yFocus, yContext, sources) {
   // TODO: Préciser les domaines pour les variables "yFocus" et "yContext" pour l'axe Y.
-  let minY = d3.min(sources, d => d3.min(d.values, val => val.count));
-  let maxY = d3.max(sources, d =>  d3.max(d.values, val => val.count));
+  let minY = d3.min(sources, d => d3.min(d.values, val => val.count)); //on trouve le min et le max des données selon l'attribut count, c'est-à-dire le nombre de velos passés chaque jour
+  let maxY = d3.max(sources, d =>  d3.max(d.values, val => val.count)); 
   yFocus.domain([minY, maxY]);
   yContext.domain([minY, maxY]);
 }

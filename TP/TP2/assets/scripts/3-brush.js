@@ -23,14 +23,14 @@ function brushUpdate(brush, g, line, xFocus, xContext, xAxis, yAxis) {
   // TODO: Redessiner le graphique focus en fonction de la zone sélectionnée dans le graphique contexte.
 
   var selectedRange = d3.event.selection;
-  xFocus.domain(selectedRange.map(xContext.invert, xContext));
+  xFocus.domain(selectedRange.map(xContext.invert, xContext)); //on récupère le nouvel intervalle de dates et on modifie l'échelle en fonction
 
   g.select(".x.axis")
-    .call(xAxis);
+    .call(xAxis); // on update l'axe x
 
   g.selectAll("path")
     .attr("d",line);
-
+//on update le graphe
   g.select(".y.axis")
-    .call(yAxis);
+    .call(yAxis); // on rappelle yaxis pour etre sur que l'axe sera toujours affiché (probème sinon avec certains navigateurs)
 }
