@@ -59,21 +59,21 @@ function parseDate(data) {
 function createSources(color, data) {
   // TODO: Retourner l'objet ayant le format demandé.
 
-  var streets = data.columns.slice(1)
-  var dicco = [];
-  var nbSt = streets.length;
+  var streets = data.columns.slice(1) //Recupere les noms de rues
+  var dicco_street_values = []; //format {"rue":{values:[{date:Date count: number}]}}
+  var nbSt = streets.length; //Le nombre de rues
   data.forEach(el=>{
-    for (var i = 0; i < nbSt; i++) {
+    for (var i = 0; i < nbSt; i++) { //Balaye toutes les rues pour cette echantillon
       let street = streets[i];
-      if(dicco[street] && dicco[street].values){
-        dicco[streets[i]].values.push({"date":el.Date,"count":parseInt(el[street])})
+      if(dicco_street_values[street] && dicco_street_values[street].values){ //Si le conteneur finale est initialiser
+        dicco_street_values[streets[i]].values.push({"date":el.Date,"count":parseInt(el[street])}) //On ajoute a values cet échantillon
       }else{
-        dicco[street] = {"values": [{"date":el.Date,"count":parseInt(el[street])}]}
+        dicco_street_values[street] = {"values": [{"date":el.Date,"count":parseInt(el[street])}]} // on initialise l'entrée coorespondant à la rue
       }
     }
   });
   return streets.map(el => {
-    let values = dicco[el].values;
+    let values = dicco_street_values[el].values;
     return {"name":el, values}
   })
 }
@@ -103,7 +103,7 @@ function domainX(xFocus, xContext, data) {
 function domainY(yFocus, yContext, sources) {
   // TODO: Préciser les domaines pour les variables "yFocus" et "yContext" pour l'axe Y.
   let minY = d3.min(sources, d => d3.min(d.values, val => val.count)); //on trouve le min et le max des données selon l'attribut count, c'est-à-dire le nombre de velos passés chaque jour
-  let maxY = d3.max(sources, d =>  d3.max(d.values, val => val.count)); 
+  let maxY = d3.max(sources, d =>  d3.max(d.values, val => val.count));
   yFocus.domain([minY, maxY]);
   yContext.domain([minY, maxY]);
 }
