@@ -32,12 +32,7 @@ function transition(g, data, x, y, r) {
      .attr("cy", function(d){
        return y(d.income);
      })
-     .attr("fill",function(d){
-       return color(d.zone);
-     })
      .attr("r", function(d){return r(d.population);})
-     .on('mouseover', tip.show)
-     .on("mouseout", tip.hide);
 
 
 
