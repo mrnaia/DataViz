@@ -13,7 +13,11 @@
  */
 function initializeData(data) {
   // TODO: Convertir les propriétés "income", "lifeExpectancy" et "population" au format "number" pour chacune des entrées.
-
+  data.forEach(el => {
+    el.income = parseFloat(el.income);
+    el.lifeExpectancy = parseFloat(el.lifeExpectancy);
+    el.population = parseInt(el.population);
+  });
 }
 
 /**
