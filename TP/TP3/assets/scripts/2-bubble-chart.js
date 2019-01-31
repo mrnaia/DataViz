@@ -17,7 +17,14 @@
 function createAxes(g, xAxis, yAxis, height, width) {
   // TODO: Dessiner les axes X et Y du graphique.
   // Axe horizontal
-
+  g.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + height + ")")
+    .call(xAxis);
+  // Axe vertical
+  g.append("g")
+    .attr("class", "y axis")
+    .call(yAxis);
 }
 
 /**
