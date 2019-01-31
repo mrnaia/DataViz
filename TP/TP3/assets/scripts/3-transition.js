@@ -26,24 +26,8 @@ function transition(g, data, x, y, r) {
      .data(data)
      .transition()
      .duration(1000)
-     .attr("cx", function(d){
-       return x(d.lifeExpectancy);
-     })
-     .attr("cy", function(d){
-       return y(d.income);
-     })
-     .attr("r", function(d){return r(d.population);})
-
-
-
-   /*g.select(".x.axis")
-    .transition()
-    .duration(1000)
-    .call(xAxis);
-
-    g.select(".y.axis")
-     .transition()
-     .duration(1000)
-     .call(yAxis);*/
+     .attr("cx", d => x(d.lifeExpectancy))
+     .attr("cy", d => y(d.income))
+     .attr("r", d => r(d.population))
 
 }

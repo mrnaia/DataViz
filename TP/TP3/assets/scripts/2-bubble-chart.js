@@ -15,21 +15,25 @@
  * @param width   La largeur du graphique.
  */
 function createAxes(g, xAxis, yAxis, height, width) {
-  // TODO: Dessiner les axes X et Y du graphique.
+  // Dessiner les axes X et Y du graphique.
+
   // Axe horizontal
   g.append("g")
     .attr("class", "x axis")
     .attr("transform", "translate(0," + height + ")")
     .call(xAxis);
+
   g.append("text")
     .attr("x", width)
     .attr("y", height-10)
     .style("text-anchor", "end")
     .text("Espérance de vie (années)")
+
   // Axe vertical
   g.append("g")
     .attr("class", "y axis")
     .call(yAxis);
+
   g.append("text")
     .attr("y", 20)
     .attr("transform", "rotate(-90)")
@@ -56,16 +60,10 @@ function createBubbleChart(g, data, x, y, r, color, tip) {
     .data(data)
     .enter()
     .append("circle")
-    .attr("cx", function(d){
-      return x(d.lifeExpectancy);
-    })
-    .attr("cy", function(d){
-      return y(d.income);
-    })
-    .attr("fill",function(d){
-      return color(d.zone);
-    })
-    .attr("r", function(d){return r(d.population);})
+    .attr("cx", d => x(d.lifeExpectancy))
+    .attr("cy", d => y(d.income))
+    .attr("fill", d => color(d.zone))
+    .attr("r", d => r(d.population))
     .on('mouseover', tip.show)
     .on("mouseout", tip.hide);
 

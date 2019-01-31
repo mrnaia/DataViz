@@ -61,12 +61,7 @@ function domainColor(color, data) {
 function domainRadius(r, data) {
   // TODO: Préciser le domaine de l'échelle de la variable "r" em spécifiant comme valeurs extrêmes le minimum et le
   //       maximum des populations des pays.
-  var popMin = d3.min(data, function(d){
-    return d.population;
-  });
-  var popMax = d3.max(data, function(d){
-    return d.population;
-  });
-
+  var popMin = d3.min(data, d => d.population);
+  var popMax = d3.max(data, d => d.population);
   r.domain([popMin, popMax]);
 }
