@@ -44,7 +44,8 @@ function domainY(y) {
  */
 function domainColor(color, data) {
   // TODO: Préciser le domaine de l'échelle de couleurs. Assurez-vous d'associer une zone du monde distincte pour chaque couleur.
-
+  var zoneList = Array.from(new Set(data.map(d => d.zone)));
+  color.domain(zoneList);
 }
 
 /**
