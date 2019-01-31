@@ -35,4 +35,22 @@ function createBubbleChart(g, data, x, y, r, color, tip) {
   // TODO: Dessiner les cercles du graphique en utilisant les échelles spécifiées.
   //       Assurez-vous d'afficher l'infobulle spécifiée lorsqu'un cercle est survolé.
 
+  g.selectAll("circle")
+    .data(data)
+    .enter()
+    .append("circle")
+    .attr("cx", function(d){
+      console.log(d.lifeExpectancy);
+      return x(d.lifeExpectancy);
+    })
+    .attr("cy", function(d){
+      return y(d.income);
+    })
+    .attr("fill",function(d){
+      return color(d.zone);
+    })
+    .attr("r", function(d){return r(d.population);})
+    .on('mouseover', tip.show)
+    .on("mouseout", tip.hide);
+
 }
