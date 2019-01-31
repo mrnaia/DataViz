@@ -21,15 +21,20 @@ function createAxes(g, xAxis, yAxis, height, width) {
     .attr("class", "x axis")
     .attr("transform", "translate(0," + height + ")")
     .call(xAxis);
-  //g.append("text")
-    //.attr("x", width)
-    //.attr("y", 0)
-    //.style("text-anchor", "end")
-    //.text("X axis text")
+  g.append("text")
+    .attr("x", width)
+    .attr("y", height-10)
+    .style("text-anchor", "end")
+    .text("Expérance de vie (années)")
   // Axe vertical
   g.append("g")
     .attr("class", "y axis")
     .call(yAxis);
+  g.append("text")
+    .attr("y", 20)
+    .attr("transform", "rotate(-90)")
+    .style("text-anchor", "end")
+    .text(" Revenu (USD)")
 }
 
 /**
