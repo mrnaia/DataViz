@@ -21,6 +21,11 @@ function createAxes(g, xAxis, yAxis, height, width) {
     .attr("class", "x axis")
     .attr("transform", "translate(0," + height + ")")
     .call(xAxis);
+  //g.append("text")
+    //.attr("x", width)
+    //.attr("y", 0)
+    //.style("text-anchor", "end")
+    //.text("X axis text")
   // Axe vertical
   g.append("g")
     .attr("class", "y axis")
