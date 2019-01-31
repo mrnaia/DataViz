@@ -20,7 +20,6 @@ function getToolTipText(d, formatNumber) {
   tipText += "Espérance de vie: <strong>" + formatNumber(d.lifeExpectancy) + "</strong><br>";
   tipText += "Revenu: <strong>" + formatNumber(d.income) + "</strong> USD<br>";
   tipText += "Population: <strong>" + formatNumber(d.population) + "</strong> habitants<br>";
-  tipText += "Zone du monde: <strong>" + formatNumber(d.zone) + "</strong>";
-  console.log(tipText)
+  tipText += "Zone du monde: <strong>" + d.zone + "</strong>";
   return tipText;
 }
