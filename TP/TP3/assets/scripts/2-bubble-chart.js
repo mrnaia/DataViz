@@ -25,7 +25,7 @@ function createAxes(g, xAxis, yAxis, height, width) {
     .attr("x", width)
     .attr("y", height-10)
     .style("text-anchor", "end")
-    .text("Expérance de vie (années)")
+    .text("Espérance de vie (années)")
   // Axe vertical
   g.append("g")
     .attr("class", "y axis")
