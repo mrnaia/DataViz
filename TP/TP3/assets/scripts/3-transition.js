@@ -20,7 +20,7 @@ function transition(g, data, x, y, r) {
        - Mettre à jour la taille du rayon des cercles.
        - La transition doit se faire en 1 seconde.
    */
-   domainRadius(r, data);
+   domainRadius(r, data); //mise à jour du domaine des rayons
 
    g.selectAll("circle")
      .data(data)
@@ -33,7 +33,7 @@ function transition(g, data, x, y, r) {
        return y(d.income);
      })
      .attr("r", function(d){return r(d.population);})
-
+     //transition des cercles
 
 
    /*g.select(".x.axis")
