@@ -57,7 +57,6 @@ function createBubbleChart(g, data, x, y, r, color, tip) {
     .enter()
     .append("circle")
     .attr("cx", function(d){
-      console.log(d.lifeExpectancy);
       return x(d.lifeExpectancy);
     })
     .attr("cy", function(d){
