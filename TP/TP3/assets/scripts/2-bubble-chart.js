@@ -47,7 +47,7 @@ function createBubbleChart(g, data, x, y, r, color, tip) {
     .enter()
     .append("circle")
     .attr("cx", function(d){
-      console.log(d.lifeExpectancy);
+      //console.log(d.lifeExpectancy);
       return x(d.lifeExpectancy);
     })
     .attr("cy", function(d){
@@ -58,6 +58,7 @@ function createBubbleChart(g, data, x, y, r, color, tip) {
     })
     .attr("r", function(d){return r(d.population);})
     .on('mouseover', tip.show)
-    .on("mouseout", tip.hide);
+    .on("mouseout", tip.hide)
+    .attr("id", d => d.name);
 
 }
