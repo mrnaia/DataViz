@@ -48,8 +48,8 @@ function domainY(y) {
  */
 function domainColor(color, data) {
   // TODO: Préciser le domaine de l'échelle de couleurs. Assurez-vous d'associer une zone du monde distincte pour chaque couleur.
-  var zoneList = Array.from(new Set(data.map(d => d.zone)));
-  color.domain(zoneList);
+  var zoneList = Array.from(new Set(data.map(d => d.zone))); //liste des differentes zones
+  color.domain(zoneList); //domaine de l'échelle
 }
 
 /**
@@ -61,7 +61,12 @@ function domainColor(color, data) {
 function domainRadius(r, data) {
   // TODO: Préciser le domaine de l'échelle de la variable "r" em spécifiant comme valeurs extrêmes le minimum et le
   //       maximum des populations des pays.
-  var popMin = d3.min(data, d => d.population);
-  var popMax = d3.max(data, d => d.population);
-  r.domain([popMin, popMax]);
+  var popMin = d3.min(data, function(d){
+    return d.population;
+  }); // population minimum
+  var popMax = d3.max(data, function(d){
+    return d.population;
+  }); // population maximum
+
+  r.domain([popMin, popMax]); //domaine de l'échelle
 }
