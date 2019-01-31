@@ -21,10 +21,20 @@ function createAxes(g, xAxis, yAxis, height, width) {
     .attr("class", "x axis")
     .attr("transform", "translate(0," + height + ")")
     .call(xAxis);
+  g.append("text")
+    .attr("x", width)
+    .attr("y", height-10)
+    .style("text-anchor", "end")
+    .text("Espérance de vie (années)")
   // Axe vertical
   g.append("g")
     .attr("class", "y axis")
     .call(yAxis);
+  g.append("text")
+    .attr("y", 20)
+    .attr("transform", "rotate(-90)")
+    .style("text-anchor", "end")
+    .text(" Revenu (USD)")
 }
 
 /**
@@ -47,7 +57,6 @@ function createBubbleChart(g, data, x, y, r, color, tip) {
     .enter()
     .append("circle")
     .attr("cx", function(d){
-      //console.log(d.lifeExpectancy);
       return x(d.lifeExpectancy);
     })
     .attr("cy", function(d){

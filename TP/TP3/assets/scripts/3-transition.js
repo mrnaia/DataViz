@@ -20,5 +20,30 @@ function transition(g, data, x, y, r) {
        - Mettre à jour la taille du rayon des cercles.
        - La transition doit se faire en 1 seconde.
    */
+   domainRadius(r, data);
+
+   g.selectAll("circle")
+     .data(data)
+     .transition()
+     .duration(1000)
+     .attr("cx", function(d){
+       return x(d.lifeExpectancy);
+     })
+     .attr("cy", function(d){
+       return y(d.income);
+     })
+     .attr("r", function(d){return r(d.population);})
+
+
+
+   /*g.select(".x.axis")
+    .transition()
+    .duration(1000)
+    .call(xAxis);
+
+    g.select(".y.axis")
+     .transition()
+     .duration(1000)
+     .call(yAxis);*/
 
 }
