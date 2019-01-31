@@ -65,6 +65,7 @@ function createBubbleChart(g, data, x, y, r, color, tip) {
     .attr("fill", d => color(d.zone))
     .attr("r", d => r(d.population))
     .on('mouseover', tip.show)
-    .on("mouseout", tip.hide);
+    .on("mouseout", tip.hide)
+    .attr("id", d => d.name);
 
 }
