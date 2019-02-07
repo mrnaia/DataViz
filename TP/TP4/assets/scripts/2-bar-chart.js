@@ -15,7 +15,7 @@
  */
 function createAxes(g, xAxis, yAxis, height) {
   // TODO: Dessiner les axes X et Y du graphique. Assurez-vous d'indiquer un titre pour l'axe Y.
-  
+
   // Axe horizontal
   g.append("g") //axe
     .attr("class", "x axis")
@@ -76,7 +76,7 @@ function transition(g, newData, y, yAxis, height) {
 /**
  * Obtient le texte associé à l'infobulle.
  *
- * @param d               Les données associées à la barre survollée par la souris.
+ * @param d               Les données associées à la barre survolée par la souris.
  * @param currentData     Les données qui sont actuellement utilisées.
  * @param formatPercent   Fonction permettant de formater correctement un pourcentage.
  * @return {string}       Le texte à afficher dans l'infobulle.
@@ -84,6 +84,6 @@ function transition(g, newData, y, yAxis, height) {
 function getToolTipText(d, currentData, formatPercent) {
   // TODO: Retourner le texte à afficher dans l'infobulle selon le format demandé.
   //       Assurez-vous d'utiliser la fonction "formatPercent" pour formater le pourcentage correctement.
-
-  return "";
+  var total = currentData.destinations.sum(d => d.count);
+  return d.count + " (" + formatPercent(d.count/total) + ")";
 }
