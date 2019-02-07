@@ -88,7 +88,9 @@ function createChords(g, data, layout, path, color, total, formatPercent) {
     .attr("fill", function(d){
       return color(data[d.source.index].name);
 
+
     })
+    //revoir couleur, title
 }
 
 /**
