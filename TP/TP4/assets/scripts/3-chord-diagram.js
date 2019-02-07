@@ -26,34 +26,36 @@ function createGroups(g, data, layout, arc, color, total, formatPercent) {
      - Afficher un élément "title" lorsqu'un groupe est survolé par la souris.
   */
   var group = g.selectAll("g")
-  .data(layout.groups)
-  .enter()
-  .append("g")
-  .attr("class","group")
+    .data(layout.groups)
+    .enter()
+    .append("g")
+    .attr("class","group")
 
   group.append("path")
-  .attr("fill", d => {
-    return color(data[d.index].name)
-  })
-  .attr("d",arc)
-  .property("id",d => data[d.index].name);
+    .attr("fill", d => {
+      return color(data[d.index].name)
+    })
+    .attr("d",arc)
+    .property("id",d => data[d.index].name);
 
   group.append("text")
-  .style("font-size","9pt")
-  .attr("dy", 17)
-  .attr("dx", 10)
-  .append("textPath")
-  .attr("xlink:href",d => "#"+data[d.index].name)
-  .text(d => {
-    let text = data[d.index].name;
-    if(text === "Métro Mont-Royal (Rivard/Mont-Royal)"){
-      text = "Métro Mont-Royal"
-    }
-    if(text === "Pontiac / Gilford"){
-      text = "Pontiac"
-    }
-    return text
-  })
+    .style("font-size","9pt")
+    .attr("dy", 17)
+    .attr("dx", 10)
+    .append("textPath")
+    .attr("xlink:href",d => "#"+data[d.index].name)
+    .text(d => {
+      let text = data[d.index].name;
+      if(text === "Métro Mont-Royal (Rivard/Mont-Royal)"){
+        text = "Métro Mont-Royal"
+      }
+      if(text === "Pontiac / Gilford"){
+        text = "Pontiac"
+      }
+      return text
+    })
+  group.append("title")
+    .text(d => data[d.index].name + ": " + formatPercent(d.value/total) + " des départs")
 }
 
 /**
