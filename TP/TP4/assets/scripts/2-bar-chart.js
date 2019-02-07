@@ -69,8 +69,18 @@ function transition(g, newData, y, yAxis, height) {
   /* TODO:
    - Réaliser une transition pour mettre à jour l'axe des Y et la hauteur des barres à partir des nouvelles données.
    - La transition doit se faire en 1 seconde.
-   */
+  */
 
+  domainY(height, newData);
+
+  g.select("g.y.axis")
+    .transition(t)
+    .duration(1000)
+
+  g.select("rect")
+    .transition(t)
+    .duration(1000)
+    .attr("height", height);
 }
 
 /**
