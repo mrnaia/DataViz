@@ -53,7 +53,7 @@ function createAxes(g, xAxis, yAxis, height) {
 function createBarChart(g, currentData, x, y, color, tip, height) {
   // TODO: Dessiner les cercles à bandes en utilisant les échelles spécifiées.
   //       Assurez-vous d'afficher l'infobulle spécifiée lorsqu'une barre est survolée.
-    console.log(currentData);
+    //console.log(currentData);
 
     //var width = barChartWidth/10;
     //console.log(width);

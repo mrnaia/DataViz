@@ -74,7 +74,19 @@ function createChords(g, data, layout, path, color, total, formatPercent) {
      - Créer les cordes du diagramme avec une opacité de 80%.
      - Afficher un élément "title" lorsqu'une corde est survolée par la souris.
   */
+  //console.log(layout);
+  g.append("g")
 
+    .selectAll("path")
+    .data(layout)
+    .enter()
+    .append("path")
+    .attr("d", path)
+    .attr("class", "chord")
+    .attr("fill", function(d){
+      return color(data[d.source.index].name);
+
+    })
 }
 
 /**
