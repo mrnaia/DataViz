@@ -69,7 +69,6 @@ function createBarChart(g, currentData, x, y, color, tip, height) {
       .attr("fill",function(d){
         return color(d.name);
       })
-      .attr("transform", "translate(0," + barChartMargin.left + ")")
       .on('mouseover', tip.show) //affiche les infobulles quand on passe la souris sur un cercle
       .on("mouseout", tip.hide);
 }
@@ -112,6 +111,6 @@ function transition(g, newData, y, yAxis, height) {
 function getToolTipText(d, currentData, formatPercent) {
   // TODO: Retourner le texte à afficher dans l'infobulle selon le format demandé.
   //       Assurez-vous d'utiliser la fonction "formatPercent" pour formater le pourcentage correctement.
-  var total = currentData.destinations.sum(d => d.count);
-  return d.count + " (" + formatPercent(d.count/total) + ")";
+  /*var total = currentData.destinations.sum(d => d.count);
+  return d.count + " (" + formatPercent(d.count/total) + ")";*/
 }
