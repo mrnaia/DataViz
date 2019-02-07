@@ -15,7 +15,7 @@
  */
 function createAxes(g, xAxis, yAxis, height) {
   // TODO: Dessiner les axes X et Y du graphique. Assurez-vous d'indiquer un titre pour l'axe Y.
-  
+
   // Axe horizontal
   g.append("g") //axe
     .attr("class", "x axis")
@@ -53,7 +53,22 @@ function createAxes(g, xAxis, yAxis, height) {
 function createBarChart(g, currentData, x, y, color, tip, height) {
   // TODO: Dessiner les cercles à bandes en utilisant les échelles spécifiées.
   //       Assurez-vous d'afficher l'infobulle spécifiée lorsqu'une barre est survolée.
+    console.log(currentData);
 
+    //var width = barChartWidth/10;
+    //console.log(width);
+    var width = 84;
+    g.selectAll("rect")
+      .data(currentData.destinations)
+      .enter()
+      .append("rect")
+      .attr("x", d => x(d.name) + 44 - width/2)
+      .attr("y", d => y(d.count))
+      .attr("height",d => height - y(d.count))
+      .attr("width", width)
+      .attr("fill", d => color(d.name))
+      .on('mouseover', tip.show) //affiche les infobulles quand on passe la souris sur un cercle
+      .on("mouseout", tip.hide);
 }
 
 /**
@@ -69,14 +84,28 @@ function transition(g, newData, y, yAxis, height) {
   /* TODO:
    - Réaliser une transition pour mettre à jour l'axe des Y et la hauteur des barres à partir des nouvelles données.
    - La transition doit se faire en 1 seconde.
-   */
+  */
 
+  domainY(y, newData);
+
+  g.select("g.y.axis")
+    .transition()
+    .duration(1000)
+    .call(yAxis);
+
+  g.selectAll("rect")
+    .data(newData.destinations)
+    .transition()
+    .duration(1000)
+    .attr("height", height)
+    .attr("y", d => y(d.count))
+    .attr("height", d => height - y(d.count));
 }
 
 /**
  * Obtient le texte associé à l'infobulle.
  *
- * @param d               Les données associées à la barre survollée par la souris.
+ * @param d               Les données associées à la barre survolée par la souris.
  * @param currentData     Les données qui sont actuellement utilisées.
  * @param formatPercent   Fonction permettant de formater correctement un pourcentage.
  * @return {string}       Le texte à afficher dans l'infobulle.
@@ -84,6 +113,7 @@ function transition(g, newData, y, yAxis, height) {
 function getToolTipText(d, currentData, formatPercent) {
   // TODO: Retourner le texte à afficher dans l'infobulle selon le format demandé.
   //       Assurez-vous d'utiliser la fonction "formatPercent" pour formater le pourcentage correctement.
-
-  return "";
+  var total = d3.sum(currentData.destinations, d => d.count);
+  return d.count + " (" + formatPercent(d.count/total) + ")";
+  //return "test";
 }
