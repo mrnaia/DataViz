@@ -50,9 +50,8 @@ function domainY(y, currentData) {
 function getMatrix(data) {
   // TODO: Calculer la matrice d'adjacence pour créer le diagramme à cordes.
   var matr = [];
-  data.forEach(d => {
-    matr.push(d.destinations.map(c => c.count));
-  })
+  data.forEach(d => matr.push(d.destinations.map(c => c.count)))
+  console.log(matr);
   return matr;
 }
 
