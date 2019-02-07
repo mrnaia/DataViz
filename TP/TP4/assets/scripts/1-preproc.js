@@ -13,7 +13,7 @@
  */
 function domainColor(color, data) {
   // TODO: Préciser le domaine de l'échelle de couleurs en y associant les stations de BIXI utilisées.
-  color.domain(data, d => d.name);
+  color.domain(data.map(d=>d.name));
 }
 
 /**
@@ -26,7 +26,6 @@ function domainX(x, data) {
   // TODO: Préciser le domaine pour la variable "x" en y associant les stations de BIXI utilisées.
   var domaine = data.map(d=>d.name);
   x.domain(domaine);
-  console.log(x("De la Commune / Saint-Sulpice"));
 }
 
 /**

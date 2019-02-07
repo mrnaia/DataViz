@@ -63,8 +63,8 @@ function createBarChart(g, currentData, x, y, color, tip, height) {
       .enter()
       .append("rect")
       .attr("x",d=>x(d.name)+44-width/2)
-      .attr("y",d=>height-y(d.count))
-      .attr("height",d=>y(d.count))
+      .attr("y",d=>y(d.count))
+      .attr("height",d=>height-y(d.count))
       .attr("width",width)
       .attr("fill",function(d){
         return color(d.name);
@@ -88,16 +88,21 @@ function transition(g, newData, y, yAxis, height) {
    - La transition doit se faire en 1 seconde.
   */
 
-  domainY(height, newData);
+  domainY(y, newData);
+  console.log(newData);
 
   g.select("g.y.axis")
-    .transition(t)
+    .transition()
     .duration(1000)
+    .call(yAxis);
 
-  g.select("rect")
-    .transition(t)
+  g.selectAll("rect")
+    .data(newData.destinations)
+    .transition()
     .duration(1000)
-    .attr("height", height);
+    .attr("height", height)
+    .attr("y",d=>y(d.count))
+    .attr("height",d=>height-y(d.count));
 }
 
 /**
@@ -111,6 +116,9 @@ function transition(g, newData, y, yAxis, height) {
 function getToolTipText(d, currentData, formatPercent) {
   // TODO: Retourner le texte à afficher dans l'infobulle selon le format demandé.
   //       Assurez-vous d'utiliser la fonction "formatPercent" pour formater le pourcentage correctement.
-  /*var total = currentData.destinations.sum(d => d.count);
-  return d.count + " (" + formatPercent(d.count/total) + ")";*/
+  var total = d3.sum(currentData.destinations, d => d.count);
+  console.log("d " + d.count);
+  console.log(currentData);
+  return d.count + " (" + formatPercent(d.count/total) + ")";
+  //return "test";
 }
