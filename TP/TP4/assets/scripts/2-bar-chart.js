@@ -15,8 +15,28 @@
  */
 function createAxes(g, xAxis, yAxis, height) {
   // TODO: Dessiner les axes X et Y du graphique. Assurez-vous d'indiquer un titre pour l'axe Y.
+  
   // Axe horizontal
+  g.append("g") //axe
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + height + ")")
+    .call(xAxis);
+  g.selectAll(".tick > text") //nom des catégories
+    .attr("x", 10)
+    .attr("y", 20)
+    .attr("transform", "rotate(30)")
+    .style("text-anchor", "start")
 
+  // Axe vertical
+  g.append("g") //axe
+    .attr("class", "y axis")
+    .call(yAxis);
+  g.append("text") //nom de l'axe
+    .attr("x", -25)
+    .attr("y", -10)
+    .style("text-anchor", "start")
+    .style("font-size", "8pt")
+    .text("Nombre de trajets")
 }
 
 /**
