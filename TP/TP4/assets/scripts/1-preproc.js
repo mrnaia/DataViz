@@ -24,8 +24,8 @@ function domainColor(color, data) {
  */
 function domainX(x, data) {
   // TODO: Préciser le domaine pour la variable "x" en y associant les stations de BIXI utilisées.
-  var domaine = data.map(d=>d.name);
-    x.domain(domaine);
+  var domain = data.map(d=>d.name);
+  x.domain(domain);
 }
 
 /**
