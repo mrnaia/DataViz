@@ -15,7 +15,7 @@
  */
 function createAxes(g, xAxis, yAxis, height) {
   // TODO: Dessiner les axes X et Y du graphique. Assurez-vous d'indiquer un titre pour l'axe Y.
-  
+
   // Axe horizontal
   g.append("g") //axe
     .attr("class", "x axis")
@@ -54,17 +54,22 @@ function createBarChart(g, currentData, x, y, color, tip, height) {
   // TODO: Dessiner les cercles à bandes en utilisant les échelles spécifiées.
   //       Assurez-vous d'afficher l'infobulle spécifiée lorsqu'une barre est survolée.
     console.log(currentData);
+
+    //var width = barChartWidth/10;
+    //console.log(width);
+    var width = 84;
     g.selectAll("rect")
       .data(currentData.destinations)
       .enter()
       .append("rect")
-      .attr("x",d=>x(d.name))
-      .attr("y",0)
-      .attr("height", d=>y(d.count))
-      .attr("width",10)
+      .attr("x",d=>x(d.name)+44-width/2)
+      .attr("y",d=>height-y(d.count))
+      .attr("height",d=>y(d.count))
+      .attr("width",width)
       .attr("fill",function(d){
         return color(d.name);
       })
+      .attr("transform", "translate(0," + barChartMargin.left + ")")
       .on('mouseover', tip.show) //affiche les infobulles quand on passe la souris sur un cercle
       .on("mouseout", tip.hide);
 }
