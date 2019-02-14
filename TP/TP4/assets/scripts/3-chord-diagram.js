@@ -54,6 +54,7 @@ function createGroups(g, data, layout, arc, color, total, formatPercent) {
       }
       return text
     })
+
   group.append("title")
     .text(d => data[d.index].name + ": " + formatPercent(d.value/total) + " des départs")
 }
@@ -76,9 +77,8 @@ function createChords(g, data, layout, path, color, total, formatPercent) {
      - Créer les cordes du diagramme avec une opacité de 80%.
      - Afficher un élément "title" lorsqu'une corde est survolée par la souris.
   */
-  //console.log(layout);
+  console.log(data);
   g.append("g")
-
     .selectAll("path")
     .data(layout)
     .enter()
@@ -86,11 +86,15 @@ function createChords(g, data, layout, path, color, total, formatPercent) {
     .attr("d", path)
     .attr("class", "chord")
     .attr("fill", function(d){
+      console.log(d);
       return color(data[d.source.index].name);
-
-
     })
+    .append("title")
+    .text(d => d)
     //revoir couleur, title
+/*  g.selectAll("path")
+    .append("title")
+    .text(d => d)*/
 }
 
 /**
