@@ -19,7 +19,7 @@ function createAxes(g, xAxis, yAxis, height) {
   // Axe horizontal
   g.append("g") //axe
     .attr("class", "x axis")
-    .attr("transform", "translate(0," + height + ")")
+    .attr("transform", "translate(0," + height + ")") //Put the axis at the right place
     .call(xAxis);
   g.selectAll(".tick > text") //nom des catégories
     .attr("x", 10)
