@@ -97,7 +97,13 @@ function createChords(g, data, layout, path, color, total, formatPercent) {
       }
     })
     .append("title")
-    .text(d => d)
+    .html(d => {
+      let nbDeparts_source_vers_target =data[d.source.index].destinations[d.target.index].count;
+      let nbDeparts_target_vers_src =data[d.target.index].destinations[d.source.index].count ;
+      let source = data[d.source.index].name;
+      let target = data[d.target.index].name;
+      return source + " &rarr; " + target + ": " + formatPercent(nbDeparts_source_vers_target/total) + "\n" + target + " &rarr; " + source + ": " + formatPercent(nbDeparts_target_vers_src/total);
+    })
     //revoir couleur, title
 /*  g.selectAll("path")
     .append("title")
