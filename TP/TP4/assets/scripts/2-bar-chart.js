@@ -19,7 +19,7 @@ function createAxes(g, xAxis, yAxis, height) {
   // Axe horizontal
   g.append("g") //axe
     .attr("class", "x axis")
-    .attr("transform", "translate(0," + height + ")")
+    .attr("transform", "translate(0," + height + ")") //Put the axis at the right place
     .call(xAxis);
   g.selectAll(".tick > text") //nom des catégories
     .attr("x", 10)
@@ -53,22 +53,19 @@ function createAxes(g, xAxis, yAxis, height) {
 function createBarChart(g, currentData, x, y, color, tip, height) {
   // TODO: Dessiner les cercles à bandes en utilisant les échelles spécifiées.
   //       Assurez-vous d'afficher l'infobulle spécifiée lorsqu'une barre est survolée.
-    //console.log(currentData);
 
-    //var width = barChartWidth/10;
-    //console.log(width);
-    var width = 84;
-    g.selectAll("rect")
-      .data(currentData.destinations)
-      .enter()
-      .append("rect")
-      .attr("x", d => x(d.name) + 44 - width/2)
-      .attr("y", d => y(d.count))
-      .attr("height",d => height - y(d.count))
-      .attr("width", width)
-      .attr("fill", d => color(d.name))
-      .on('mouseover', tip.show) //affiche les infobulles quand on passe la souris sur un cercle
-      .on("mouseout", tip.hide);
+  var width = 84;
+  g.selectAll("rect")
+    .data(currentData.destinations)
+    .enter()
+    .append("rect")
+    .attr("x", d => x(d.name) + 44 - width/2)
+    .attr("y", d => y(d.count))
+    .attr("height",d => height - y(d.count))
+    .attr("width", width)
+    .attr("fill", d => color(d.name))
+    .on('mouseover', tip.show) //affiche les infobulles quand on passe la souris sur un cercle
+    .on("mouseout", tip.hide);
 }
 
 /**
@@ -115,5 +112,4 @@ function getToolTipText(d, currentData, formatPercent) {
   //       Assurez-vous d'utiliser la fonction "formatPercent" pour formater le pourcentage correctement.
   var total = d3.sum(currentData.destinations, d => d.count);
   return d.count + " (" + formatPercent(d.count/total) + ")";
-  //return "test";
 }
