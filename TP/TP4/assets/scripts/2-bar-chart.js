@@ -53,10 +53,7 @@ function createAxes(g, xAxis, yAxis, height) {
 function createBarChart(g, currentData, x, y, color, tip, height) {
   // TODO: Dessiner les cercles à bandes en utilisant les échelles spécifiées.
   //       Assurez-vous d'afficher l'infobulle spécifiée lorsqu'une barre est survolée.
-    //console.log(currentData);
 
-    //var width = barChartWidth/10;
-    //console.log(width);
     var width = 84;
     g.selectAll("rect")
       .data(currentData.destinations)
@@ -115,5 +112,4 @@ function getToolTipText(d, currentData, formatPercent) {
   //       Assurez-vous d'utiliser la fonction "formatPercent" pour formater le pourcentage correctement.
   var total = d3.sum(currentData.destinations, d => d.count);
   return d.count + " (" + formatPercent(d.count/total) + ")";
-  //return "test";
 }
