@@ -83,20 +83,21 @@ function transition(g, newData, y, yAxis, height) {
    - La transition doit se faire en 1 seconde.
   */
 
-  domainY(y, newData);
+  domainY(y, newData); //mise à jour du domaine
 
+  //mise à jour de l'axe
   g.select("g.y.axis")
     .transition()
-    .duration(1000)
+    .duration(1000) //1 seconde
     .call(yAxis);
 
+  //mise à jour des barres
   g.selectAll("rect")
     .data(newData.destinations)
     .transition()
-    .duration(1000)
-    .attr("height", height)
-    .attr("y", d => y(d.count))
-    .attr("height", d => height - y(d.count));
+    .duration(1000) // 1 seconde
+    .attr("y", d => y(d.count)) //le y correspond au coin en haut à gauche de la barre
+    .attr("height", d => height - y(d.count));  
 }
 
 /**
