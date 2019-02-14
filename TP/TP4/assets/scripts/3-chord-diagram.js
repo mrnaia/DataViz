@@ -86,8 +86,15 @@ function createChords(g, data, layout, path, color, total, formatPercent) {
     .attr("d", path)
     .attr("class", "chord")
     .attr("fill", function(d){
-      console.log(d);
-      return color(data[d.source.index].name);
+      //console.log(data[d.source.index].destinations[d.target.index]);
+      let nbDeparts_source_vers_target =data[d.source.index].destinations[d.target.index].count;
+      let nbDeparts_target_vers_src =data[d.target.index].destinations[d.source.index].count ;
+      if(nbDeparts_source_vers_target>=nbDeparts_target_vers_src){
+        return color(data[d.source.index].name);
+      }
+      else{
+        return color(data[d.target.index].name);
+      }
     })
     .append("title")
     .text(d => d)
@@ -108,5 +115,16 @@ function initializeGroupsHovered(g) {
        opacité de 80%. Toutes les autres cordes doivent être affichées avec une opacité de 10%.
      - Rétablir l'affichage du diagramme par défaut lorsque la souris sort du cercle du diagramme.
   */
-
+  g.selectAll(".group").on("mouseover", function(d){
+    d3.selectAll(".chord").attr("class", function(dChord){
+      if(!(dChord.source.index === d.index || dChord.target.index === d.index)){
+        return "chord fade";
+      } else{
+        return "chord";
+      }
+    });
+  })
+  g.on("mouseleave", d => {
+    d3.selectAll(".chord").attr("class", "chord");
+  })
 }
