@@ -86,9 +86,15 @@ function createChords(g, data, layout, path, color, total, formatPercent) {
     .attr("d", path)
     .attr("class", "chord")
     .attr("fill", function(d){
-      return color(data[d.source.index].name);
-
-
+      //console.log(data[d.source.index].destinations[d.target.index]);
+      let nbDeparts_source_vers_target =data[d.source.index].destinations[d.target.index].count;
+      let nbDeparts_target_vers_src =data[d.target.index].destinations[d.source.index].count ;
+      if(nbDeparts_source_vers_target>=nbDeparts_target_vers_src){
+        return color(data[d.source.index].name);
+      }
+      else{
+        return color(data[d.target.index].name);
+      }
     })
     //revoir couleur, title
 }
