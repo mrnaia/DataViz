@@ -4,7 +4,6 @@
  * Fichier permettant de traiter les données provenant du fichier JSON.
  */
 
-
 /**
  * Précise le domaine de l'échelle de couleurs qui est utilisée pour distinguer chacune des stations de BIXI.
  *

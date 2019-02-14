@@ -25,21 +25,20 @@ function createGroups(g, data, layout, arc, color, total, formatPercent) {
      - Tronquer les noms des stations de BIXI qui sont trop longs (Pontiac et Métro Mont-Royal).
      - Afficher un élément "title" lorsqu'un groupe est survolé par la souris.
   */
-
-  //Create the group
+ //Creation dans le dom des groupes
   var group = g.selectAll("g")
     .data(layout.groups)
     .enter()
     .append("g")
     .attr("class","group")
 
-  //Create the background path group
+  //Dessiner les arcs des groupes
   group.append("path")
     .attr("fill", d => color(data[d.index].name))
     .attr("d", arc)
     .property("id", d => data[d.index].name);
 
-  //Create the text for the group
+  //Les noms dans les groupes
   group.append("text")
     .style("font-size", "9pt")
     .attr("dy", 17)
@@ -48,6 +47,7 @@ function createGroups(g, data, layout, arc, color, total, formatPercent) {
     .attr("xlink:href",d => "#"+data[d.index].name)
     .text(d => {
       let text = data[d.index].name;
+      //Couper les noms trop long
       if(text === "Métro Mont-Royal (Rivard/Mont-Royal)"){
         text = "Métro Mont-Royal"
       }
@@ -56,8 +56,7 @@ function createGroups(g, data, layout, arc, color, total, formatPercent) {
       }
       return text;
     })
-
-  //Create the tip title
+  //Rajouter les titres sur les groupes
   group.append("title")
     .text(d => data[d.index].name + ": " + formatPercent(d.value/total) + " des départs")
 }
@@ -100,7 +99,8 @@ function createChords(g, data, layout, path, color, total, formatPercent) {
       let source = data[d.source.index].name;
       let target = data[d.target.index].name;
       return source + " &rarr; " + target + ": " + formatPercent(nbDeparts_source_vers_target/total) + "\n" + target + " &rarr; " + source + ": " + formatPercent(nbDeparts_target_vers_src/total);
-    })
+    });
+
 }
 
 /**
@@ -116,6 +116,7 @@ function initializeGroupsHovered(g) {
   */
   //Define mouseover
   g.selectAll(".group").on("mouseover", function(d){
+    //Assigner la classe "fade" aux cordes qui ne partent pas du bon groupes
     d3.selectAll(".chord").attr("class", function(dChord){
       if(!(dChord.source.index === d.index || dChord.target.index === d.index)){
         return "chord fade";
@@ -124,7 +125,7 @@ function initializeGroupsHovered(g) {
       }
     });
   })
-  //Define mouseleave
+  //Reset les classes des chords
   g.on("mouseleave", d => {
     d3.selectAll(".chord").attr("class", "chord");
   })

@@ -54,18 +54,18 @@ function createBarChart(g, currentData, x, y, color, tip, height) {
   // TODO: Dessiner les cercles à bandes en utilisant les échelles spécifiées.
   //       Assurez-vous d'afficher l'infobulle spécifiée lorsqu'une barre est survolée.
 
-  var width = 84;
-  g.selectAll("rect")
-    .data(currentData.destinations)
-    .enter()
-    .append("rect")
-    .attr("x", d => x(d.name) + 44 - width/2)
-    .attr("y", d => y(d.count))
-    .attr("height",d => height - y(d.count))
-    .attr("width", width)
-    .attr("fill", d => color(d.name))
-    .on('mouseover', tip.show) //affiche les infobulles quand on passe la souris sur un cercle
-    .on("mouseout", tip.hide);
+    var width = 84;
+    g.selectAll("rect")
+      .data(currentData.destinations)
+      .enter()
+      .append("rect")
+      .attr("x", d => x(d.name) + 44 - width/2)
+      .attr("y", d => y(d.count))
+      .attr("height",d => height - y(d.count))
+      .attr("width", width)
+      .attr("fill", d => color(d.name))
+      .on('mouseover', tip.show) //affiche les infobulles quand on passe la souris sur un cercle
+      .on("mouseout", tip.hide);
 }
 
 /**
