@@ -25,12 +25,14 @@ function createGroups(g, data, layout, arc, color, total, formatPercent) {
      - Tronquer les noms des stations de BIXI qui sont trop longs (Pontiac et Métro Mont-Royal).
      - Afficher un élément "title" lorsqu'un groupe est survolé par la souris.
   */
+ //Creation dans le dom des groupes
   var group = g.selectAll("g")
     .data(layout.groups)
     .enter()
     .append("g")
     .attr("class","group")
 
+  //Dessiner les arcs des groupes
   group.append("path")
     .attr("fill", d => {
       return color(data[d.index].name)
@@ -38,6 +40,7 @@ function createGroups(g, data, layout, arc, color, total, formatPercent) {
     .attr("d",arc)
     .property("id",d => data[d.index].name);
 
+  //Les noms dans les groupes
   group.append("text")
     .style("font-size","9pt")
     .attr("dy", 17)
@@ -46,6 +49,7 @@ function createGroups(g, data, layout, arc, color, total, formatPercent) {
     .attr("xlink:href",d => "#"+data[d.index].name)
     .text(d => {
       let text = data[d.index].name;
+      //Couper les noms trop long
       if(text === "Métro Mont-Royal (Rivard/Mont-Royal)"){
         text = "Métro Mont-Royal"
       }
@@ -54,7 +58,7 @@ function createGroups(g, data, layout, arc, color, total, formatPercent) {
       }
       return text
     })
-
+  //Rajouter les titres sur les groupes
   group.append("title")
     .text(d => data[d.index].name + ": " + formatPercent(d.value/total) + " des départs")
 }
@@ -119,6 +123,7 @@ function initializeGroupsHovered(g) {
      - Rétablir l'affichage du diagramme par défaut lorsque la souris sort du cercle du diagramme.
   */
   g.selectAll(".group").on("mouseover", function(d){
+    //Assigner la classe "fade" aux cordes qui ne partent pas du bon groupes
     d3.selectAll(".chord").attr("class", function(dChord){
       if(!(dChord.source.index === d.index || dChord.target.index === d.index)){
         return "chord fade";
@@ -127,6 +132,7 @@ function initializeGroupsHovered(g) {
       }
     });
   })
+  //Reset les classes des chord
   g.on("mouseleave", d => {
     d3.selectAll(".chord").attr("class", "chord");
   })
