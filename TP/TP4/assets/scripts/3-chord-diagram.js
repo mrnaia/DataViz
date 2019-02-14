@@ -116,7 +116,7 @@ function initializeGroupsHovered(g) {
   */
   //Define mouseover
   g.selectAll(".group").on("mouseover", function(d){
-    //Assigner la classe "fade" aux cordes qui ne partent pas du bon groupes
+    //Assigner la classe "fade" aux cordes qui ne partent pas du bon groupe
     d3.selectAll(".chord").attr("class", function(dChord){
       if(!(dChord.source.index === d.index || dChord.target.index === d.index)){
         return "chord fade";
