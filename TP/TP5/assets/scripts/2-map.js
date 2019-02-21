@@ -42,6 +42,7 @@ function initSvgLayer(map) {
   // TODO: Créer l'élément SVG en vous basant sur l'exemple fourni. Assurez-vous de créer un élément "g" dans l'élément SVG.
   var svg = d3.select(map.getPanes().overlayPane).append("svg");
   svg.append("g");
+  return svg;
 }
 
 /**
@@ -79,5 +80,12 @@ function createDistricts(g, path, canada, sources, color, showPanel) {
  */
 function updateMap(svg, g, path, canada) {
   // TODO: Mettre à jour l'élément SVG, la position du groupe "g" et l'affichage des tracés en vous basant sur l'exemple fourni.
-
+  var bounds = path.bounds(canada);
+	var topLeft = bounds[0];
+	var bottomRight = bounds[1];
+	svg.attr("width", bottomRight[0] - topLeft[0])
+		.attr("height", bottomRight[1] - topLeft[1])
+		.style("left", topLeft[0] + "px")
+		.style("top", topLeft[1] + "px");
+  g.attr("transform", "translate(" + -topLeft[0] + ","+ -topLeft[1] + ")");
 }
