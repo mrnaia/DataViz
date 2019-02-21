@@ -108,4 +108,6 @@ function updateMap(svg, g, path, canada) {
 		.style("left", topLeft[0] + "px")
 		.style("top", topLeft[1] + "px");
   g.attr("transform", "translate(" + -topLeft[0] + ","+ -topLeft[1] + ")");
+  g.selectAll("path")
+    .attr("d", path)
 }

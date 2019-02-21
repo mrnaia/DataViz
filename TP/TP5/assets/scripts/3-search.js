@@ -26,4 +26,7 @@ function search(map, g, districtId, bound, showPanel) {
       pour cette circonscription en faisant appel à la fonction "showPanel".
    */
 
+  map.fitBounds(bound,[0,0],[0,0],[0,0], 8 ,true, true,1,0.5,false);
+  
+
 }
