@@ -69,7 +69,13 @@ function updatePanelBarChart(gBars, gAxis, districtSource, x, y, yAxis, color, p
          via la liste "parties" passée en paramètre. Il est à noter que si le parti ne se trouve pas dans la liste "parties",
          vous devez indiquer "Autre" comme forme abrégée.
    */
-   gBars.selectAll("rect")
+
+  // Axe vertical
+  gAxis.attr("class", "y axis")
+    .call(yAxis);
+
+  //Bars
+  gBars.selectAll("rect")
     .data(districtSource.results)
     .enter()
     .append("rect")
@@ -82,7 +88,7 @@ function updatePanelBarChart(gBars, gAxis, districtSource, x, y, yAxis, color, p
        return (yRange[1]-yRange[0])/(districtSource.results.length+1);
     })
     .attr("width", d => x(d.votes))
-    .style("fill",d => {
+    .style("fill", d => {
       if(color.domain().includes(d.party)){
         return color(d.party)
       } else {
