@@ -69,7 +69,23 @@ function updatePanelBarChart(gBars, gAxis, districtSource, x, y, yAxis, color, p
          via la liste "parties" passée en paramètre. Il est à noter que si le parti ne se trouve pas dans la liste "parties",
          vous devez indiquer "Autre" comme forme abrégée.
    */
-   gBars.selectAll("rect")
+
+
+  // Axe vertical
+  yAxis.tickFormat(function(d){
+    var party = parties.filter(elt => elt.name == d);
+    if(party.length==0){
+      return "Autre";
+    }else{
+      return party[0].abbreviation;
+    }
+  });
+  gAxis.attr("class", "y axis")
+    .call(yAxis);
+
+
+  //Bars
+  gBars.selectAll("rect")
     .data(districtSource.results)
     .enter()
     .append("rect")
@@ -82,22 +98,32 @@ function updatePanelBarChart(gBars, gAxis, districtSource, x, y, yAxis, color, p
        return (yRange[1]-yRange[0])/(districtSource.results.length+1);
     })
     .attr("width", d => x(d.votes))
-    .style("fill",d => {
+    .style("fill", d => {
       if(color.domain().includes(d.party)){
         return color(d.party)
       } else {
         return "grey"
       }
-    })
-    .append("text")
-    .text(function(d){
+    });
 
-      var party = parties.filter(elt => elt.name == d.party);
-      if(party.length==0){
-        return "Autre";
-      }else{
-        return party[0].abbreviation;
-      }
+
+
+  gBars.selectAll("text")
+    .data(districtSource.results)
+    .enter()
+    .append("text")
+    //y position of the label is halfway down the bar
+    .attr("y", function (d) {
+      var yRange = y.range()
+        return y(d.party) + (yRange[1]-yRange[0])/(districtSource.results.length+1)/2 + 3;
+    })
+    //x position is 3 pixels to the right of the bar
+    .attr("x", function (d) {
+        return x(d.votes) + 3;
+    })
+    .text(function (d) {
+        return d.percent;
+
     });
 
 
