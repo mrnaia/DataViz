@@ -93,8 +93,8 @@ function createSources(data) {
   array_out[index].results.sort(function(e1,e2){
     return d3.descending(e1.votes,e2.votes);
   });
-  console.log(array_out);
 
+  return array_out;
 
 
 }
