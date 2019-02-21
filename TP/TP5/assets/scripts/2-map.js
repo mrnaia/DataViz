@@ -23,7 +23,11 @@ function initTileLayer(L, map) {
        - Coordonnées: [57.3, -94.7];
        - Niveau de zoom: 4.
    */
-
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
+               minZoom:1,
+               maxZoom: 10,
+               }).addTo(map);
+  map.setView([57.3, -94.7], 4);
 }
 
 /**
