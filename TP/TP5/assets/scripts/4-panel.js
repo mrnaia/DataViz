@@ -88,7 +88,19 @@ function updatePanelBarChart(gBars, gAxis, districtSource, x, y, yAxis, color, p
       } else {
         return "grey"
       }
+    })
+    .append("text")
+    .text(function(d){
+
+      var party = parties.filter(elt => elt.name == d.party);
+      if(party.length==0){
+        return "Autre";
+      }else{
+        return party[0].abbreviation;
+      }
     });
+
+
 }
 
 /**
