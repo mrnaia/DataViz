@@ -42,7 +42,7 @@ function updatePanelInfo(panel, districtSource, formatNumber) {
   panel.select("#elected-candidate")
   .text(districtSource.results[0].candidate);
   panel.select("#votes-count")
-  .text(districtSource.results[0].votes)
+  .text(formatNumber(districtSource.results[0].votes) + " votes")
 }
 
 /**
@@ -69,17 +69,12 @@ function updatePanelBarChart(gBars, gAxis, districtSource, x, y, yAxis, color, p
          via la liste "parties" passée en paramètre. Il est à noter que si le parti ne se trouve pas dans la liste "parties",
          vous devez indiquer "Autre" comme forme abrégée.
    */
-<<<<<<< HEAD
 
   // Axe vertical
   gAxis.attr("class", "y axis")
-    .call(yAxis);
+    .call(yAxis)
 
   //Bars
-=======
-  console.log(districtSource);
-
->>>>>>> 8bcaa84cbdb91fc3e4d12d64494c184e7e14a2ad
   gBars.selectAll("rect")
     .data(districtSource.results)
     .enter()
