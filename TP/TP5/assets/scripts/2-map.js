@@ -80,6 +80,11 @@ function createDistricts(g, path, canada, sources, color, showPanel) {
     })
     .style("fill-opacity", 0.8)
     .style("stroke", "#333")
+    .on("click", function(d) {
+      g.selectAll(".selected").classed("selected", false);
+      d3.select(this).classed("selected", true);
+      showPanel(d.properties.NUMCF);
+    })
 }
 
 /**
