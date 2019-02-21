@@ -28,7 +28,6 @@ function convertNumbers(data) {
     el.id = parseFloat(el.id);
     el.number = parseFloat(el.number);
   });
-  console.log(data);
 }
 
 /**
