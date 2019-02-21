@@ -40,7 +40,8 @@ function initTileLayer(L, map) {
  */
 function initSvgLayer(map) {
   // TODO: Créer l'élément SVG en vous basant sur l'exemple fourni. Assurez-vous de créer un élément "g" dans l'élément SVG.
-
+  var svg = d3.select(map.getPanes().overlayPane).append("svg");
+  svg.append("g");
 }
 
 /**
