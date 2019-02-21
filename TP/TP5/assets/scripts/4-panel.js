@@ -19,7 +19,9 @@ function updateDomains(districtSource, x, y) {
          que les partis sont triés en ordre décroissant de votes obtenus (le parti du candidat gagnant doit se retrouver
          en premier).
    */
-
+  var results = districtSource.results
+  x.domain(d3.min(results,el => el.votes),d3.max(results,el => el.votes));
+  y.domain(results.map(el => el.party));
 }
 
 /**
@@ -35,7 +37,12 @@ function updatePanelInfo(panel, districtSource, formatNumber) {
        - La nom du candidat gagnant ainsi que son parti;
        - Le nombre total de votes pour tous les candidats (utilisez la fonction "formatNumber" pour formater le nombre).
    */
-
+  panel.select("#district-name")
+  .text(districtSource.name + "["+ districtSource.id +"]");
+  panel.select("#elected-candidate")
+  .text(districtSource.results[0].candidate);
+  panel.select("#votes-count")
+  .text(districtSource.results[0].votes)
 }
 
 /**
@@ -62,7 +69,24 @@ function updatePanelBarChart(gBars, gAxis, districtSource, x, y, yAxis, color, p
          via la liste "parties" passée en paramètre. Il est à noter que si le parti ne se trouve pas dans la liste "parties",
          vous devez indiquer "Autre" comme forme abrégée.
    */
-
+   gBars.selectAll("rect")
+    .data(districtSource.results)
+    .enter()
+    .append("rect")
+    .attr("x", 0)
+    .attr("y", d => {
+      console.log(d);
+      return y(d.party);
+    })
+    .attr("height", "20px")
+    .attr("width", d => d.votes)
+    .style("fill",d => {
+      if(d.name in color.domain()){
+        return color(d.name)
+      } else {
+        return "#333"
+      }
+    });
 }
 
 /**
