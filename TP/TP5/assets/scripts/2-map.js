@@ -40,8 +40,7 @@ function initTileLayer(L, map) {
  */
 function initSvgLayer(map) {
   // TODO: Créer l'élément SVG en vous basant sur l'exemple fourni. Assurez-vous de créer un élément "g" dans l'élément SVG.
-  var svg = d3.select(map.getPanes().overlayPane).append("svg");
-  svg.append("g");
+
 }
 
 /**
@@ -63,7 +62,20 @@ function createDistricts(g, path, canada, sources, color, showPanel) {
          d'informations associé à cette circonscription doit faire son apparition (utiliser la fonction "showPanel").
          Il est à noter qu'il est possible de sélectionner uniquement une circonscription à la fois.
    */
+  console.log(canada.features)
+  g.selectAll("path")
+    .data(canada.features)
+    .enter()
+    .append("path")
+    .attr("d", path)
+    .style("fill", d => {
+      console.log(d.properties); //.properties.NUMCF
+      var circonscriptionId = 0;
 
+      //color(sources.results[0].party)
+    })
+    .style("fill-opacity", 0.8)
+    .style("stroke", "#333")
 }
 
 /**
