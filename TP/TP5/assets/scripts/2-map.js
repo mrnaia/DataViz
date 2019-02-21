@@ -23,7 +23,11 @@ function initTileLayer(L, map) {
        - Coordonnées: [57.3, -94.7];
        - Niveau de zoom: 4.
    */
-
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
+               minZoom:1,
+               maxZoom: 10,
+               }).addTo(map);
+  map.setView([57.3, -94.7], 4);
 }
 
 /**
@@ -36,7 +40,8 @@ function initTileLayer(L, map) {
  */
 function initSvgLayer(map) {
   // TODO: Créer l'élément SVG en vous basant sur l'exemple fourni. Assurez-vous de créer un élément "g" dans l'élément SVG.
-
+  var svg = d3.select(map.getPanes().overlayPane).append("svg");
+  svg.append("g");
 }
 
 /**
