@@ -42,7 +42,7 @@ function updatePanelInfo(panel, districtSource, formatNumber) {
   panel.select("#elected-candidate")
   .text(districtSource.results[0].candidate);
   panel.select("#votes-count")
-  .text(districtSource.results[0].votes)
+  .text(formatNumber(districtSource.results[0].votes) + " votes")
 }
 
 /**
@@ -82,7 +82,6 @@ function updatePanelBarChart(gBars, gAxis, districtSource, x, y, yAxis, color, p
   });
   gAxis.attr("class", "y axis")
     .call(yAxis);
-
 
   //Bars
   gBars.selectAll("rect")
