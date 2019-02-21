@@ -14,7 +14,8 @@
 function colorScale(color, parties) {
   // TODO: Préciser le domaine de l'échelle en y associant chacun des partis politique de la liste spécifiée en paramètre.
   //       De plus, préciser la gamme de couleurs en spécifiant les couleurs utilisées par chacun des partis.
-
+  color.domain(parties.map(d=>d.name));
+  color.range(parties.map(d=>d.color));
 }
 
 /**
