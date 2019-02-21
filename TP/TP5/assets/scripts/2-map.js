@@ -71,6 +71,7 @@ function createDistricts(g, path, canada, sources, color, showPanel) {
     .enter()
     .append("path")
     .attr("d", path)
+    .attr("id", d=>"district"+d.properties.NUMCF)
     .style("fill", d => {
       //console.log(d.properties.NUMCF);
       var circonscriptionId = d.properties.NUMCF;
