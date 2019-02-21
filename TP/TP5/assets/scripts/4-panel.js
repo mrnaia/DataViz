@@ -19,8 +19,8 @@ function updateDomains(districtSource, x, y) {
          que les partis sont triés en ordre décroissant de votes obtenus (le parti du candidat gagnant doit se retrouver
          en premier).
    */
-  var results = districtSource.results
-  x.domain(d3.min(results,el => el.votes),d3.max(results,el => el.votes));
+  var results = districtSource.results;
+  x.domain([d3.min(results,el => el.votes),d3.max(results,el => el.votes)]);
   y.domain(results.map(el => el.party));
 }
 
@@ -75,16 +75,18 @@ function updatePanelBarChart(gBars, gAxis, districtSource, x, y, yAxis, color, p
     .append("rect")
     .attr("x", 0)
     .attr("y", d => {
-      console.log(d);
       return y(d.party);
     })
-    .attr("height", "20px")
-    .attr("width", d => d.votes)
+    .attr("height", d => {
+      var yRange = y.range()
+       return (yRange[1]-yRange[0])/(districtSource.results.length+1);
+    })
+    .attr("width", d => x(d.votes))
     .style("fill",d => {
-      if(d.name in color.domain()){
-        return color(d.name)
+      if(color.domain().includes(d.party)){
+        return color(d.party)
       } else {
-        return "#333"
+        return "grey"
       }
     });
 }
