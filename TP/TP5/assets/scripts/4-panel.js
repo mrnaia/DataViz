@@ -72,5 +72,5 @@ function updatePanelBarChart(gBars, gAxis, districtSource, x, y, yAxis, color, p
  */
 function reset(g) {
   // TODO: Réinitialiser l'affichage de la carte en retirant la classe "selected" de tous les éléments.
-
+  g.selectAll(".selected").classed("selected", false);
 }
