@@ -24,7 +24,11 @@ function colorScale(color, parties) {
  */
 function convertNumbers(data) {
   // TODO: Convertir les propriétés "id" et "votes" en type "number" pour chacun des éléments de la liste.
-
+  data.forEach(el => {
+    el.id = parseFloat(el.id);
+    el.number = parseFloat(el.number);
+  });
+  console.log(data);
 }
 
 /**
