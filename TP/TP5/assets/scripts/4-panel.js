@@ -85,7 +85,7 @@ function updatePanelBarChart(gBars, gAxis, districtSource, x, y, yAxis, color, p
   var rect = gBars.selectAll("rect")
     .data(districtSource.results);
   var rectEnter = rect.enter().append("rect");
-  rect = rectEnter.merge(rect);
+  rect = rectEnter.merge(rect)
   //Define attributes
     .attr("x", 0)
     .attr("y", d => y(d.party))
