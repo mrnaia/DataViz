@@ -38,11 +38,11 @@ function updatePanelInfo(panel, districtSource, formatNumber) {
        - Le nombre total de votes pour tous les candidats (utilisez la fonction "formatNumber" pour formater le nombre).
    */
   panel.select("#district-name")
-  .text(districtSource.name + "["+ districtSource.id +"]");
+    .text(districtSource.name + "["+ districtSource.id +"]");
   panel.select("#elected-candidate")
-  .text(districtSource.results[0].candidate);
+    .text(districtSource.results[0].candidate);
   panel.select("#votes-count")
-  .text(formatNumber(districtSource.results[0].votes) + " votes")
+    .text(formatNumber(districtSource.results[0].votes) + " votes")
 }
 
 /**
@@ -62,7 +62,7 @@ function updatePanelInfo(panel, districtSource, formatNumber) {
 function updatePanelBarChart(gBars, gAxis, districtSource, x, y, yAxis, color, parties) {
   /* TODO: Créer ou mettre à jour le graphique selon les spécifications suivantes:
        - Le nombre de votes des candidats doit être affiché en ordre décroissant;
-       - Le pourcentage obtenu par chacun des candidat doit être affiché à droite de le barre;
+       - Le pourcentage obtenu par chacun des candidats doit être affiché à droite de le barre;
        - La couleur de la barre doit correspondre à la couleur du parti du candidat. Si le parti du candidat n'est pas
          dans le domaine de l'échelle de couleurs, la barre doit être coloriée en gris;
        - Le nom des partis doit être affiché sous la forme abrégée. Il est possible d'obtenir la forme abrégée d'un parti
@@ -70,62 +70,53 @@ function updatePanelBarChart(gBars, gAxis, districtSource, x, y, yAxis, color, p
          vous devez indiquer "Autre" comme forme abrégée.
    */
 
-
-  // Axe vertical
+  //Vertical axis
   yAxis.tickFormat(function(d){
     var party = parties.filter(elt => elt.name == d);
-    if(party.length==0){
-      return "Autre";
-    }else{
-      return party[0].abbreviation;
-    }
+    if (party.length == 0) return "Autre";
+    else return party[0].abbreviation;
   });
   gAxis.attr("class", "y axis")
     .call(yAxis);
 
-  //Bars
-  gBars.selectAll("rect")
-    .data(districtSource.results)
-    .enter()
-    .append("rect")
+  //Rectangles
+  gBars.selectAll("rect").remove(); //Remove previous ones
+  //Update with new data
+  var rect = gBars.selectAll("rect")
+    .data(districtSource.results);
+  var rectEnter = rect.enter().append("rect");
+  rect = rectEnter.merge(rect);
+  //Define attributes
     .attr("x", 0)
-    .attr("y", d => {
-      return y(d.party);
-    })
+    .attr("y", d => y(d.party))
     .attr("height", d => {
       var yRange = y.range()
-       return (yRange[1]-yRange[0])/(districtSource.results.length+1);
+      return (yRange[1] - yRange[0]) / (districtSource.results.length + 1);
     })
     .attr("width", d => x(d.votes))
     .style("fill", d => {
-      if(color.domain().includes(d.party)){
-        return color(d.party)
-      } else {
-        return "grey"
-      }
+      if (color.domain().includes(d.party)) return color(d.party);
+      else return "grey";
     });
+  rect.exit().remove();
 
-
-
-  gBars.selectAll("text")
+  //Text percentages
+  gBars.selectAll("text").remove(); //Remove previous ones
+  //Update with new data
+  var text = gBars.selectAll("text")
     .data(districtSource.results)
-    .enter()
-    .append("text")
+  var textEnter = text.enter().append("text");
+  text = textEnter.merge(text)
+    //Define attributes
     //y position of the label is halfway down the bar
     .attr("y", function (d) {
       var yRange = y.range()
-        return y(d.party) + (yRange[1]-yRange[0])/(districtSource.results.length+1)/2 + 3;
+      return y(d.party) + (yRange[1] - yRange[0]) / (districtSource.results.length + 1) /2 + 3;
     })
     //x position is 3 pixels to the right of the bar
-    .attr("x", function (d) {
-        return x(d.votes) + 3;
-    })
-    .text(function (d) {
-        return d.percent;
-
-    });
-
-
+    .attr("x", d => x(d.votes) + 3)
+    .text(d => d.percent);
+  text.exit().remove();
 }
 
 /**
@@ -134,6 +125,6 @@ function updatePanelBarChart(gBars, gAxis, districtSource, x, y, yAxis, color, p
  * @param g     Le groupe dans lequel les tracés des circonscriptions ont été créés.
  */
 function reset(g) {
-  // TODO: Réinitialiser l'affichage de la carte en retirant la classe "selected" de tous les éléments.
+  // Réinitialiser l'affichage de la carte en retirant la classe "selected" de tous les éléments.
   g.selectAll(".selected").classed("selected", false);
 }
