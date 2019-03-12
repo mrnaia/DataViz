@@ -65,7 +65,6 @@ function createDistricts(g, path, canada, sources, color, showPanel) {
          Il est à noter qu'il est possible de sélectionner uniquement une circonscription à la fois.
    */
 
-  //console.log(canada.features)
   g.selectAll("path")
     .data(canada.features)
     .enter()
@@ -73,7 +72,6 @@ function createDistricts(g, path, canada, sources, color, showPanel) {
     .attr("d", path)
     .attr("id", d=>"district"+d.properties.NUMCF)
     .style("fill", d => {
-      //console.log(d.properties.NUMCF);
       var circonscriptionId = d.properties.NUMCF;
       var circonscriptionInfos = sources.filter(circ => circ.id == circonscriptionId);
       var circonscriptionWinner = circonscriptionInfos[0].results[0].party;
@@ -81,7 +79,7 @@ function createDistricts(g, path, canada, sources, color, showPanel) {
     })
     .style("fill-opacity", 0.8)
     .style("stroke", "#333")
-    .on("click", function(d) {
+    .on("click", function(d) { //Do not use arrow function here, they don't keep the context
       g.selectAll(".selected").classed("selected", false); //déselectionner ceux qui l'étaient
       d3.select(this).classed("selected", true);
       showPanel(d.properties.NUMCF);
@@ -110,7 +108,7 @@ function updateMap(svg, g, path, canada) {
 		.style("top", topLeft[1] + "px");
   g.attr("transform", "translate(" + -topLeft[0] + ","+ -topLeft[1] + ")"); //translate
 
-  //mise a jour
+  //mise à jour
   g.selectAll("path")
     .attr("d", path)
 }
