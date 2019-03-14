@@ -6,4 +6,8 @@ d3.dsv("|","./data/QuebecMedia.csv").then(function(data) {
     //.attr("height", heightFocus + marginFocus.top + marginFocus.bottom);
   var bubbleChartGroup = svg.append("g")
   createBubbleChart(bubbleChartGroup,sources["@tvanouvelles"])
+
+
+  coloredTweet(); //Test
+
 });
