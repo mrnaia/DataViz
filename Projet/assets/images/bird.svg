@@ -9,9 +9,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="210mm"
-   height="297mm"
-   viewBox="0 0 744.09448819 1052.3622047"
+   width="77.723854mm"
+   height="63.940735mm"
+   viewBox="0 0 275.39948 226.56166"
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
@@ -25,17 +25,21 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="3.4918922"
-     inkscape:cx="358.27704"
-     inkscape:cy="493.16073"
+     inkscape:zoom="0.59199219"
+     inkscape:cx="273.7011"
+     inkscape:cy="4.4868468"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1920"
-     inkscape:window-height="1017"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
-     inkscape:window-maximized="1" />
+     inkscape:window-width="958"
+     inkscape:window-height="1008"
+     inkscape:window-x="953"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -51,9 +55,10 @@
   <g
      inkscape:label="Calque 1"
      inkscape:groupmode="layer"
-     id="layer1">
+     id="layer1"
+     transform="translate(-240.97453,-445.36183)">
     <path
-       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 258.7945,456.60837 c 29.62046,32.76244 65.02571,57.89946 118.25976,59.53488 -13.16018,-50.09094 49.00614,-98.27788 96.79482,-52.24489 13.55344,-3.26629 25.85402,-7.47223 35.1052,-13.96521 -2.24021,12.91125 -13.57543,22.41188 -24.17022,32.19016 11.65802,-1.97695 22.09101,-5.17893 31.58994,-9.31497 -5.82284,11.73426 -15.99199,20.61775 -27.13495,29.15994 3.25414,140.00163 -141.75145,211.15268 -248.26452,144.98972 31.54768,3.92321 58.62628,-5.5608 82.61984,-24.29996 -21.70404,-3.82102 -41.63111,-11.55137 -52.6499,-38.87992 9.51907,0.47408 18.15424,0.0643 25.51495,-1.62 -28.29723,-8.03141 -43.38742,-27.06869 -45.76491,-56.69988 8.63998,3.37586 17.27997,6.06738 25.91995,7.28998 -37.11391,-30.74456 -24.378,-65.87252 -17.81996,-76.13985 z"
        id="path4147"
        inkscape:connector-curvature="0"
