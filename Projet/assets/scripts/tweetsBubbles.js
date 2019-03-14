@@ -18,6 +18,7 @@ function createBubbleChart(g,x,source){
   .append("circle")
   .attr("r", (d) => x(d.retweet_count))
   .attr("style","opacity:0.1")
+  //https://vallandingham.me/bubble_charts_with_d3v4.html
 }
 
 function coloredTweet() {
