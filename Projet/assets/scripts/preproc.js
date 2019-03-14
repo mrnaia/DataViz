@@ -26,12 +26,14 @@ function createSources(data){
   var sources = {}
   data.forEach((tweet) => {
     if(!(tweet.searchTerm in sources)){
-      sources[tweet.searchTerm]  = {"number_tweet":0,"cumul_sentiment":0,"tweets":[]};
-
+      sources[tweet.searchTerm]  = {"number_tweets_and_RT":0,"cumul_sentiment":0,"tweets":[]};
     }
-    sources[tweet.searchTerm].number_tweet+=1
-    sources[tweet.searchTerm].cumul_sentiment += parseFloat(tweet.sentiment)*tweet.retweet_count;
+    sources[tweet.searchTerm].number_tweets_and_RT += +1 + +tweet.retweet_count;
+    sources[tweet.searchTerm].cumul_sentiment += parseFloat(tweet.sentiment)*(1 + tweet.retweet_count);
     sources[tweet.searchTerm].tweets = sources[tweet.searchTerm].tweets.concat([tweet]);
   })
-  return sources
+  for(var media in sources){
+    sources[media].mean_sentiment = +sources[media].cumul_sentiment / +sources[media].number_tweets_and_RT;
+  }
+  return sources;
 }
