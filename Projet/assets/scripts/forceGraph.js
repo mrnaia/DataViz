@@ -24,7 +24,7 @@ function attractionCenterY(d){
 }
 
 function runSimulation(source,bubbleGroups,xBubbleScale){
-  var forceStrength = 0.06;
+  var forceStrength = 0.03;
   var simulation = d3.forceSimulation()
     .velocityDecay(0.4)
     .force('x', d3.forceX().strength(forceStrength).x(attractionCenterX))

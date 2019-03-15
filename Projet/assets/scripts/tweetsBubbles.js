@@ -22,8 +22,8 @@ function createBubbleChart(g,x,source,initPosition,$svg){
   .attr("style","opacity:0.1")
   .attr("id",d => d.id)
   .datum(function(d){
-    d.x = initPosition.x;
-    d.y = initPosition.y;
+    d.x = initPosition.x+Math.random()*5;
+    d.y = initPosition.y+Math.random()*5;
     replaceSVG($svg, d.id, 100, 100, Math.sqrt(x(d.retweet_count)),d.sentiment);
     return d;
   })
