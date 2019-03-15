@@ -11,7 +11,7 @@ function sizeScaleDomain(x,source){
  * @param x       La scale pour déterminer la taille des bulle en fonction du nombre de retweet
  * @param source  les donneés
  */
-function createBubbleChart(g,x,source){
+function createBubbleChart(g,x,source,$svg){
   var bubbleGroups = g.selectAll("g").data(source)
   var tweetG = bubbleGroups.enter().append("g")
  var id = 0;
@@ -20,12 +20,10 @@ function createBubbleChart(g,x,source){
   .attr("cx",100)
   .attr("cy",100)
   .attr("style","opacity:0.1")
-  tweetG.append("img")
+  tweetG.append("div")
   .attr("id",d => d.id)
-  .attr("class","svg")
-  .attr("src","assets/images/bird.svg")
   .datum(function(d){
-    replaceSVG(d3.select(this), 100, 100, Math.sqrt(x(d.retweet_count)), d.sentiment);
+    replaceSVG($svg, d.id, 100, 100, Math.sqrt(x(d.retweet_count)),d.sentiment);
     return d;
   })
   bubbleGroups = bubbleGroups.merge(tweetG)

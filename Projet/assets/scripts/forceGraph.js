@@ -14,7 +14,7 @@ function seperateTweets(d){
     return 0;
   }
 }
-var attractionPoints = [[50,100],[200,100],[350,100]] //The coordinates of the points of attraction
+var attractionPoints = [[200,100],[500,100],[800,100]] //The coordinates of the points of attraction
 function attractionCenterX(d){
   return attractionPoints[seperateTweets(d)+1][0]
 }
@@ -24,9 +24,9 @@ function attractionCenterY(d){
 }
 
 function runSimulation(source,bubbleGroups,xBubbleScale){
-  var forceStrength = 0.03;
+  var forceStrength = 0.06;
   var simulation = d3.forceSimulation()
-    .velocityDecay(0.2)
+    .velocityDecay(0.4)
     .force('x', d3.forceX().strength(forceStrength).x(attractionCenterX))
     .force('y', d3.forceY().strength(forceStrength).y(attractionCenterY))
     .force('collide', d3.forceCollide(d => Math.sqrt(xBubbleScale(d.retweet_count)) +0.5))

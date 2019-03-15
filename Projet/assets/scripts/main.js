@@ -3,15 +3,20 @@ d3.dsv("|","./data/QuebecMedia.csv").then(function(data) {
   var svg = d3.select("body")
     .append("svg")
     .attr("width", "100%")
-    .attr("height", "100%")
+    .attr("height", "1000px")
     //.attr("height", heightFocus + marginFocus.top + marginFocus.bottom);
   var bubbleChartGroup = svg.append("g")
-  var maxBubbleSize = 100;
-  var minBubbleSize = 0.01;
+  var maxBubbleSize = 400;
+  var minBubbleSize = 10;
   var xBubbleScale = d3.scaleLinear().range([minBubbleSize, maxBubbleSize]);
 
   var source = sources["@tvanouvelles"].tweets;
   sizeScaleDomain(xBubbleScale,source);
-  var bubbleGroups = createBubbleChart(bubbleChartGroup,xBubbleScale,source);
-  runSimulation(source,bubbleGroups,xBubbleScale);
+
+  jQuery.get("assets/images/bird.svg", function(svgData) {
+    var $svg = jQuery(svgData).find('svg');
+    console.log($svg);
+    var bubbleGroups = createBubbleChart(bubbleChartGroup,xBubbleScale,source,$svg);
+    runSimulation(source,bubbleGroups,xBubbleScale);
+  },'xml');
 });

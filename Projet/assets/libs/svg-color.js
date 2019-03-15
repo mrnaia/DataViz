@@ -1,39 +1,23 @@
 /*
  * Replace all SVG images with inline SVG
  */
-function replaceSVG(img, x, y, r, sentiment) {
-  var $img = $("#"+img.attr("id"));
-  var imgID = $img.attr('id');
-  var imgClass = $img.attr('class');
-  var imgURL = $img.attr('src');
+function replaceSVG($svg,imgID, x, y, r,sentiment) {
+  var $img = $("#"+imgID);
+  var $imgGroup = $img.parent("g");
 
-  jQuery.get(imgURL, function(data) {
-    // Get the SVG tag, ignore the rest
-    var $svg = jQuery(data).find('svg');
+  $imgGroup.append($svg.clone())
+  $localSvg = $imgGroup.find("svg")
 
-    // Add replaced image's ID to the new SVG
-    if(typeof imgID !== 'undefined') {
-      $svg = $svg.attr('id', imgID);
-    }
-    // Add replaced image's classes to the new SVG
-    if(typeof imgClass !== 'undefined') {
-      $svg = $svg.attr('class', imgClass+' replaced-svg');
-    }
-
-    // Remove any invalid XML tags as per http://validator.w3.org
-    $svg = $svg.removeAttr('xmlns:a');
-
-    // Replace image with new SVG
-    $img.replaceWith($svg);
-    var birdTransform = placeBird(x,y,r)
-    $svg.attr("width",birdTransform.width);
-    $svg.attr("height",birdTransform.height);
-    $svg.attr("x",birdTransform.x);
-    $svg.attr("y",birdTransform.y);
-    var style = $svg.attr("style")+" opacity:1;";
-    $svg.attr("style",style)
-    $svg.find("path").attr("style", "fill:"+d3.interpolateRdYlGn(sentiment/2 +0.5)+";");
-  }, 'xml');
+  $localSvg.attr('id', imgID);
+  var birdTransform = placeBird(x,y,r)
+  $localSvg.attr("width",birdTransform.width);
+  $localSvg.attr("height",birdTransform.height);
+  $localSvg.attr("x",birdTransform.x);
+  $localSvg.attr("y",birdTransform.y);
+  var style = $localSvg.attr("style")+" opacity:1;";
+  $localSvg.attr("style",style)
+  $localSvg.find("path").attr("style", "fill:"+d3.interpolateRdYlGn(sentiment/2 +0.5)+";");
+  $imgGroup.remove("div")
 }
 
 function placeBird(x,y,r){
