@@ -2,8 +2,8 @@
  * Replace all SVG images with inline SVG
  */
 function replaceSVG($svg,imgID, x, y, r,sentiment) {
-  var $img = $("#"+imgID);
-  var $imgGroup = $img.parent("g");
+  var $circle = $("#"+imgID);
+  var $imgGroup = $circle.parent("g");
 
   $imgGroup.append($svg.clone())
   $localSvg = $imgGroup.find("svg")

@@ -12,11 +12,17 @@ d3.dsv("|","./data/QuebecMedia.csv").then(function(data) {
 
   var source = sources["@tvanouvelles"].tweets;
   sizeScaleDomain(xBubbleScale,source);
-
-  jQuery.get("assets/images/bird.svg", function(svgData) {
-    var $svg = jQuery(svgData).find('svg');
-    console.log($svg);
-    var bubbleGroups = createBubbleChart(bubbleChartGroup,xBubbleScale,source,$svg);
-    runSimulation(source,bubbleGroups,xBubbleScale);
-  },'xml');
+  d3.select("body").on("click",function(){
+    var mouseCoordinates= d3.mouse(this);
+    var initPosition = {"x":mouseCoordinates[0],"y":mouseCoordinates[1]}
+    launchBubbleChart(bubbleChartGroup,xBubbleScale,source,initPosition)
+  })
 });
+
+function launchBubbleChart(bubbleChartGroup,xBubbleScale,source,initPosition){
+    jQuery.get("assets/images/bird.svg", function(svgData) {
+      var $svg = jQuery(svgData).find('svg');
+      var bubbleGroups = createBubbleChart(bubbleChartGroup,xBubbleScale,source,initPosition,$svg);
+      runSimulation(source,bubbleGroups,xBubbleScale);
+    },'xml');
+}
