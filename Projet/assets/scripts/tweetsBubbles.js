@@ -24,13 +24,21 @@ function createBubbleChart(g,x,source){
   .attr("id",d => d.id)
   .attr("class","svg")
   .attr("src","assets/images/bird.svg")
-  bubbleGroups = bubbleGroups.merge(tweetG);
-  /*
   .datum(function(d){
-    replaceSVG(d3.select(this), 100, 100, x(d.retweet_count))
+    replaceSVG(d3.select(this), 100, 100, x(d.retweet_count), d.sentiment);
     return d;
-  });*/
+  })
 
+  tweetG.select("path")
+  .attr("style",)
+  .attr("style","fill:green !important;")
+
+  bubbleGroups = bubbleGroups.merge(tweetG)
+  /*.attr("fill", function(d, i){
+    //console.log(d.sentiment);
+    //console.log(d3.interpolateRdYlGn(d.sentiment*2 +1));
+    return d3.interpolateRdYlGn(d.sentiment/2 +0.5);
+  })*/
 
   //https://vallandingham.me/bubble_charts_with_d3v4.html
   /*
@@ -43,7 +51,7 @@ function createBubbleChart(g,x,source){
     */
    return bubbleGroups;
 }
-
+/*
 function coloredTweet(sources) {
   d3.xml("assets/images/bird.svg", "image/svg+xml", function(xml) {
     var importedNode = document.importNode(xml.documentElement, true);
@@ -57,7 +65,7 @@ function coloredTweet(sources) {
         d3.select(bird).select("path").attr("fill", "blue !important");
       });
 });
-
+}
+*/
   // https://stackoverflow.com/questions/11978995/how-to-change-color-of-svg-image-using-css-jquery-svg-image-replacement
   // https://stackoverflow.com/questions/24933430/img-src-svg-changing-the-fill-color
-}
