@@ -29,14 +29,12 @@ function runSimulation(source,bubbleGroups,xBubbleScale){
     .velocityDecay(0.2)
     .force('x', d3.forceX().strength(forceStrength).x(attractionCenterX))
     .force('y', d3.forceY().strength(forceStrength).y(attractionCenterY))
-    .force('charge', d3.forceManyBody().strength(d => charge(d,xBubbleScale)))
+    .force('collide', d3.forceCollide(d => Math.sqrt(xBubbleScale(d.retweet_count)) +0.5))
     .on('tick', d => ticked(d,bubbleGroups,xBubbleScale));
   simulation.nodes(source);
 }
 
-function charge(d,x) {
-  return -Math.pow(x(d.retweet_count), 2.0) * forceStrength;
-}
+
 function ticked(d,bubbleGroups,x) {
     bubbleGroups.select("circle")
       .attr('cx', function (d) { return d.x; })
