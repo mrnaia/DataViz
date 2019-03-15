@@ -14,5 +14,5 @@ d3.dsv("|","./data/QuebecMedia.csv").then(function(data) {
   sizeScaleDomain(xBubbleScale,source);
   createBubbleChart(bubbleChartGroup,xBubbleScale,source);
 
-  coloredTweet();
+  coloredTweet(source);
 });

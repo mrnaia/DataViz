@@ -4,6 +4,6 @@ body {
   font-family: Arial, sans-serif;
 }
 
-svg path {
-    fill: red;
+path {
+  fill: red !important;
 }
