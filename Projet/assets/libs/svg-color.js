@@ -1,7 +1,7 @@
 /*
  * Replace all SVG images with inline SVG
  */
-function replaceSVG(img, x, y, r) {
+function replaceSVG(img, x, y, r, sentiment) {
   var $img = $("#"+img.attr("id"));
   var imgID = $img.attr('id');
   var imgClass = $img.attr('class');
@@ -25,11 +25,13 @@ function replaceSVG(img, x, y, r) {
 
     // Replace image with new SVG
     $img.replaceWith($svg);
-    var margin = r* 0.38;
+    var margin = r* 0.4;
     $svg.attr("width",2*r-margin);
     $svg.attr("height",2*r-margin);
     $svg.attr("x",x-r+margin/2);
     $svg.attr("y",y-r+margin/2);
-    $svg.attr("opacity","0.05");
+    var style = $svg.attr("style")+" opacity:1;";
+    $svg.attr("style",style)
+    $svg.find("path").attr("style", "fill:"+d3.interpolateRdYlGn(sentiment/2 +0.5)+";");
   }, 'xml');
 }
