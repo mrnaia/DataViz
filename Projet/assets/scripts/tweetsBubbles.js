@@ -12,17 +12,28 @@ function sizeScaleDomain(x,source){
  * @param source  les donneés
  */
 function createBubbleChart(g,x,source){
-  g.selectAll("circle")
+  var tweetG = g.selectAll("g")
   .data(source)
   .enter()
-  .append("circle")
+  .append("g")
+ var id = 0;
+  tweetG.append("circle")
   .attr("r", (d) => x(d.retweet_count))
   .attr("cx",100)
   .attr("cy",100)
   .attr("style","opacity:0.1")
-  .append("img")
+  tweetG.append("img")
+  .attr("id",d => {
+    id++;
+    d.id = id
+    return id;
+  })
   .attr("class","svg")
-  .attr("src","assets/images/bird.svg");
+  .attr("src","assets/images/bird.svg")
+  .datum(function(d){
+    replaceSVG(d3.select(this), 100, 100, x(d.retweet_count))
+  });
+
 
   //https://vallandingham.me/bubble_charts_with_d3v4.html
   /*

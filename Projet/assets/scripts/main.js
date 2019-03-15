@@ -12,7 +12,8 @@ d3.dsv("|","./data/QuebecMedia.csv").then(function(data) {
 
   var source = sources["@tvanouvelles"].tweets;
   sizeScaleDomain(xBubbleScale,source);
-//createBubbleChart(bubbleChartGroup,xBubbleScale,source);
+  createBubbleChart(bubbleChartGroup,xBubbleScale,source);
+/*
   var circleGroupe = svg.append("g")
   circleGroupe.append("circle")
   .attr("r",20)
@@ -21,15 +22,10 @@ d3.dsv("|","./data/QuebecMedia.csv").then(function(data) {
   .attr("cy",100)
   var img = circleGroupe
   .append("image")
+  .attr("id","Bulle1")
   .attr("class","svg")
-  .attr("width", "20px")
-  .attr("height", "20px")
   .attr("src","assets/images/bird.svg");
-  replaceSVG(img)
-
-/*
-  .attr("x", 100)
-  .attr("y", 100)
+  replaceSVG(img,100,100,20)
 */
 
   //coloredTweet(source);
