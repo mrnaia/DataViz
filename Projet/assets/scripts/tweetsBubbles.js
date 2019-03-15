@@ -25,30 +25,11 @@ function createBubbleChart(g,x,source){
   .attr("class","svg")
   .attr("src","assets/images/bird.svg")
   .datum(function(d){
-    replaceSVG(d3.select(this), 100, 100, x(d.retweet_count), d.sentiment);
+    replaceSVG(d3.select(this), 100, 100, Math.sqrt(x(d.retweet_count)), d.sentiment);
     return d;
   })
-
-  tweetG.select("path")
-  .attr("style",)
-  .attr("style","fill:green !important;")
-
   bubbleGroups = bubbleGroups.merge(tweetG)
-  /*.attr("fill", function(d, i){
-    //console.log(d.sentiment);
-    //console.log(d3.interpolateRdYlGn(d.sentiment*2 +1));
-    return d3.interpolateRdYlGn(d.sentiment/2 +0.5);
-  })*/
 
-  //https://vallandingham.me/bubble_charts_with_d3v4.html
-  /*
-
-  //d3.selectAll("circle")
-    .append("img")
-    .attr("src","assets/images/bird.svg")
-    .attr("width", "100%")
-    .attr("height", "100%")
-    */
    return bubbleGroups;
 }
 /*

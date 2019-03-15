@@ -25,13 +25,18 @@ function replaceSVG(img, x, y, r, sentiment) {
 
     // Replace image with new SVG
     $img.replaceWith($svg);
-    var margin = r* 0.4;
-    $svg.attr("width",2*r-margin);
-    $svg.attr("height",2*r-margin);
-    $svg.attr("x",x-r+margin/2);
-    $svg.attr("y",y-r+margin/2);
+    var birdTransform = placeBird(x,y,r)
+    $svg.attr("width",birdTransform.width);
+    $svg.attr("height",birdTransform.height);
+    $svg.attr("x",birdTransform.x);
+    $svg.attr("y",birdTransform.y);
     var style = $svg.attr("style")+" opacity:1;";
     $svg.attr("style",style)
     $svg.find("path").attr("style", "fill:"+d3.interpolateRdYlGn(sentiment/2 +0.5)+";");
   }, 'xml');
+}
+
+function placeBird(x,y,r){
+  var margin = r* 0.4;
+  return {"x":x-r+margin/2,"y":y-r+margin/2,"width":2*r-margin,"height":2*r-margin}
 }
