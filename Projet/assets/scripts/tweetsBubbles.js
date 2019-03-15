@@ -16,7 +16,7 @@ function createBubbleChart(g,x,source){
   var tweetG = bubbleGroups.enter().append("g")
  var id = 0;
   tweetG.append("circle")
-  .attr("r", (d) => x(d.retweet_count))
+  .attr("r", (d) => Math.sqrt(x(d.retweet_count)))
   .attr("cx",100)
   .attr("cy",100)
   .attr("style","opacity:0.1")
