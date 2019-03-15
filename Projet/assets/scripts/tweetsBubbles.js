@@ -12,14 +12,20 @@ function sizeScaleDomain(x,source){
  * @param source  les donneés
  */
 function createBubbleChart(g,x,source){
-  /*
   g.selectAll("circle")
   .data(source)
   .enter()
   .append("circle")
   .attr("r", (d) => x(d.retweet_count))
+  .attr("cx",100)
+  .attr("cy",100)
   .attr("style","opacity:0.1")
+  .append("img")
+  .attr("class","svg")
+  .attr("src","assets/images/bird.svg");
+
   //https://vallandingham.me/bubble_charts_with_d3v4.html
+  /*
 
   //d3.selectAll("circle")
     .append("img")

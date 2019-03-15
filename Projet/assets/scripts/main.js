@@ -12,7 +12,25 @@ d3.dsv("|","./data/QuebecMedia.csv").then(function(data) {
 
   var source = sources["@tvanouvelles"].tweets;
   sizeScaleDomain(xBubbleScale,source);
-  createBubbleChart(bubbleChartGroup,xBubbleScale,source);
+//createBubbleChart(bubbleChartGroup,xBubbleScale,source);
+  var circleGroupe = svg.append("g")
+  circleGroupe.append("circle")
+  .attr("r",20)
+  .attr("style","opacity:0.5")
+  .attr("cx",100)
+  .attr("cy",100)
+  var img = circleGroupe
+  .append("image")
+  .attr("class","svg")
+  .attr("width", "20px")
+  .attr("height", "20px")
+  .attr("src","assets/images/bird.svg");
+  replaceSVG(img)
 
-  coloredTweet(source);
+/*
+  .attr("x", 100)
+  .attr("y", 100)
+*/
+
+  //coloredTweet(source);
 });

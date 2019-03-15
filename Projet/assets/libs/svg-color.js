@@ -1,12 +1,12 @@
 /*
  * Replace all SVG images with inline SVG
  */
-function replaceSVG() {
-  jQuery('img.svg').each(function(){
-    var $img = jQuery(this);
+function replaceSVG(img) {
+    var $img = $(img);
     var imgID = $img.attr('id');
     var imgClass = $img.attr('class');
     var imgURL = $img.attr('src');
+    console.log(imgURL);
 
     jQuery.get(imgURL, function(data) {
       // Get the SVG tag, ignore the rest
@@ -26,9 +26,10 @@ function replaceSVG() {
 
       // Replace image with new SVG
       $img.replaceWith($svg);
+      $svg.attr("width","20mm");
+      $svg.attr("height","20mm");
+      $svg.attr("x","100");
+      $svg.attr("y","100");
 
     }, 'xml');
-
-  });
-
 }
