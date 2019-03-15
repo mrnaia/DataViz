@@ -1,67 +1,13 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
-<svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="77.723854mm"
-   height="63.940735mm"
-   viewBox="0 0 275.39948 226.56166"
-   id="svg2"
-   version="1.1"
-   inkscape:version="0.91 r13725"
-   sodipodi:docname="bird.svg">
-  <defs
-     id="defs4" />
-  <sodipodi:namedview
-     id="base"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:pageopacity="0.0"
-     inkscape:pageshadow="2"
-     inkscape:zoom="0.59199219"
-     inkscape:cx="273.7011"
-     inkscape:cy="4.4868468"
-     inkscape:document-units="px"
-     inkscape:current-layer="layer1"
-     showgrid="false"
-     inkscape:window-width="958"
-     inkscape:window-height="1008"
-     inkscape:window-x="953"
-     inkscape:window-y="0"
-     inkscape:window-maximized="0"
-     fit-margin-top="0"
-     fit-margin-left="0"
-     fit-margin-right="0"
-     fit-margin-bottom="0" />
-  <metadata
-     id="metadata7">
-    <rdf:RDF>
-      <cc:Work
-         rdf:about="">
-        <dc:format>image/svg+xml</dc:format>
-        <dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
-      </cc:Work>
-    </rdf:RDF>
-  </metadata>
-  <g
-     inkscape:label="Calque 1"
-     inkscape:groupmode="layer"
-     id="layer1"
-     transform="translate(-240.97453,-445.36183)">
-    <path
-       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 258.7945,456.60837 c 29.62046,32.76244 65.02571,57.89946 118.25976,59.53488 -13.16018,-50.09094 49.00614,-98.27788 96.79482,-52.24489 13.55344,-3.26629 25.85402,-7.47223 35.1052,-13.96521 -2.24021,12.91125 -13.57543,22.41188 -24.17022,32.19016 11.65802,-1.97695 22.09101,-5.17893 31.58994,-9.31497 -5.82284,11.73426 -15.99199,20.61775 -27.13495,29.15994 3.25414,140.00163 -141.75145,211.15268 -248.26452,144.98972 31.54768,3.92321 58.62628,-5.5608 82.61984,-24.29996 -21.70404,-3.82102 -41.63111,-11.55137 -52.6499,-38.87992 9.51907,0.47408 18.15424,0.0643 25.51495,-1.62 -28.29723,-8.03141 -43.38742,-27.06869 -45.76491,-56.69988 8.63998,3.37586 17.27997,6.06738 25.91995,7.28998 -37.11391,-30.74456 -24.378,-65.87252 -17.81996,-76.13985 z"
-       id="path4147"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cccccccccccccc" />
-  </g>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 21.0.2, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 850.4 850.4" style="enable-background:new 0 0 850.4 850.4;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#010101;}
+</style>
+<path class="st0" d="M57,106.2C147.6,203,246.8,283,420.3,289.1C376.7,156.3,554.6-18.4,717.7,128.6c12.6-3.2,81.4-20.3,107.9-42.9
+	c-10.4,44.4-42.6,71.1-74.3,98.9c0,0,33.4-6.5,52.3-12.2c16.6-5,31.6-10.7,44.7-16.4c-7.2,12.7-16.9,27.4-30,42.6
+	c-18.7,21.6-38,36.8-53.4,47C779.3,656.8,351.7,899.4,2.3,691c68.5,10,165.1,0.4,253.8-74.7c-19.2-1.9-83.9-10.9-129.9-64.7
+	c-16.5-19.3-26.1-39.1-31.9-54.7c11.8,0.8,25.2,1,39.9,0.1c13.3-0.8,26.6-2.4,39.9-5c-88.3-25.3-135.6-83.4-142-174.3
+	c30,14,61.6,18.4,79.6,22.4C78.1,313.8-6.1,224.5,57,106.2z"/>
 </svg>
