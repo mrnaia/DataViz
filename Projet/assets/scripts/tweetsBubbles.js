@@ -12,10 +12,8 @@ function sizeScaleDomain(x,source){
  * @param source  les donneés
  */
 function createBubbleChart(g,x,source){
-  var tweetG = g.selectAll("g")
-  .data(source)
-  .enter()
-  .append("g")
+  var bubbleGroups = g.selectAll("g").data(source)
+  var tweetG = bubbleGroups.enter().append("g")
  var id = 0;
   tweetG.append("circle")
   .attr("r", (d) => x(d.retweet_count))
@@ -23,16 +21,15 @@ function createBubbleChart(g,x,source){
   .attr("cy",100)
   .attr("style","opacity:0.1")
   tweetG.append("img")
-  .attr("id",d => {
-    id++;
-    d.id = id
-    return id;
-  })
+  .attr("id",d => d.id)
   .attr("class","svg")
   .attr("src","assets/images/bird.svg")
+  bubbleGroups = bubbleGroups.merge(tweetG);
+  /*
   .datum(function(d){
     replaceSVG(d3.select(this), 100, 100, x(d.retweet_count))
-  });
+    return d;
+  });*/
 
 
   //https://vallandingham.me/bubble_charts_with_d3v4.html
@@ -44,6 +41,7 @@ function createBubbleChart(g,x,source){
     .attr("width", "100%")
     .attr("height", "100%")
     */
+   return bubbleGroups;
 }
 
 function coloredTweet(sources) {

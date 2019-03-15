@@ -12,7 +12,7 @@ d3.dsv("|","./data/QuebecMedia.csv").then(function(data) {
 
   var source = sources["@tvanouvelles"].tweets;
   sizeScaleDomain(xBubbleScale,source);
-  createBubbleChart(bubbleChartGroup,xBubbleScale,source);
-
+  var bubbleGroups = createBubbleChart(bubbleChartGroup,xBubbleScale,source);
+  //runSimulation(source,bubbleGroups);
   //coloredTweet(source);
 });
