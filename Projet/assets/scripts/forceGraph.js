@@ -1,3 +1,4 @@
+
 "use strict";
 function ticked() {
   bubbles
@@ -23,6 +24,7 @@ function attractionCenterY(d){
   return attractionPoints[seperateTweets(d)+1][1]
 }
 
+//fonction qui maintient les cercles de chaque tweet d'un même groupe ensemble
 function runSimulation(source,bubbleGroups,xBubbleScale){
   var forceStrength = 0.03;
   var simulation = d3.forceSimulation()
