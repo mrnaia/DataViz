@@ -1,4 +1,3 @@
-
 "use strict";
 
 function sizeScaleDomain(x,source){
@@ -18,7 +17,6 @@ function sizeScaleDomain(x,source){
 function createTweetsBubbleChart(g,x,source,initPosition,$svg){
   var bubbleGroups = g.selectAll("g").data(source);
   var tweetG = bubbleGroups.enter().append("g");
-  var id = 0;
   //pour chaque tweet on crée un cercle
   tweetG.append("circle")
   .attr("r", (d) => Math.sqrt(x(d.retweet_count))) //dont le rayon dépend du nombre de retweets --> Y a pas des modifs à faire sur source avant pour avoir un seul exemplaire de chaque tweet et le bon nombre de retweets ou c'est fait sur python avant ?

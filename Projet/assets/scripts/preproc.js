@@ -6,10 +6,7 @@
 
  /**
   *
-  *
-  *
   * @param data      Données provenant du fichier CSV.
-  *
   * @return Object
   *                    {
   *                      $NomDuMedia$: {
@@ -49,4 +46,28 @@ function createSources(data){
     })
   }
   return sources;
+}
+
+/**
+ * Fichier permettant de traiter les données provenant du fichier CSV.
+ */
+
+ /**
+  *
+  * @param tweetSources      L'object au format de la sortie de la fonction précedente
+  * @return Object
+  *                    [
+  *                    { name: $NomDuMedia$
+  *                      number_tweets_and_RT: number //How many tweets + retweets
+                          mean_sentiment : number
+                        }
+  *                      ...
+  *                    ]
+  */
+function createMediaSources(tweetSources){
+  var mediaSources = []
+  for(var media in tweetSources){
+    mediaSources.push({"name":media,"number_tweets_and_RT":tweetSources[media].number_tweets_and_RT,"mean_sentiment":tweetSources[media].mean_sentiment})
+  }
+  return mediaSources;
 }
