@@ -25,7 +25,7 @@ function attractionCenterY(d){
 }
 
 //fonction qui maintient les cercles de chaque tweet d'un même groupe ensemble
-function runSimulation(source,bubbleGroups,xBubbleScale){
+function runTweetSimulation(source,bubbleGroups,xBubbleScale){
   var forceStrength = 0.03;
   var simulation = d3.forceSimulation()
     .velocityDecay(0.4)

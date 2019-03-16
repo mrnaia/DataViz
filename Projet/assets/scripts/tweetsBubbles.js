@@ -7,7 +7,7 @@ function sizeScaleDomain(x,source){
 
 
 /**
- * Crée les axes du graphique à bulles.
+ * Crée le graphique à bulle avec tous les tweet d'un média
  *
  * @param g       Le groupe SVG dans lequel le graphique à bulles doit être dessiné.
  * @param x       La scale pour déterminer la taille des bulles en fonction du nombre de retweets
@@ -15,7 +15,7 @@ function sizeScaleDomain(x,source){
  * @param initPosition
  * @param svg
  */
-function createBubbleChart(g,x,source,initPosition,$svg){
+function createTweetsBubbleChart(g,x,source,initPosition,$svg){
   var bubbleGroups = g.selectAll("g").data(source);
   var tweetG = bubbleGroups.enter().append("g");
   var id = 0;
