@@ -14,8 +14,8 @@ d3.dsv("|","./data/QuebecMedia.csv").then(function(data) {
 
     //bubble chart ne signifie pas le bubble chart mais le graphique avec les tweets
   var bubbleChartGroup = svg.append("g")
-  //testTweetChart(bubbleChartGroup,sources,"@TVAnouvelles")
-  testMediaChart(bubbleChartGroup,sources)
+  testTweetChart(bubbleChartGroup,sources,"@LP_LaPresse")
+  //testMediaChart(bubbleChartGroup,sources)
 });
 
 function testMediaChart(bubbleChartGroup,sources){
@@ -42,16 +42,18 @@ function launchMediaBubbleChart(bubbleChartGroup,xBubbleScale,sizeBubbleScale,so
 
 function testTweetChart(bubbleChartGroup,sources,searchTerm){
   //tailles des oiseaux tweets
-  var maxBubbleSize = 400;
-  var minBubbleSize = 10;
+  var maxBubbleSize = 500;
+  var minBubbleSize = 50;
   var xBubbleScale = d3.scaleLinear().range([minBubbleSize, maxBubbleSize]);
 
   ////////////////////////////////////////////////////////
   //code de test temporaire
   //création du chart des tweets pour le media TVAnouvelles qui apparait quand on clique
   var source = sources[searchTerm].tweets;
-
   sizeScaleDomain(xBubbleScale,source);
+
+
+
   d3.select("body").on("click",function(){
     var mouseCoordinates= d3.mouse(this);
     var initPosition = {"x":mouseCoordinates[0],"y":mouseCoordinates[1]}
@@ -65,7 +67,16 @@ function testTweetChart(bubbleChartGroup,sources,searchTerm){
 function launchTweetsBubbleChart(bubbleChartGroup,xBubbleScale,source,initPosition){
     jQuery.get("assets/images/bird.svg", function(svgData) {
       var $svg = jQuery(svgData).find('svg');
-      var bubbleGroups = createTweetsBubbleChart(bubbleChartGroup,xBubbleScale,source,initPosition,$svg);
+      var tip = d3.tip()
+        .attr('class', 'd3-tip')
+        .attr('width',100)
+        .offset([-10, 0]);
+      var bubbleGroups = createTweetsBubbleChart(bubbleChartGroup,xBubbleScale,source,initPosition,$svg,tip);
+
+      tip.html(function(d) {
+        return getTipText.call(this, d)
+      });
+      bubbleGroups.call(tip);
       runTweetSimulation(source,bubbleGroups,xBubbleScale);
     },'xml');
 }

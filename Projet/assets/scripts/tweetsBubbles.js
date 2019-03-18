@@ -1,7 +1,7 @@
 "use strict";
 
 function sizeScaleDomain(x,source){
-  x.domain([0,d3.max(source,(d) => d.retweet_count)]);
+  x.domain([d3.min(source,(d) => d.retweet_count),d3.max(source,(d) => d.retweet_count)]);
 }
 
 
@@ -14,9 +14,11 @@ function sizeScaleDomain(x,source){
  * @param initPosition
  * @param svg
  */
-function createTweetsBubbleChart(g,x,source,initPosition,$svg){
+function createTweetsBubbleChart(g,x,source,initPosition,$svg,tip){
   var bubbleGroups = g.selectAll("g").data(source);
-  var tweetG = bubbleGroups.enter().append("g");
+  var tweetG = bubbleGroups.enter().append("g")
+  .on('mouseover', tip.show) //affiche les infobulles quand on passe la souris sur un cercle
+  .on("mouseout", tip.hide);
   //pour chaque tweet on crée un cercle
   tweetG.append("circle")
   .attr("r", (d) => Math.sqrt(x(d.retweet_count))) //dont le rayon dépend du nombre de retweets --> Y a pas des modifs à faire sur source avant pour avoir un seul exemplaire de chaque tweet et le bon nombre de retweets ou c'est fait sur python avant ?
@@ -24,6 +26,7 @@ function createTweetsBubbleChart(g,x,source,initPosition,$svg){
   .attr("cy",100)
   .attr("style","opacity:0.1")
   .attr("id",d => d.id)
+
   .datum(function(d){
     d.x = initPosition.x+Math.random()*5;
     d.y = initPosition.y+Math.random()*5;
@@ -31,8 +34,11 @@ function createTweetsBubbleChart(g,x,source,initPosition,$svg){
     return d;
   })
   bubbleGroups = bubbleGroups.merge(tweetG);
+  return bubbleGroups;
+}
 
-   return bubbleGroups;
+function  getTipText(d){
+  return d.full_text;
 }
 /*
 function coloredTweet(sources) {
