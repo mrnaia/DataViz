@@ -16,6 +16,7 @@ path {
   border-radius: 2px;
   color: #fff;
   background: rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
 }
 
 .selected{
@@ -32,4 +33,19 @@ path {
 
 #mediaBubbleChart > text {
   font-size: 10pt;
+}
+
+#mediaBubbleChart circle:hover {
+  cursor: pointer;
+}
+
+#tweetBubbleChart circle {
+  fill: white;
+}
+
+#tweetBubbleChart g:hover circle {
+  fill: black;
+  stroke: black;
+  stroke-width: 1px;
+  opacity: 1;
 }

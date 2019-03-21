@@ -25,7 +25,6 @@ function createTweetsBubbleChart(g,x,source,initPosition,$svg,tip){
   .attr("r", (d) => Math.sqrt(x(d.retweet_count))) //dont le rayon dépend du nombre de retweets --> Y a pas des modifs à faire sur source avant pour avoir un seul exemplaire de chaque tweet et le bon nombre de retweets ou c'est fait sur python avant ?
   .attr("cx",100)
   .attr("cy",100)
-  .attr("style","opacity:0.1")
   .attr("id",d => d.id)
   .datum(function(d){
     d.x = initPosition.x+Math.random()*5;

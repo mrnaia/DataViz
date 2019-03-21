@@ -14,7 +14,7 @@ function replaceSVG($svg,imgID, x, y, r,sentiment) {
   $localSvg.attr("height",birdTransform.height);
   $localSvg.attr("x",birdTransform.x);
   $localSvg.attr("y",birdTransform.y);
-  var style = $localSvg.attr("style")+" opacity:1;";
+  var style = $localSvg.attr("style");
   $localSvg.attr("style",style)
   $localSvg.find("path").attr("style", "fill:"+d3.interpolateRdYlGn(sentiment/2 +0.5)+";");
   $imgGroup.remove("div")
