@@ -56,7 +56,7 @@ d3.dsv("|","./data/QuebecMedia.csv").then(function(data) {
     var mediaSources = createMediaSources(tweetSources);
 
     var pays_population = createPays();
-    var scaleBubbleSizeMediaChart =  d3.scaleLinear().range([100, 500]);
+    var scaleBubbleSizeMediaChart =  d3.scaleLinear().range([20, 100]);
     scaleBubbleSize(scaleBubbleSizeMediaChart, mediasData, pays_population);
     var mediasData = formatMediasData(mediasData);
 
@@ -83,7 +83,7 @@ d3.dsv("|","./data/QuebecMedia.csv").then(function(data) {
     var mediaChartBounds = mediaChartGroup.node().getBoundingClientRect()
     var xMedias = d3.scaleLinear().range([500, 1000]);
     mediaxScaleDomain(xMedias, mediaSources);
-    console.log(xMedias.range());
+    //console.log(xMedias.range());
     var xAxis = d3.axisBottom(xMedias);
     // Création du mediaBubbles
     createMediaBubblesAxis(mediaChartGroup, xAxis, heightMedias, mediaChartBounds.width);
@@ -111,5 +111,5 @@ function setUpMediaChart(tweetsChartGroup,mediaChartGroup,mediaSources,tweetSour
   });
   bubbleGroups.call(mediaTip);
 
-  runMediaSimulation(mediaSources,bubbleGroups,d3.scaleLinear().range([100,100]),xBubbleScale);
+  runMediaSimulation(mediaSources,bubbleGroups,scaleBubbleSizeMediaChart,xBubbleScale, mediasData, pays_population);
 }
