@@ -4,7 +4,7 @@ function ticked() {
     .attr('cx', function (d) { return nodes[d.id].x; })
     .attr('cy', function (d) { return nodes[d.id].y; });
 }
-var center = {"x":0,"y":200}
+var center = {"x":0,"y":500}
 
 //fonction qui maintient les cercles de chaque tweet d'un même groupe ensemble
 function runMediaSimulation(source,bubbleGroups,sizeBubbleScale,xBubbleScale){

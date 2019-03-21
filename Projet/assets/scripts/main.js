@@ -10,11 +10,12 @@ d3.dsv("|","./data/QuebecMedia.csv").then(function(data) {
     .append("svg")
     .attr("width", "100%")
     .attr("height", "1000px")
+  console.log(svg.node().getBoundingClientRect());
     //.attr("height", heightFocus + marginFocus.top + marginFocus.bottom);
 
     //bubble chart ne signifie pas le bubble chart mais le graphique avec les tweets
   var bubbleChartGroup = svg.append("g")
-  testTweetChart(bubbleChartGroup,sources,"@LP_LaPresse")
+  testTweetChart(bubbleChartGroup,sources,"@tvanouvelles")
   //testMediaChart(bubbleChartGroup,sources)
 });
 
