@@ -88,24 +88,6 @@ d3.dsv("|","./data/QuebecMedia.csv").then(function(data) {
     tweetsChartGroup.attr("id","tweetBubbleChart")
     mediaChartGroup.attr("id","mediaBubbleChart")
     setUpMediaChart(tweetsChartGroup,mediaChartGroup,mediaSources,tweetSources)
-
-    //todo : on récupère le fichier csv qui contient les associa nom du media, compte_twitter du media, type de media, pays
-    //on formate le fichier sources
-    var sources = createSources(data);
-
-    //console.log(mediasData);
-      //création du svg
-    var svg = d3.select("body")
-      .append("svg")
-      .attr("width", "100%")
-      .attr("height", "1000px")
-    //console.log(svg.node().getBoundingClientRect());
-      //.attr("height", heightFocus + marginFocus.top + marginFocus.bottom);
-
-      //bubble chart ne signifie pas le bubble chart mais le graphique avec les tweets
-    var bubbleChartGroup = svg.append("g")
-    //testTweetChart(bubbleChartGroup,sources,"@tvanouvelles")
-    testMediaChart(bubbleChartGroup,sources);
   });
 });
 
