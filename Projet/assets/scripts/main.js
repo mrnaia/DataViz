@@ -56,7 +56,7 @@ d3.dsv("|","./data/QuebecMedia.csv").then(function(data) {
     var mediaSources = createMediaSources(tweetSources);
 
     var pays_population = createPays();
-    var scaleBubbleSizeMediaChart =  d3.scaleLinear().range([100, 500]);
+    var scaleBubbleSizeMediaChart =  d3.scaleLinear().range([20, 100]);
     scaleBubbleSize(scaleBubbleSizeMediaChart, mediasData, pays_population);
     var mediasData = formatMediasData(mediasData);
 
@@ -116,5 +116,5 @@ function setUpMediaChart(tweetsChartGroup,mediaChartGroup,mediaSources,tweetSour
   });
   bubbleGroups.call(mediaTip);
 
-  runMediaSimulation(mediaSources,bubbleGroups,d3.scaleLinear().range([100,100]),xBubbleScale);
+  runMediaSimulation(mediaSources,bubbleGroups,scaleBubbleSizeMediaChart,xBubbleScale, mediasData, pays_population);
 }

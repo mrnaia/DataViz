@@ -7,13 +7,22 @@ function ticked() {
 var center = {"x":0,"y":200}
 
 //fonction qui maintient les cercles de chaque tweet d'un même groupe ensemble
-function runMediaSimulation(source,bubbleGroups,sizeBubbleScale,xBubbleScale){
+function runMediaSimulation(source,bubbleGroups,sizeBubbleScale,xBubbleScale, mediasData, pays_population){
   var forceStrength = 0.035;
   var simulation = d3.forceSimulation()
     .velocityDecay(0.2)
     .force('x', d3.forceX().strength(forceStrength).x(d => xBubbleScale(d.mean_sentiment)))
     .force('y', d3.forceY().strength(forceStrength).y(center.y))
-    .force('collide', d3.forceCollide(d => Math.sqrt(sizeBubbleScale(d.number_tweets_and_RT)) +0.5))
+    .force('collide', d3.forceCollide(function(d){
+      if(d.name in mediasData ){
+        console.log(sizeBubbleScale(mediasData[d.name].Followers/pays_population[mediasData[d.name].Pays]) +0.5)
+        return sizeBubbleScale(mediasData[d.name].Followers/pays_population[mediasData[d.name].Pays]) +0.5;
+      }
+      else{
+        return 10+0.5;
+      }
+
+    }))
     .on('tick', d => mediaTicked(d,bubbleGroups,xBubbleScale));
   simulation.nodes(source);
 }

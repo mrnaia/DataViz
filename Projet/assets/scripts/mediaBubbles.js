@@ -54,13 +54,10 @@ function createMediaBubbleChart(g,mediaSources,initPosition,tweetsG,tweetSources
   //console.log(mediaBubbleGroups);
   var mediaG = mediaBubbleGroups.enter().append("g");
   //pour chaque media on crée un cercle
-  console.log(mediaSources);
   mediaG.append("circle")
   .attr("r",function(d){
-    console.log(d);
     if(d.name in mediasData){
-      console.log("here");
-        return mediasData[d.name].Followers/pays_population[mediasData[d.name].Pays]*1000;
+        return scaleBubbleSizeMediaChart(mediasData[d.name].Followers/pays_population[mediasData[d.name].Pays]);
     }
     else{
       //console.log("pas d'infos");
