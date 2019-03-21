@@ -15,6 +15,7 @@ function sizeScaleDomain(x,source){
  * @param svg
  */
 function createTweetsBubbleChart(g,x,source,initPosition,$svg,tip){
+  g.selectAll("g").remove()
   var bubbleGroups = g.selectAll("g").data(source);
   var tweetG = bubbleGroups.enter().append("g")
   .on('mouseover', tip.show) //affiche les infobulles quand on passe la souris sur un cercle
@@ -26,7 +27,6 @@ function createTweetsBubbleChart(g,x,source,initPosition,$svg,tip){
   .attr("cy",100)
   .attr("style","opacity:0.1")
   .attr("id",d => d.id)
-
   .datum(function(d){
     d.x = initPosition.x+Math.random()*5;
     d.y = initPosition.y+Math.random()*5;
@@ -40,21 +40,37 @@ function createTweetsBubbleChart(g,x,source,initPosition,$svg,tip){
 function  getTipText(d){
   return d.full_text;
 }
-/*
-function coloredTweet(sources) {
-  d3.xml("assets/images/bird.svg", "image/svg+xml", function(xml) {
-    var importedNode = document.importNode(xml.documentElement, true);
-    svg.selectAll("g")
-      .data(sources)
-      .enter()
-      .append("g")
-      .attr("r", (d) => x(d.retweet_count))
-      .each(function(d, i){
-        var bird = this.appendChild(importedNode.cloneNode(true));
-        d3.select(bird).select("path").attr("fill", "blue !important");
-      });
-});
+
+function setUpTweetChart(bubbleChartGroup,tweets,clickPosition){
+  //tailles des oiseaux tweets
+  var maxBubbleSize = 500;
+  var minBubbleSize = 50;
+  var xBubbleScale = d3.scaleLinear().range([minBubbleSize, maxBubbleSize]);
+
+  ////////////////////////////////////////////////////////
+  //création du chart des tweets pour le media clické qui apparait quand on clique
+  sizeScaleDomain(xBubbleScale,tweets);
+  launchTweetsBubbleChart(bubbleChartGroup,xBubbleScale,tweets,clickPosition)
 }
-*/
+
+
+
+//récupère l'image de l'oiseau puis crée le graphique
+function launchTweetsBubbleChart(bubbleChartGroup,xBubbleScale,source,initPosition){
+    jQuery.get("assets/images/bird.svg", function(svgData) {
+      var $svg = jQuery(svgData).find('svg');
+      var tip = d3.tip()
+        .attr('class', 'd3-tip')
+        .attr('width',100)
+        .offset([-10, 0]);
+      var bubbleGroups = createTweetsBubbleChart(bubbleChartGroup,xBubbleScale,source,initPosition,$svg,tip);
+
+      tip.html(function(d) {
+        return getTipText.call(this, d)
+      });
+      bubbleGroups.call(tip);
+      runTweetSimulation(source,bubbleGroups,xBubbleScale);
+    },'xml');
+}
   // https://stackoverflow.com/questions/11978995/how-to-change-color-of-svg-image-using-css-jquery-svg-image-replacement
   // https://stackoverflow.com/questions/24933430/img-src-svg-changing-the-fill-color

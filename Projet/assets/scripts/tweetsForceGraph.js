@@ -14,7 +14,7 @@ function seperateTweets(d){
     return 0;
   }
 }
-var attractionPoints = [[400,300],[800,300],[1200,300]] //The coordinates of the points of attraction
+var attractionPoints = [[400,700],[800,700],[1200,700]] //The coordinates of the points of attraction
 function attractionCenterX(d){
   return attractionPoints[seperateTweets(d)+1][0]
 }
