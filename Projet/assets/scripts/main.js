@@ -1,3 +1,59 @@
+/*
+(function () {
+  "use strict";
+  console.log("test")
+
+  // Configuration
+  var nbHabitants = {"Québec": 8000000, "France": 66000000}; //TODO à compléter/changer
+
+  var heightMedias = "1000px";
+  var heightTweets = "1000px";
+
+  var mediaMargin = {
+    top: 0,
+    right: 50,
+    bottom: 0,
+    left: 50
+  }
+
+  // Création des éléments
+
+  var svg = d3.select("body")
+    .append("svg")
+    .attr("width", "100%")
+    .attr("height", heightMedias)
+
+  var files = { //TODO à compléter/changer
+    QCMedias: "./data/QuebecMedia.csv",
+    FRMedias: "./data/FranceMedia.csv",
+    metadataMedias: "./data/metadataMedias.csv"
+  }
+
+  // Échelles
+
+  var svgBounds = svg.node().getBoundingClientRect()
+  var xMedias = d3.scaleLinear().range([svgBounds.left + mediaMargin.left, svgBounds.right - mediaMargin.right]);
+  var rMedias = d3.scaleLinear().range([5, 20]);
+
+  var xAxis = d3.axisBottom(x);
+
+  // Chargement des données
+  // Prétraitement des données
+
+
+
+  // Création du mediaBubbles
+  createMediaBubblesAxis(svg, xAxis, heightMedias, svgBounds.width - mediaMargin.left - mediaMargin.right);
+  //createMediaBubbles()
+
+
+})
+*/
+
+
+
+
+
 
 //on récupère le fichier csv qui contient les tweets
 d3.dsv("|","./data/QuebecMedia.csv").then(function(data) {
@@ -10,7 +66,20 @@ d3.dsv("|","./data/QuebecMedia.csv").then(function(data) {
     .append("svg")
     .attr("width", "100%")
     .attr("height", "1000px")
-  console.log(svg.node().getBoundingClientRect());
+
+  // Echelles
+  var svgBounds = svg.node().getBoundingClientRect()
+  var xMedias = d3.scaleLinear().range([svgBounds.left, svgBounds.right]);
+  //var rMedias = d3.scaleLinear().range([5, 20]);
+
+  var xAxis = d3.axisBottom(xMedias);
+
+  // Création du mediaBubbles
+  createMediaBubblesAxis(svg, xAxis, heightMedias, svgBounds.width);
+
+  console.log("test2")
+
+  //console.log(svg.node().getBoundingClientRect());
     //.attr("height", heightFocus + marginFocus.top + marginFocus.bottom);
 
     //bubble chart ne signifie pas le bubble chart mais le graphique avec les tweets

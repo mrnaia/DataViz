@@ -10,6 +10,30 @@ function mediaxScaleDomain(x,source){
 }
 
 
+/**
+ * Crée les axes du graphique à bulles des médias.
+ *
+ * @param g       Le groupe SVG dans lequel le graphique à bulles doit être dessiné.
+ * @param xAxis   L'axe X.
+ * @param yAxis   L'axe Y.
+ * @param height  La hauteur du graphique.
+ * @param width   La largeur du graphique.
+ */
+function createMediaBubblesAxis(g, xAxis, height, width) {
+  // Dessiner l'axe des abscisses du graphique.
+  // Axe horizontal
+  g.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + height/2 + ")")
+    .call(xAxis); //axe
+    /*
+  g.append("text")
+    .attr("x", width)
+    .attr("y", height/2-10)
+    .style("text-anchor", "end")
+    .text("Positivité des tweets") //nom de l'axe
+    */
+}
 
 /**
  * Crée le graphique à bulle avec tous les tweet d'un média

@@ -58,3 +58,11 @@ function coloredTweet(sources) {
 */
   // https://stackoverflow.com/questions/11978995/how-to-change-color-of-svg-image-using-css-jquery-svg-image-replacement
   // https://stackoverflow.com/questions/24933430/img-src-svg-changing-the-fill-color
+
+//TODO
+  /*
+  window.setInterval(function() {
+  var elem = document.getElementById('data');
+  elem.scrollTop = elem.scrollHeight;
+}, 5000);
+  */
