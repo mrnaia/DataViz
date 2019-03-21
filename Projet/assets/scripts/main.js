@@ -1,22 +1,31 @@
 
 //on récupère le fichier csv qui contient les tweets
 d3.dsv("|","./data/QuebecMedia.csv").then(function(data) {
-  //todo : on récupère le fichier csv qui contient les associa nom du media, compte_twitter du media, type de media, pays
-  //on formate le fichier sources
-  var sources = createSources(data);
+  d3.dsv(";", "./data/media_pays_followers.csv").then(function(mediasData){
 
-  //création du svg
-  var svg = d3.select("body")
-    .append("svg")
-    .attr("width", "100%")
-    .attr("height", "1000px")
-  console.log(svg.node().getBoundingClientRect());
-    //.attr("height", heightFocus + marginFocus.top + marginFocus.bottom);
 
-    //bubble chart ne signifie pas le bubble chart mais le graphique avec les tweets
-  var bubbleChartGroup = svg.append("g")
-  testTweetChart(bubbleChartGroup,sources,"@tvanouvelles")
-  //testMediaChart(bubbleChartGroup,sources)
+    //todo : on récupère le fichier csv qui contient les associa nom du media, compte_twitter du media, type de media, pays
+    //on formate le fichier sources
+    var sources = createSources(data);
+    var pays_population = createPays();
+    var scaleBubbleSizeMediaChart =  d3.scaleLinear().range([100, 500]);
+    scaleBubbleSize(scaleBubbleSizeMediaChart, mediasData, pays_population);
+
+    var mediasData = formatMediasData(mediasData);
+    //console.log(mediasData);
+      //création du svg
+    var svg = d3.select("body")
+      .append("svg")
+      .attr("width", "100%")
+      .attr("height", "1000px")
+    //console.log(svg.node().getBoundingClientRect());
+      //.attr("height", heightFocus + marginFocus.top + marginFocus.bottom);
+
+      //bubble chart ne signifie pas le bubble chart mais le graphique avec les tweets
+    var bubbleChartGroup = svg.append("g")
+    //testTweetChart(bubbleChartGroup,sources,"@tvanouvelles")
+    testMediaChart(bubbleChartGroup,sources);
+  });
 });
 
 function testMediaChart(bubbleChartGroup,sources){
