@@ -29,3 +29,6 @@ path {
 .axis .tick text {
   font-size: 10pt;
 }
+
+.d3-tip span{
+}

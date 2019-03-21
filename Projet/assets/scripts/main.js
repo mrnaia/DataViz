@@ -101,6 +101,17 @@ function setUpMediaChart(tweetsChartGroup,mediaChartGroup,mediaSources,tweetSour
   var xBubbleScale = d3.scaleLinear().range([minXCoord, maxXCoord]);
   var initPosition = {"x":500,"y":250};
   mediaxScaleDomain(xBubbleScale,mediaSources);
-  var bubbleGroups = createMediaBubbleChart(mediaChartGroup,mediaSources,initPosition,tweetsChartGroup,tweetSources);
+  var mediaTip = d3.tip()
+    .attr('class', 'd3-tip')
+    .attr('width',100)
+    .offset([-10, 0]);
+
+  var bubbleGroups = createMediaBubbleChart(mediaChartGroup,mediaSources,initPosition,tweetsChartGroup,tweetSources,mediaTip,localization.getFormattedNumber);
+
+  mediaTip.html(function(d) {
+    return getMediaTipText.call(this, d,localization.getFormattedNumber)
+  });
+  bubbleGroups.call(mediaTip);
+
   runMediaSimulation(mediaSources,bubbleGroups,sizeBubbleScale,xBubbleScale);
 }
