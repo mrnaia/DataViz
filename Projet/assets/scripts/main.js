@@ -1,8 +1,4 @@
 /*
-(function () {
-  "use strict";
-  console.log("test")
-
   // Configuration
   var nbHabitants = {"Québec": 8000000, "France": 66000000}; //TODO à compléter/changer
 
@@ -53,8 +49,6 @@
 
 
 
-
-
 //on récupère le fichier csv qui contient les tweets
 d3.dsv("|","./data/QuebecMedia.csv").then(function(data) {
   d3.dsv(";", "./data/media_pays_followers.csv").then(function(mediasData){
@@ -66,6 +60,9 @@ d3.dsv("|","./data/QuebecMedia.csv").then(function(data) {
     scaleBubbleSize(scaleBubbleSizeMediaChart, mediasData, pays_population);
     var mediasData = formatMediasData(mediasData);
 
+
+    var heightMedias = 1000;
+
     //création du svg
     var svg = d3.select("body")
       .append("svg")
@@ -73,21 +70,26 @@ d3.dsv("|","./data/QuebecMedia.csv").then(function(data) {
       .attr("height", "1000px")
       //.attr("height", heightFocus + marginFocus.top + marginFocus.bottom);
 
-    // Echelles
-    var svgBounds = svg.node().getBoundingClientRect()
-    var xMedias = d3.scaleLinear().range([svgBounds.left, svgBounds.right]);
-
-    var xAxis = d3.axisBottom(xMedias);
-
-    // Création du mediaBubbles
-    createMediaBubblesAxis(svg, xAxis, heightMedias, svgBounds.width);
-
-    //bubble chart ne signifie pas le bubble chart mais le graphique avec les tweets
     var mediaChartGroup = svg.append("g")
     var tweetsChartGroup = svg.append("g")
+    var mediaBubblesGroup = mediaChartGroup.append("g");
+
     tweetsChartGroup.attr("id","tweetBubbleChart")
-    mediaChartGroup.attr("id","mediaBubbleChart")
-    setUpMediaChart(tweetsChartGroup,mediaChartGroup,mediaSources,tweetSources)
+    mediaChartGroup
+      .attr("id","mediaBubbleChart")
+      .attr("height", heightMedias + "px")
+
+    // Echelles
+    var mediaChartBounds = mediaChartGroup.node().getBoundingClientRect()
+    var xMedias = d3.scaleLinear().range([500, 1000]);
+    mediaxScaleDomain(xMedias, mediaSources);
+    console.log(xMedias.range());
+    var xAxis = d3.axisBottom(xMedias);
+    // Création du mediaBubbles
+    createMediaBubblesAxis(mediaChartGroup, xAxis, heightMedias, mediaChartBounds.width);
+
+
+    setUpMediaChart(tweetsChartGroup,mediaBubblesGroup,mediaSources,tweetSources)
   });
 });
 
@@ -97,8 +99,8 @@ function setUpMediaChart(tweetsChartGroup,mediaChartGroup,mediaSources,tweetSour
   var minXCoord = 500;
   var maxXCoord = 1000;
   var xBubbleScale = d3.scaleLinear().range([minXCoord, maxXCoord]);
-  var initPosition = {"x":0,"y":0};
-  mediaxScaleDomain(sizeBubbleScale,mediaSources);
+  var initPosition = {"x":500,"y":250};
+  mediaxScaleDomain(xBubbleScale,mediaSources);
   var bubbleGroups = createMediaBubbleChart(mediaChartGroup,mediaSources,initPosition,tweetsChartGroup,tweetSources);
   runMediaSimulation(mediaSources,bubbleGroups,sizeBubbleScale,xBubbleScale);
 }

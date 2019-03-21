@@ -21,18 +21,19 @@ function mediaxScaleDomain(x,source){
  */
 function createMediaBubblesAxis(g, xAxis, height, width) {
   // Dessiner l'axe des abscisses du graphique.
+  console.log("test")
   // Axe horizontal
   g.append("g")
     .attr("class", "x axis")
-    .attr("transform", "translate(0," + height/2 + ")")
+    .attr("transform", "translate(" +0 + "," + height/4 + ")")
     .call(xAxis); //axe
-    /*
   g.append("text")
-    .attr("x", width)
-    .attr("y", height/2-10)
+    .attr("x", 1000)
+    .attr("y", height/4-10)
     .style("text-anchor", "end")
     .text("Positivité des tweets") //nom de l'axe
-    */
+
+  console.log("test axe")
 }
 
 /**
