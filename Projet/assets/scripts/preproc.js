@@ -71,3 +71,30 @@ function createMediaSources(tweetSources){
   }
   return mediaSources;
 }
+
+function createPays(){
+  var array = {};
+  array["France"] = 67190000;
+  array["Quebec"] = 8390000;
+  return array;
+
+}
+
+function formatMediasData(data){
+  var output = {};
+  data.forEach((media) =>{
+    //console.log(media);
+
+    output[media.Compte] = {Categorie : media.Categorie, Followers : media.Followers, Nom : media.Nom, Pays : media.Pays};
+
+  })
+  return output;
+}
+
+function scaleBubbleSize(scale, data, pays){
+  console.log(data);
+  let min = d3.min(data, d => d.Followers/pays[d.Pays]); //la plus petite date des datas
+  let max = d3.max(data, d => d.Followers/pays[d.Pays]); // la date la plus récente
+  console.log(min, max);
+  scale.domain([min,max]);
+}
