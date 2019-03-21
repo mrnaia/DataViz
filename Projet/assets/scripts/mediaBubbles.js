@@ -38,21 +38,20 @@ function createMediaBubblesAxis(g, xAxis, height, width) {
 /**
  * Crée le graphique à bulle avec tous les tweet d'un média
  *
- * @param g       Le groupe SVG dans lequel le graphique à bulles doit être dessiné.
- * @param x       La scale pour déterminer la taille des bulles en fonction du nombre de retweets
- * @param source  les donneés : les tweets associiés à un média (issus du fichier csv non modifié + un id)
+ * @param g       Le groupe dans lequel le graphique à bulles doit être dessiné.
+ * @param mediaSources  les donneés : les tweets associiés à un média (issus du fichier csv non modifié + un id)
  * @param initPosition
- * @param svg
+ * @param tweetsGg       Le groupe dans lequel le graphique à bulles des tweets doit être dessiné.
+ * @param tweetSources  les donneés : les tweets associiés à un média (issus du fichier csv non modifié)
  */
-function createMediaBubbleChart(g,source,initPosition){
-  var bubbleGroups = g.selectAll("g").data(source);
-  var mediaG = bubbleGroups.enter().append("g");
-  var id = 0;
+function createMediaBubbleChart(g,mediaSources,initPosition,tweetsG,tweetSources){
+  var mediaBubbleGroups = g.selectAll("g").data(mediaSources);
+  console.log("createMediaBubbleChart");
+  console.log(mediaBubbleGroups);
+  var mediaG = mediaBubbleGroups.enter().append("g");
   //pour chaque tweet on crée un cercle
   mediaG.append("circle")
   .attr("r", (d) => 10)//Math.sqrt(x(d.retweet_count))) //dont le rayon dépend du nombre de retweets --> Y a pas des modifs à faire sur source avant pour avoir un seul exemplaire de chaque tweet et le bon nombre de retweets ou c'est fait sur python avant ?
-  .attr("cx",100)
-  .attr("cy",100)
   .attr("style","opacity:1")
   .attr("fill",d => d3.interpolateRdYlGn(d.mean_sentiment/2 +0.5))
   .datum(function(d){
@@ -60,8 +59,16 @@ function createMediaBubbleChart(g,source,initPosition){
     d.y = initPosition.y+Math.random()*5;
     return d;
   })
-  bubbleGroups = bubbleGroups.merge(mediaG);
-  return bubbleGroups;
+  .attr("cy",d => d.x)
+  .attr("cx",d => d.y)
+  .on("click",function(d){
+    var mouseCoordinates= d3.mouse(this);
+    var initPosition = {"x":mouseCoordinates[0],"y":mouseCoordinates[1]}
+    setUpTweetChart(tweetsG,tweetSources[d.name].tweets,initPosition)
+  });
+
+  return mediaBubbleGroups.merge(mediaG);
+
 }
   // https://stackoverflow.com/questions/11978995/how-to-change-color-of-svg-image-using-css-jquery-svg-image-replacement
   // https://stackoverflow.com/questions/24933430/img-src-svg-changing-the-fill-color
