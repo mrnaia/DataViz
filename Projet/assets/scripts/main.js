@@ -94,13 +94,11 @@ d3.dsv("|","./data/QuebecMedia.csv").then(function(data) {
     createMediaBubblesAxis(mediaChartGroup, xAxis, heightMedias, mediaChartBounds.width);
 
 
-    setUpMediaChart(tweetsChartGroup,mediaBubblesGroup,mediaSources,tweetSources)
+    setUpMediaChart(tweetsChartGroup,mediaBubblesGroup,mediaSources,tweetSources,pays_population,scaleBubbleSizeMediaChart, mediasData)
   });
 });
 
-function setUpMediaChart(tweetsChartGroup,mediaChartGroup,mediaSources,tweetSources){
-  var bubbleSize = 100;
-  var sizeBubbleScale = d3.scaleLinear().range([bubbleSize, bubbleSize]);
+function setUpMediaChart(tweetsChartGroup,mediaChartGroup,mediaSources,tweetSources, pays_population,scaleBubbleSizeMediaChart, mediasData){
   var minXCoord = 500;
   var maxXCoord = 1000;
   var xBubbleScale = d3.scaleLinear().range([minXCoord, maxXCoord]);
@@ -111,12 +109,12 @@ function setUpMediaChart(tweetsChartGroup,mediaChartGroup,mediaSources,tweetSour
     .attr('width',100)
     .offset([-10, 0]);
 
-  var bubbleGroups = createMediaBubbleChart(mediaChartGroup,mediaSources,initPosition,tweetsChartGroup,tweetSources,mediaTip,localization.getFormattedNumber);
+  var bubbleGroups = createMediaBubbleChart(mediaChartGroup,mediaSources,initPosition,tweetsChartGroup,tweetSources,mediaTip,localization.getFormattedNumber,pays_population,scaleBubbleSizeMediaChart, mediasData);
 
   mediaTip.html(function(d) {
     return getMediaTipText.call(this, d,localization.getFormattedNumber)
   });
   bubbleGroups.call(mediaTip);
 
-  runMediaSimulation(mediaSources,bubbleGroups,sizeBubbleScale,xBubbleScale);
+  runMediaSimulation(mediaSources,bubbleGroups,d3.scaleLinear().range([100,100]),xBubbleScale);
 }

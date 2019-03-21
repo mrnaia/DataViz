@@ -92,9 +92,18 @@ function formatMediasData(data){
 }
 
 function scaleBubbleSize(scale, data, pays){
-  console.log(data);
+  //console.log(data);
   let min = d3.min(data, d => d.Followers/pays[d.Pays]); //la plus petite date des datas
   let max = d3.max(data, d => d.Followers/pays[d.Pays]); // la date la plus récente
-  console.log(min, max);
+  //console.log(min, max);
   scale.domain([min,max]);
+}
+
+function colorCountryScale(){
+  var scale = d3.scaleOrdinal().range(["#3F48CC", "#FF0000"]).domain(["Quebec","France"]);
+  return scale;
+}
+function colorCategory(){
+  var scale = d3.scaleOrdinal().range(["#750078", "#FF0080", "#00AF00"]).domain(["TV","Ecrite", "Radio"]);
+  return scale;
 }
