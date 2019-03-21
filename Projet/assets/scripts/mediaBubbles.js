@@ -45,12 +45,10 @@ function createMediaBubblesAxis(g, xAxis, height, width) {
  * @param tweetsGg       Le groupe dans lequel le graphique à bulles des tweets doit être dessiné.
  * @param tweetSources  les donneés : les tweets associiés à un média (issus du fichier csv non modifié)
  */
-function createMediaBubbleChart(g,mediaSources,initPosition,tweetsG,tweetSources){
+function createMediaBubbleChart(g,mediaSources,initPosition,tweetsG,tweetSources,tip,formatNumber){
   var mediaBubbleGroups = g.selectAll("g").data(mediaSources);
-  console.log("createMediaBubbleChart");
-  console.log(mediaBubbleGroups);
   var mediaG = mediaBubbleGroups.enter().append("g");
-  //pour chaque tweet on crée un cercle
+  //pour chaque media on crée un cercle
   mediaG.append("circle")
   .attr("r", (d) => 10)//Math.sqrt(x(d.retweet_count))) //dont le rayon dépend du nombre de retweets --> Y a pas des modifs à faire sur source avant pour avoir un seul exemplaire de chaque tweet et le bon nombre de retweets ou c'est fait sur python avant ?
   .attr("style","opacity:1")
@@ -65,10 +63,20 @@ function createMediaBubbleChart(g,mediaSources,initPosition,tweetsG,tweetSources
   .on("click",function(d){
     var mouseCoordinates= d3.mouse(this);
     var initPosition = {"x":mouseCoordinates[0],"y":mouseCoordinates[1]}
-    setUpTweetChart(tweetsG,tweetSources[d.name].tweets,initPosition)
-  });
+    setUpTweetChart(tweetsG,tweetSources[d.name].tweets,initPosition,formatNumber)
+  })
+  .on('mouseover', tip.show) //affiche les infobulles quand on passe la souris sur un cercle
+  .on("mouseout", tip.hide);
 
   return mediaBubbleGroups.merge(mediaG);
+
+}
+function getMediaTipText(d, formatNumber){
+  var tipText = "";
+  tipText += "<span><strong>" + d.name + "</strong></span><br>";
+  tipText += "<span>Sentiment moyen: <strong>" + formatNumber(d.mean_sentiment) + "</strong></span><br>";
+  tipText += "<span>Nombre de tweet et retweet moyen: <strong>" + formatNumber(d.number_tweets_and_RT) + "</strong></span>";
+  return tipText;
 
 }
   // https://stackoverflow.com/questions/11978995/how-to-change-color-of-svg-image-using-css-jquery-svg-image-replacement
