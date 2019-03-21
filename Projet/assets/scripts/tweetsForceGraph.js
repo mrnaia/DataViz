@@ -27,7 +27,7 @@ function attractionCenterY(d){
 function runTweetSimulation(source,bubbleGroups,xBubbleScale){
   var forceStrength = 0.03;
   var simulation = d3.forceSimulation()
-    .velocityDecay(0.3)
+    .velocityDecay(0.2)
     .force('x', d3.forceX().strength(forceStrength).x(attractionCenterX))
     .force('y', d3.forceY().strength(forceStrength).y(attractionCenterY))
     .force('collide', d3.forceCollide(d => Math.sqrt(xBubbleScale(d.retweet_count)) +0.5))

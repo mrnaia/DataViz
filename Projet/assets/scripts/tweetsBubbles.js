@@ -37,11 +37,7 @@ function createTweetsBubbleChart(g,x,source,initPosition,$svg,tip){
   return bubbleGroups;
 }
 
-function  getTipText(d){
-  return d.full_text;
-}
-
-function setUpTweetChart(bubbleChartGroup,tweets,clickPosition){
+function setUpTweetChart(bubbleChartGroup,tweets,clickPosition,formatNumber){
   //tailles des oiseaux tweets
   var maxBubbleSize = 500;
   var minBubbleSize = 50;
@@ -50,13 +46,11 @@ function setUpTweetChart(bubbleChartGroup,tweets,clickPosition){
   ////////////////////////////////////////////////////////
   //création du chart des tweets pour le media clické qui apparait quand on clique
   sizeScaleDomain(xBubbleScale,tweets);
-  launchTweetsBubbleChart(bubbleChartGroup,xBubbleScale,tweets,clickPosition)
+  launchTweetsBubbleChart(bubbleChartGroup,xBubbleScale,tweets,clickPosition,formatNumber)
 }
 
-
-
 //récupère l'image de l'oiseau puis crée le graphique
-function launchTweetsBubbleChart(bubbleChartGroup,xBubbleScale,source,initPosition){
+function launchTweetsBubbleChart(bubbleChartGroup,xBubbleScale,source,initPosition,formatNumber){
     jQuery.get("assets/images/bird.svg", function(svgData) {
       var $svg = jQuery(svgData).find('svg');
       var tip = d3.tip()
@@ -64,9 +58,8 @@ function launchTweetsBubbleChart(bubbleChartGroup,xBubbleScale,source,initPositi
         .attr('width',100)
         .offset([-10, 0]);
       var bubbleGroups = createTweetsBubbleChart(bubbleChartGroup,xBubbleScale,source,initPosition,$svg,tip);
-
       tip.html(function(d) {
-        return getTipText.call(this, d)
+        return getTweetTipText.call(this, d, formatNumber)
       });
       bubbleGroups.call(tip);
       runTweetSimulation(source,bubbleGroups,xBubbleScale);
@@ -74,3 +67,17 @@ function launchTweetsBubbleChart(bubbleChartGroup,xBubbleScale,source,initPositi
 }
   // https://stackoverflow.com/questions/11978995/how-to-change-color-of-svg-image-using-css-jquery-svg-image-replacement
   // https://stackoverflow.com/questions/24933430/img-src-svg-changing-the-fill-color
+function  getTweetTipText(d,formatNumber){
+  var tipText = "";
+  tipText += "<span>Text: <strong>" + d.full_text + "</strong></span><br>";
+  tipText += "<span>Nombre de retweet: <strong>" + formatNumber(+d.retweet_count) + "</strong></span><br>";
+  tipText += "<span>Sentiment: <strong>" + formatNumber(+d.sentiment) + "</strong></span><br>";
+  return tipText;
+}
+//TODO
+  /*
+  window.setInterval(function() {
+  var elem = document.getElementById('data');
+  elem.scrollTop = elem.scrollHeight;
+}, 5000);
+  */

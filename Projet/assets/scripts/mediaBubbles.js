@@ -9,6 +9,33 @@ function mediaxScaleDomain(x,source){
   x.domain([d3.min(source,(d) => d.mean_sentiment),d3.max(source,(d) => d.mean_sentiment)]);
 }
 
+
+/**
+ * Crée les axes du graphique à bulles des médias.
+ *
+ * @param g       Le groupe SVG dans lequel le graphique à bulles doit être dessiné.
+ * @param xAxis   L'axe X.
+ * @param yAxis   L'axe Y.
+ * @param height  La hauteur du graphique.
+ * @param width   La largeur du graphique.
+ */
+function createMediaBubblesAxis(g, xAxis, height, width) {
+  // Dessiner l'axe des abscisses du graphique.
+  console.log("test")
+  // Axe horizontal
+  g.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(" +0 + "," + height/4 + ")")
+    .call(xAxis); //axe
+  g.append("text")
+    .attr("x", 1000)
+    .attr("y", height/4-10)
+    .style("text-anchor", "end")
+    .text("Positivité des tweets") //nom de l'axe
+
+  console.log("test axe")
+}
+
 /**
  * Crée le graphique à bulle avec tous les médias
  *
@@ -18,7 +45,7 @@ function mediaxScaleDomain(x,source){
  * @param tweetsGg       Le groupe dans lequel le graphique à bulles des tweets doit être dessiné.
  * @param tweetSources  les donneés : les tweets associiés à un média (issus du fichier csv non modifié)
  */
-function createMediaBubbleChart(g,mediaSources,initPosition,tweetsG,tweetSources, pays_population,scaleBubbleSizeMediaChart, mediasData){
+function createMediaBubbleChart(g,mediaSources,initPosition,tweetsG,tweetSources, tip,formatNumber,pays_population,scaleBubbleSizeMediaChart, mediasData){
   //console.log(mediaSources);
   var mediaBubbleGroups = g.selectAll("g").data(mediaSources);
   var countrycolorscale = colorCountryScale();
@@ -27,9 +54,12 @@ function createMediaBubbleChart(g,mediaSources,initPosition,tweetsG,tweetSources
   //console.log(mediaBubbleGroups);
   var mediaG = mediaBubbleGroups.enter().append("g");
   //pour chaque media on crée un cercle
+  console.log(mediaSources);
   mediaG.append("circle")
   .attr("r",function(d){
+    console.log(d);
     if(d.name in mediasData){
+      console.log("here");
         return mediasData[d.name].Followers/pays_population[mediasData[d.name].Pays]*1000;
     }
     else{
@@ -60,10 +90,20 @@ function createMediaBubbleChart(g,mediaSources,initPosition,tweetsG,tweetSources
   .on("click",function(d){
     var mouseCoordinates= d3.mouse(this);
     var initPosition = {"x":mouseCoordinates[0],"y":mouseCoordinates[1]}
-    setUpTweetChart(tweetsG,tweetSources[d.name].tweets,initPosition)
-  });
+    setUpTweetChart(tweetsG,tweetSources[d.name].tweets,initPosition,formatNumber)
+  })
+  .on('mouseover', tip.show) //affiche les infobulles quand on passe la souris sur un cercle
+  .on("mouseout", tip.hide);
 
   return mediaBubbleGroups.merge(mediaG);
+
+}
+function getMediaTipText(d, formatNumber){
+  var tipText = "";
+  tipText += "<span><strong>" + d.name + "</strong></span><br>";
+  tipText += "<span>Sentiment moyen: <strong>" + formatNumber(d.mean_sentiment) + "</strong></span><br>";
+  tipText += "<span>Nombre de tweet et retweet moyen: <strong>" + formatNumber(d.number_tweets_and_RT) + "</strong></span>";
+  return tipText;
 
 }
   // https://stackoverflow.com/questions/11978995/how-to-change-color-of-svg-image-using-css-jquery-svg-image-replacement
