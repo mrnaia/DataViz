@@ -29,3 +29,7 @@ path {
 .axis .tick text {
   font-size: 10pt;
 }
+
+#mediaBubbleChart > text {
+  font-size: 10pt;
+}

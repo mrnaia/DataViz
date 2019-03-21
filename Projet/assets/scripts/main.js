@@ -83,8 +83,13 @@ d3.dsv("|","./data/QuebecMedia.csv").then(function(data) {
     var mediaChartBounds = mediaChartGroup.node().getBoundingClientRect()
     var xMedias = d3.scaleLinear().range([500, 1000]);
     mediaxScaleDomain(xMedias, mediaSources);
-    console.log(xMedias.range());
     var xAxis = d3.axisBottom(xMedias);
+    xAxis.tickSize(5);
+    xAxis.tickValues([xMedias.domain()[0], 0, xMedias.domain()[1]]);
+    xAxis.tickFormat(d => {
+      if (-0.01 < d && d < 0.01) return "0";
+      else return localization.getFormattedNumber(d);
+    })
     // Création du mediaBubbles
     createMediaBubblesAxis(mediaChartGroup, xAxis, heightMedias, mediaChartBounds.width);
 

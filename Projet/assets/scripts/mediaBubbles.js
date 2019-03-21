@@ -25,11 +25,11 @@ function createMediaBubblesAxis(g, xAxis, height, width) {
   // Axe horizontal
   g.append("g")
     .attr("class", "x axis")
-    .attr("transform", "translate(" +0 + "," + height/4 + ")")
+    .attr("transform", "translate(" + 0 + "," + height/4 + ")")
     .call(xAxis); //axe
   g.append("text")
     .attr("x", 1000)
-    .attr("y", height/4-10)
+    .attr("y", height/4 - 2)
     .style("text-anchor", "end")
     .text("Positivité des tweets") //nom de l'axe
 
