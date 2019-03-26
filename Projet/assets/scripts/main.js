@@ -6,26 +6,11 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
       var tweetSources = createSources(france_data.concat(quebec_data));
       var mediaSources = createMediaSources(tweetSources);
 
-      // SETUP values
-      var svgSetup = {height: "1000", width: "100%"};
-
-      // Media bubble chart
-
-      var pays_population = {France: 67190000, Quebec: 8390000};
-
-      var mediaBubblesSize = {min: 5, max: 50};
-      var xMediasPositions = {min: 500, max: 1000};
-      var axisMargin = 50;
-
       var scaleBubbleSizeMediaChart =  d3.scaleLinear().range([mediaBubblesSize.min, mediaBubblesSize.max]);
       var xMedias = d3.scaleLinear().range([xMediasPositions.min, xMediasPositions.max]);
 
       scaleBubbleSize(scaleBubbleSizeMediaChart, mediasData, pays_population);
       var mediasData = formatMediasData(mediasData);
-
-      // Tweets bubble chart
-
-
 
       // CREATION des visualisations
 
@@ -42,11 +27,11 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
         .attr("id", "tweetBubbleChart")
 
       // ajout d'un groupe pour les bulles des médias et pour les axes horizontaux
-      var mediaBubblesGroup = mediaChartGroup.append("g")
-        //.attr("id", "mediaBubbles")
-        .attr("height", "1000px");
       var mediaAxisGroup = mediaChartGroup.append("g")
-        //.attr("id", "mediaAxis")
+      .attr("id", "mediaAxis")
+      var mediaBubblesGroup = mediaChartGroup.append("g")
+        .attr("id", "mediaBubbles")
+        //.attr("height", "1000px");
 
       // Echelles
       var mediaChartBounds = mediaChartGroup.node().getBoundingClientRect()
@@ -56,9 +41,9 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
 
       // Création du mediaBubbles
       //createMediaBubblesAxis(mediaChartGroup, xAxis, heightMedias, mediaChartBounds.width);
-      createMediaBubblesAxis(mediaChartGroup, 250, xMediasPositions.min - axisMargin, xMediasPositions.max + axisMargin);
+      createMediaBubblesAxis(mediaAxisGroup, yMediasPosition, xMediasPositions.min - axisMargin, xMediasPositions.max + axisMargin);
 
-      setUpMediaChart(tweetsChartGroup,mediaBubblesGroup,mediaSources,tweetSources,pays_population,scaleBubbleSizeMediaChart, mediasData)
+      setUpMediaChart(tweetsChartGroup,mediaBubblesGroup,mediaSources,tweetSources,pays_population,scaleBubbleSizeMediaChart, mediasData, xMedias)
     });
   });
 });

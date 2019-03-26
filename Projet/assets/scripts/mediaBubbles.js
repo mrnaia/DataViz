@@ -10,16 +10,10 @@ function mediaxScaleDomain(x,source){
 }
 
 
-function setUpMediaChart(tweetsChartGroup,mediaChartGroup,mediaSources,tweetSources, pays_population,scaleBubbleSizeMediaChart, mediasData){
+function setUpMediaChart(tweetsChartGroup,mediaChartGroup,mediaSources,tweetSources, pays_population,scaleBubbleSizeMediaChart, mediasData, xBubbleScale){
 
-  //Set up
-  var yCoord = 250;
-  var minXCoord = 500;
-  var maxXCoord = 1000;
-
-  var xBubbleScale = d3.scaleLinear().range([minXCoord, maxXCoord]);
-
-  var initPosition = {"x":(minXCoord+maxXCoord)/2, "y":yCoord};
+  var initPosition = {"x":xBubbleScale(0), "y": 100};
+  //var initPosition = {"x":(minXCoord+maxXCoord)/2, "y":yCoord};
 
   mediaxScaleDomain(xBubbleScale, mediaSources);
 
@@ -51,6 +45,7 @@ function setUpMediaChart(tweetsChartGroup,mediaChartGroup,mediaSources,tweetSour
  */
 function createMediaBubblesAxis(g, y, x1, x2) {
   // Dessiner l'axe des abscisses du graphique.
+
   /*
   // Axe horizontal
   g.append("g")
@@ -62,17 +57,18 @@ function createMediaBubblesAxis(g, y, x1, x2) {
     .attr("y", height/4 - 2)
     .style("text-anchor", "end")
     .text("Positivité des tweets") //nom de l'axe
+  */
 
-    */
-  console.log("debut create axis")
-  g.append("line")
+  for (let i=0; i<6; i++){
+    g.append("line")
     .attr("x1", x1)
     .attr("x2", x2)
     .attr("y1", y)
     .attr("y2", y)
-    .attr("stroke", "black")
-    .attr("stroke-width", 10)
-  console.log("fin create axis")
+    .attr("stroke", "grey")
+    //.attr("stroke-width", "1px")
+    .attr("opacity", 0.5)
+  }
 
 
 }

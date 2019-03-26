@@ -72,18 +72,6 @@ function createMediaSources(tweetSources){
   return mediaSources;
 }
 
-/*
-function createPays(){
-  var array = {};
-  array["France"] = 67190000;
-  array["Quebec"] = 8390000;
-
-  var countries = {France: 67190000, Quebec: 8390000};
-  console.log("test array" + countries["France"]);
-
-  return array;
-}*/
-
 function formatMediasData(data){
   var output = {};
   data.forEach((media) =>{
@@ -104,10 +92,11 @@ function scaleBubbleSize(scale, data, pays){
 }
 
 function colorCountry(){
-  var scale = d3.scaleOrdinal().range(["#cddcf4", "#ffb7b7"]).domain(["Quebec","France"]);
+  //var scale = d3.scaleOrdinal().range(["#cddcf4", "#ffb7b7"]).domain(["Quebec","France"]);
+  var scale = d3.scaleOrdinal().range(["#000", "#ddd"]).domain(["Quebec","France"]);
   return scale;
 }
 function colorCategory(){
-  var scale = d3.scaleOrdinal().range(["#0cd3a8", "#5f40ad", "#ed8210"]).domain(["Tele","Ecrit", "Radio"]);
+  var scale = d3.scaleOrdinal().range(["#0cd3a8", "#3e80f2", "#ed8210"]).domain(["Tele", "Ecrit", "Radio"]);
   return scale;
 }

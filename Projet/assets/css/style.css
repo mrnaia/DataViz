@@ -1,11 +1,7 @@
 /***** General style *****/
 body {
-  margin: 20px auto auto;
+  margin: 0px auto auto;
   font-family: Arial, sans-serif;
-}
-
-path {
-  /*fill: black !important;*/
 }
 
 .d3-tip {
@@ -19,21 +15,6 @@ path {
   border-radius: 10px;
 }
 
-.selected{
-  border: 2px black solid;
-}
-
-.axis {
-  shape-rendering: crispEdges;
-}
-
-.axis .tick text {
-  font-size: 10pt;
-}
-
-#mediaBubbleChart > text {
-  font-size: 10pt;
-}
 
 #mediaBubbleChart circle:hover {
   cursor: pointer;
