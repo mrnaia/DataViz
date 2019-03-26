@@ -40,7 +40,7 @@ path {
 }
 
 #tweetBubbleChart circle {
-  fill: white;
+  fill: none;
 }
 
 #tweetBubbleChart g:hover circle {
