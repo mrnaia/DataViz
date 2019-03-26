@@ -50,9 +50,10 @@
 
 
 //on récupère le fichier csv qui contient les tweets
-d3.dsv("|","./data/QuebecMedia.csv").then(function(data) {
-  d3.dsv(";", "./data/media_pays_followers.csv").then(function(mediasData){
-    var tweetSources = createSources(data);
+d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
+  d3.dsv("|","./data/QuebecMedia.csv").then(function(quebec_data) {
+    d3.dsv(";", "./data/media_pays_followers.csv").then(function(mediasData){
+    var tweetSources = createSources(france_data.concat(quebec_data));
     var mediaSources = createMediaSources(tweetSources);
 
     var pays_population = createPays();
@@ -96,6 +97,7 @@ d3.dsv("|","./data/QuebecMedia.csv").then(function(data) {
 
     setUpMediaChart(tweetsChartGroup,mediaBubblesGroup,mediaSources,tweetSources,pays_population,scaleBubbleSizeMediaChart, mediasData)
   });
+  })
 });
 
 function setUpMediaChart(tweetsChartGroup,mediaChartGroup,mediaSources,tweetSources, pays_population,scaleBubbleSizeMediaChart, mediasData){
