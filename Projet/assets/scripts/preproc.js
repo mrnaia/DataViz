@@ -93,17 +93,17 @@ function formatMediasData(data){
 
 function scaleBubbleSize(scale, data, pays){
   //console.log(data);
-  let min = d3.min(data, d => d.Followers/pays[d.Pays]); //la plus petite date des datas
-  let max = d3.max(data, d => d.Followers/pays[d.Pays]); // la date la plus récente
+  let min = d3.min(data, d => Math.sqrt(d.Followers/pays[d.Pays])); //la plus petite date des datas
+  let max = d3.max(data, d => Math.sqrt(d.Followers/pays[d.Pays])); // la date la plus récente
   //console.log(min, max);
   scale.domain([min,max]);
 }
 
-function colorCountryScale(){
-  var scale = d3.scaleOrdinal().range(["#3F48CC", "#FF0000"]).domain(["Quebec","France"]);
+function colorCountry(){
+  var scale = d3.scaleOrdinal().range(["#cddcf4", "#ffb7b7"]).domain(["Quebec","France"]);
   return scale;
 }
 function colorCategory(){
-  var scale = d3.scaleOrdinal().range(["#750078", "#FF0080", "#00AF00"]).domain(["Tele","Ecrit", "Radio"]);
+  var scale = d3.scaleOrdinal().range(["#0cd3a8", "#5f40ad", "#ed8210"]).domain(["Tele","Ecrit", "Radio"]);
   return scale;
 }

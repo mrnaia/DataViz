@@ -40,12 +40,13 @@ path {
 }
 
 #tweetBubbleChart circle {
-  fill: none;
+  fill: rgba(250,250,250,1);
+  stroke : rgba(240,240,240,1);
 }
 
 #tweetBubbleChart g:hover circle {
-  fill: black;
-  stroke: black;
+  fill: rgba(100,100,100,1);
+  stroke: rgba(70,70,70,1);
   stroke-width: 1px;
   opacity: 1;
 }

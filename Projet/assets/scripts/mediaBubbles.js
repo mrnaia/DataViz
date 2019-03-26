@@ -10,6 +10,36 @@ function mediaxScaleDomain(x,source){
 }
 
 
+function setUpMediaChart(tweetsChartGroup,mediaChartGroup,mediaSources,tweetSources, pays_population,scaleBubbleSizeMediaChart, mediasData){
+
+  //Set up
+  var yCoord = 250;
+  var minXCoord = 500;
+  var maxXCoord = 1000;
+
+  var xBubbleScale = d3.scaleLinear().range([minXCoord, maxXCoord]);
+
+  var initPosition = {"x":(minXCoord+maxXCoord)/2, "y":yCoord};
+
+  mediaxScaleDomain(xBubbleScale, mediaSources);
+
+  var mediaTip = d3.tip()
+    .attr('class', 'd3-tip')
+    .attr('width', 100)
+    .offset([-10, 0]);
+
+  //Creation
+  var bubbleGroups = createMediaBubbleChart(mediaChartGroup,mediaSources,initPosition,tweetsChartGroup,tweetSources,mediaTip,localization.getFormattedNumber,pays_population,scaleBubbleSizeMediaChart, mediasData);
+
+  mediaTip.html(function(d) {
+    return getMediaTipText.call(this, d,localization.getFormattedNumber)
+  });
+  bubbleGroups.call(mediaTip);
+
+  runMediaSimulation(mediaSources, bubbleGroups, scaleBubbleSizeMediaChart,xBubbleScale, mediasData, pays_population);
+}
+
+
 /**
  * Crée les axes du graphique à bulles des médias.
  *
@@ -19,9 +49,9 @@ function mediaxScaleDomain(x,source){
  * @param height  La hauteur du graphique.
  * @param width   La largeur du graphique.
  */
-function createMediaBubblesAxis(g, xAxis, height, width) {
+function createMediaBubblesAxis(g, y, x1, x2) {
   // Dessiner l'axe des abscisses du graphique.
-  console.log("test")
+  /*
   // Axe horizontal
   g.append("g")
     .attr("class", "x axis")
@@ -34,10 +64,21 @@ function createMediaBubblesAxis(g, xAxis, height, width) {
     .text("Positivité des tweets") //nom de l'axe
 
   console.log("test axe")
+  */
+  g.append(line)
+    .attr("x1", x1)
+    .attr("x2", x2)
+    .attr("y1", y)
+    .attr("y2", y)
+    .attr("stroke", "black")
+    .attr("stroke-width", 10)
+  console.log("test")
+
+
 }
 
 /**
- * Crée le graphique à bulle avec tous les médias
+ * Crée le graphique à bulles avec tous les médias
  *
  * @param g       Le groupe dans lequel le graphique à bulles doit être dessiné.
  * @param mediaSources  les donneés : les tweets associiés à un média (issus du fichier csv non modifié + un id)
@@ -48,32 +89,32 @@ function createMediaBubblesAxis(g, xAxis, height, width) {
 function createMediaBubbleChart(g,mediaSources,initPosition,tweetsG,tweetSources, tip,formatNumber,pays_population,scaleBubbleSizeMediaChart, mediasData){
   console.log(mediasData);
   var mediaBubbleGroups = g.selectAll("g").data(mediaSources);
-  var countrycolorscale = colorCountryScale();
-  var contourcolor = colorCategory();
+  var countryColor = colorCountry();
+  var borderColor = colorCategory();
   //console.log("createMediaBubbleChart");
   //console.log(mediaBubbleGroups);
   var mediaG = mediaBubbleGroups.enter().append("g");
   //pour chaque media on crée un cercle
   mediaG.append("circle")
-  .attr("r",function(d){
-    if(d.name in mediasData){
-        return scaleBubbleSizeMediaChart(mediasData[d.name].Followers/pays_population[mediasData[d.name].Pays]);
-    }
-    else{
-      //console.log("pas d'infos");
-      return 10;
-    }
-  })
+    .attr("r",function(d){
+      if(d.name in mediasData){
+          return scaleBubbleSizeMediaChart(mediasData[d.name].Followers/pays_population[mediasData[d.name].Pays]);
+      }
+      else{
+        //console.log("pas d'infos");
+        return 10;
+      }
+    })
   //.attr("r", (d) => 10)//Math.sqrt(x(d.retweet_count))) //dont le rayon dépend du nombre de retweets --> Y a pas des modifs à faire sur source avant pour avoir un seul exemplaire de chaque tweet et le bon nombre de retweets ou c'est fait sur python avant ?
   .attr("style","opacity:1")
   .attr("fill",function(d){
     if([d.name] in mediasData){
-      return countrycolorscale(mediasData[d.name].Pays);//d3.interpolateRdYlGn(d.mean_sentiment/2 +0.5))
+      return countryColor(mediasData[d.name].Pays);//d3.interpolateRdYlGn(d.mean_sentiment/2 +0.5))
     }
   })
   .attr("stroke", function(d){
     if([d.name] in mediasData){
-      return contourcolor(mediasData[d.name].Categorie);
+      return borderColor(mediasData[d.name].Categorie);
     }
   })
   .attr("stroke-width", 3)
