@@ -46,7 +46,7 @@ function createMediaBubblesAxis(g, xAxis, height, width) {
  * @param tweetSources  les donneés : les tweets associiés à un média (issus du fichier csv non modifié)
  */
 function createMediaBubbleChart(g,mediaSources,initPosition,tweetsG,tweetSources, tip,formatNumber,pays_population,scaleBubbleSizeMediaChart, mediasData){
-  //console.log(mediaSources);
+  console.log(mediasData);
   var mediaBubbleGroups = g.selectAll("g").data(mediaSources);
   var countrycolorscale = colorCountryScale();
   var contourcolor = colorCategory();

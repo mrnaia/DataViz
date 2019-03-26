@@ -51,7 +51,7 @@
 
 //on récupère le fichier csv qui contient les tweets
 d3.dsv("|","./data/QuebecMedia.csv").then(function(data) {
-  d3.dsv(";", "./data/media_pays_followers.csv").then(function(mediasData){
+  d3.dsv(";", "./data/categories.csv").then(function(mediasData){
     var tweetSources = createSources(data);
     var mediaSources = createMediaSources(tweetSources);
 

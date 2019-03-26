@@ -86,7 +86,7 @@ function formatMediasData(data){
     //console.log(media);
 
     output[media.Compte] = {Categorie : media.Categorie, Followers : media.Followers, Nom : media.Nom, Pays : media.Pays};
-
+    //output[media.Compte] = {Categorie : media.Categorie, Followers : media.Followers, Pays : media.Pays};
   })
   return output;
 }
