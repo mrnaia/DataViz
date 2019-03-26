@@ -104,6 +104,6 @@ function colorCountryScale(){
   return scale;
 }
 function colorCategory(){
-  var scale = d3.scaleOrdinal().range(["#750078", "#FF0080", "#00AF00"]).domain(["TV","Ecrite", "Radio"]);
+  var scale = d3.scaleOrdinal().range(["#750078", "#FF0080", "#00AF00"]).domain(["Tele","Ecrit", "Radio"]);
   return scale;
 }
