@@ -1,66 +1,66 @@
-@tvanouvelles,Tele,Quebec
-@JdeMontreal,Ecrit,Quebec
-@LP_LaPresse,Ecrit,Quebec
-@RadioCanadaInfo,Radio,Quebec
-@JdeQuebec,Ecrit,Quebec
-@vicequebec,Ecrit,Quebec
-@infomantv,Tele,Quebec
-@salutbonjour,Tele,Quebec
-@CBCMontreal,Tele,Quebec
-@TVASports,Tele,Quebec
-@RDSca,Tele,Quebec
-@icimontreal,Ecrit,Quebec
-@meteomedia,Tele,Quebec
-@CTVMontreal,Tele,Quebec
-@Global_Montreal,Tele,Quebec
-@telequebec,Tele,Quebec
-@LaTribune,Ecrit,Quebec
-@_URBANIA,Ecrit,Quebec
-@HuffPostQuebec,Ecrit,Quebec
-@LeDevoir,Ecrit,Quebec
-@mtlgazette,Ecrit,Quebec
-@iciquebec,Radio,Quebec
-@cyblesoleil,Ecrit,Quebec
-@Lactualite,Ecrit,Quebec
-@coupdepouce_mag,Ecrit,Quebec
-@la_lesaffaires,Ecrit,Quebec
-@journalmetro,Ecrit,Quebec
-@icircpremiere,Radio,Quebec
-@RNCNouvellesAT,Tele,Quebec
-@Le_Figaro,Ecrit,France
-@lemondefr,Ecrit,France
-@canardenchaine,Ecrit,France
-@Qofficiel,Tele,France
-@20hFrance2,Tele,France
-@TF1LeJT,Tele,France
-@LCI,Tele,France
-@BFMTV,Tele,France
-@CNEWS,Tele,France
-@libe,Ecrit,France
-@lequipe,Ecrit,France
-@le_Parisien,Ecrit,France
-@20Minutes,Radio,France
-@lobs,Ecrit,France
-@LesEchos,Ecrit,France
-@TV5MONDE,Tele,France
-@Le_Soir3,Tele,France
-@ARTEjournal,Tele,France
-@LaTribune,Ecrit,France
-@franceinfo,Radio,France
-@FRANCE24,Tele,France
-@rtlinfo,Radio,France
-@Europe1,Radio,France
-@RMCinfo,Radio,France
-@franceinter,Radio,France
-@francebleu,Radio,France
-@Charlie_Hebdo_,Ecrit,France
-@LEXPRESS,Ecrit,France
-@LePoint,Ecrit,France
-@VICEfr,Ecrit,France
-@radiofrance,Radio,France
-@mdiplo,Ecrit,France
-@Mediapart,Ecrit,France
-@RTLFrance,Radio,France
-@franceinfo,Radio,France
-@lejdd,Ecrit,France
-@RTenfrançais,Tele,France
+Nom,Compte,Categorie,Pays,Followers
+TVA nouvelles,@tvanouvelles,Tele,Quebec,366119
+Journal de Montréal,@JdeMontreal,Ecrit,Quebec,1580
+La Presse,@LP_LaPresse,Ecrit,Quebec,687005
+Radio-Canada Info,@RadioCanadaInfo,Radio,Quebec,675
+Le Journal de Québec,@JdeQuebec,Ecrit,Quebec,1965
+VICE Québec,@vicequebec,Ecrit,Quebec,338
+INFOMAN,@infomantv,Tele,Quebec,491
+Salut Bonjour,@salutbonjour,Tele,Quebec,95975
+CBC Montreal,@CBCMontreal,Tele,Quebec,164794
+TVA Sports,@TVASports,Tele,Quebec,109747
+RDS,@RDSca,Tele,Quebec,241587
+ICI Grand Montréal,@icimontreal,Ecrit,Quebec,8227
+MétéoMédia,@meteomedia,Tele,Quebec,185407
+CTV Montreal,@CTVMontreal,Tele,Quebec,163167
+Global Montreal,@Global_Montreal,Tele,Quebec,50491
+Télé-Québec,@telequebec,Tele,Quebec,33228
+LaTribune,@LaTribune,Ecrit,Quebec,210015
+URBANIA,@_URBANIA,Ecrit,Quebec,73732
+HuffPost Québec,@HuffPostQuebec,Ecrit,Quebec,141663
+Le Devoir,@LeDevoir,Ecrit,Quebec,312976
+Montreal Gazette,@mtlgazette,Ecrit,Quebec,221578
+ICI Québec,@iciquebec,Radio,Quebec,44829
+Le Soleil,@cyblesoleil,Ecrit,Quebec,81688
+Magazine L'actualité,@Lactualite,Ecrit,Quebec,153016
+Coup de pouce,@coupdepouce_mag,Ecrit,Quebec,42529
+Les Affaires,@la_lesaffaires,Ecrit,Quebec,45858
+Journal Métro,@journalmetro,Ecrit,Quebec,137888
+ICI RC Première,@icircpremiere,Radio,Quebec,60570
+RNC MEDIA NOUVELLES,@RNCNouvellesAT,Tele,Quebec,2165
+Le Figaro,@Le_Figaro,Ecrit,France,3021307
+Le Monde,@lemondefr,Ecrit,France,8125519
+Le Canard enchaîné,@canardenchaine,Ecrit,France,636629
+Quotidien,@Qofficiel,Tele,France,520402
+Le 20heures France2,@20hFrance2,Tele,France,26805
+TF1LeJT,@TF1LeJT,Tele,France,57258
+LCI,@LCI,Tele,France,153994
+BFMTV,@BFMTV,Tele,France,2426368
+CNEWS,@CNEWS,Tele,France,1307819
+Libération,@libe,Ecrit,France,2918036
+L'équipe,@lequipe,Ecrit,France,4997299
+Le Parisien,@le_Parisien,Ecrit,France,2158189
+20 Minutes,@20Minutes,Radio,France,2288347
+L'Obs,@lobs,Ecrit,France,1325673
+Les Echos,@LesEchos,Ecrit,France,1178652
+TVMONDE,@TV5MONDE,Tele,France,854111
+Soir/3,@Le_Soir3,Tele,France,6101
+arte Journal,@ARTEjournal,Tele,France,17738
+LA TRIBUNE,@LaTribune,Ecrit,France,210015
+FRANCE 24,@FRANCE24,Tele,France,3129838
+RTL Info,@rtlinfo,Radio,France,92680
+Europe1,@Europe1,Radio,France,1418394
+RMC Info,@RMCinfo,Radio,France,176259
+France Inter,@franceinter,Radio,France,1416970
+France Bleu,@francebleu,Radio,France,68677
+Charlie Hebdo,@Charlie_Hebdo_,Ecrit,France,382586
+L'Express,@LEXPRESS,Ecrit,France,1295844
+Le Point,@LePoint,Ecrit,France,734251
+VICE France,@VICEfr,Ecrit,France,96878
+Radio France,@radiofrance,Radio,France,174750
+Le Monde diplomatique,@mdiplo,Ecrit,France,164738
+Mediapart,@Mediapart,Ecrit,France,2414305
+RTL France,@RTLFrance,Radio,France,796939
+France Info,@franceinfo,Radio,France,1354768
+Le JDD,@lejdd,Ecrit,France,367879
+RT France,@RTenfrançais,Tele,France,119973
