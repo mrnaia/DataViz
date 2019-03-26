@@ -14,9 +14,8 @@ function runMediaSimulation(source,bubbleGroups,sizeBubbleScale,xBubbleScale, me
     .force('x', d3.forceX().strength(forceStrength).x(d => xBubbleScale(d.mean_sentiment)))
     .force('y', d3.forceY().strength(forceStrength).y(center.y))
     .force('collide', d3.forceCollide(function(d){
-      if(d.name in mediasData ){
-        console.log(sizeBubbleScale(mediasData[d.name].Followers/pays_population[mediasData[d.name].Pays]) +0.5)
-        return sizeBubbleScale(mediasData[d.name].Followers/pays_population[mediasData[d.name].Pays]) +0.5;
+      if(d.name in mediasData){
+        return sizeBubbleScale(mediasData[d.name].Followers/pays_population[mediasData[d.name].Pays]) + 2;
       }
       else{
         return 10+0.5;

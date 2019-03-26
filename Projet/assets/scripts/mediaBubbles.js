@@ -63,16 +63,16 @@ function createMediaBubblesAxis(g, y, x1, x2) {
     .style("text-anchor", "end")
     .text("Positivité des tweets") //nom de l'axe
 
-  console.log("test axe")
-  */
-  g.append(line)
+    */
+  console.log("debut create axis")
+  g.append("line")
     .attr("x1", x1)
     .attr("x2", x2)
     .attr("y1", y)
     .attr("y2", y)
     .attr("stroke", "black")
     .attr("stroke-width", 10)
-  console.log("test")
+  console.log("fin create axis")
 
 
 }

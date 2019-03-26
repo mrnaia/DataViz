@@ -67,18 +67,22 @@ function createSources(data){
 function createMediaSources(tweetSources){
   var mediaSources = []
   for(var media in tweetSources){
-    mediaSources.push({"name":media,"number_tweets_and_RT":tweetSources[media].number_tweets_and_RT,"mean_sentiment":tweetSources[media].mean_sentiment})
+    mediaSources.push({"name": media, "number_tweets_and_RT":tweetSources[media].number_tweets_and_RT,"mean_sentiment":tweetSources[media].mean_sentiment})
   }
   return mediaSources;
 }
 
+/*
 function createPays(){
   var array = {};
   array["France"] = 67190000;
   array["Quebec"] = 8390000;
-  return array;
 
-}
+  var countries = {France: 67190000, Quebec: 8390000};
+  console.log("test array" + countries["France"]);
+
+  return array;
+}*/
 
 function formatMediasData(data){
   var output = {};
@@ -93,7 +97,7 @@ function formatMediasData(data){
 
 function scaleBubbleSize(scale, data, pays){
   //console.log(data);
-  let min = d3.min(data, d => Math.sqrt(d.Followers/pays[d.Pays])); //la plus petite date des datas
+  let min = d3.min(data, d => Math.sqrt(d.Followers/pays[d.Pays])); // la plus petite date des datas
   let max = d3.max(data, d => Math.sqrt(d.Followers/pays[d.Pays])); // la date la plus récente
   //console.log(min, max);
   scale.domain([min,max]);
