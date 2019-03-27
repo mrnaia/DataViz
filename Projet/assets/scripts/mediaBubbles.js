@@ -2,38 +2,12 @@
 
 function mediaSizeScaleDomain(x,source){
   // TODO: Change size in respect with popularity
-  x.domain([d3.min(source,(d) => d.number_tweets_and_RT),d3.max(source,(d) => d.number_tweets_and_RT)]);
+  x.domain([d3.min(source,(d) => +d.number_tweets_and_RT),d3.max(source,(d) => +d.number_tweets_and_RT)]);
 }
 
 function mediaxScaleDomain(x,source){
-  x.domain([d3.min(source,(d) => d.mean_sentiment),d3.max(source,(d) => d.mean_sentiment)]);
+  x.domain([d3.min(source,(d) => +d.mean_sentiment),d3.max(source,(d) => +d.mean_sentiment)]);
 }
-
-
-function setUpMediaChart(tweetsChartGroup,mediaChartGroup,mediaSources,tweetSources, countries_population,scaleBubbleSizeMediaChart, mediasData, xBubbleScale){
-
-  var initPosition = {"x":xBubbleScale(0), "y": 100};
-  //var initPosition = {"x":(minXCoord+maxXCoord)/2, "y":yCoord};
-
-  mediaxScaleDomain(xBubbleScale, mediaSources);
-
-  var mediaTip = d3.tip()
-    .attr('class', 'd3-tip')
-    .attr('width', 100)
-    .offset([-10, 0]);
-
-  //Creation
-  var bubbleGroups = createMediaBubbleChart(mediaChartGroup,mediaSources,initPosition,tweetsChartGroup,tweetSources,mediaTip,localization.getFormattedNumber,countries_population,scaleBubbleSizeMediaChart, mediasData);
-
-  mediaTip.html(function(d) {
-    return getMediaTipText.call(this, d,localization.getFormattedNumber)
-  });
-  bubbleGroups.call(mediaTip);
-
-  runMediaSimulation(mediaSources, bubbleGroups, scaleBubbleSizeMediaChart,xBubbleScale, mediasData, countries_population);
-}
-
-
 /**
  * Crée les axes horizontaux du graphique à bulles des médias.
  *
@@ -65,8 +39,13 @@ function createMediaBubblesXAxis(g, y, x1, x2) {
  * @param tweetsGg       Le groupe dans lequel le graphique à bulles des tweets doit être dessiné.
  * @param tweetSources  les donneés : les tweets associiés à un média (issus du fichier csv non modifié)
  */
-function createMediaBubbleChart(g,mediaSources,initPosition,tweetsG,tweetSources, tip,formatNumber,countries_population,scaleBubbleSizeMediaChart, mediasData){
-  console.log(mediasData);
+function createMediaBubbleChart(g,mediaSources,initPosition, tweetsG, tweetSources, mediaXScale,formatNumber,scaleBubbleSizeMediaChart, scaleBubbleSizeTweetChart, mediasData){
+  var mediaTip = d3.tip()
+    .attr('class', 'd3-tip')
+    .attr('width', 100)
+    .offset([-10, 0])
+    .html(d => getMediaTipText.call(this, d, localization.getFormattedNumber));
+
   var mediaBubbleGroups = g.selectAll("g").data(mediaSources);
   var countryColor = colorCountry();
   var borderColor = colorCategory();
@@ -107,13 +86,17 @@ function createMediaBubbleChart(g,mediaSources,initPosition,tweetsG,tweetSources
   .on("click",function(d){
     var mouseCoordinates= d3.mouse(this);
     var initPosition = {"x":mouseCoordinates[0],"y":mouseCoordinates[1]}
-    setUpTweetChart(tweetsG,tweetSources[d.name].tweets,initPosition,formatNumber)
+    launchTweetsBubbleChart(tweetsG,scaleBubbleSizeTweetChart,tweetSources[d.name].tweets,initPosition,formatNumber)
+    //setUpTweetChart(tweetsG,tweetSources[d.name].tweets,initPosition,formatNumber)
   })
-  .on('mouseover', tip.show) //affiche les infobulles quand on passe la souris sur un cercle
-  .on("mouseout", tip.hide);
+  .on('mouseover', mediaTip.show) //affiche les infobulles quand on passe la souris sur un cercle
+  .on("mouseout", mediaTip.hide);
 
-  return mediaBubbleGroups.merge(mediaG);
+  mediaBubbleGroups = mediaBubbleGroups.merge(mediaG);
 
+  mediaBubbleGroups.call(mediaTip);
+
+  runMediaSimulation(mediaSources, mediaBubbleGroups, scaleBubbleSizeMediaChart, mediaXScale, mediasData);
 }
 function getMediaTipText(d, formatNumber){
   var tipText = "";

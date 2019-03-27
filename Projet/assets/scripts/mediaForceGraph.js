@@ -7,7 +7,7 @@ function ticked() {
 //var center = {"x": 0, "y": 100}
 
 //fonction qui maintient les cercles de chaque tweet d'un même groupe ensemble
-function runMediaSimulation(source,bubbleGroups,sizeBubbleScale,xBubbleScale, mediasData, countries_population){
+function runMediaSimulation(source,bubbleGroups,sizeBubbleScale, xBubbleScale, mediasData){
   var forceStrength = 0.035;
   var simulation = d3.forceSimulation()
     .velocityDecay(0.2)

@@ -9,9 +9,13 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
 
       //Range definitions
       var scaleBubbleSizeMediaChart =  d3.scaleLinear().range([mediaBubblesSize.min, mediaBubblesSize.max]);
+      var scaleBubbleSizeTweetChart =  d3.scaleLinear().range([tweetBubblesSize.min, tweetBubblesSize.max]);
+
       var xMedias = d3.scaleLinear().range([xMediasPositions.min, xMediasPositions.max]);
 
-      domainBubbleSize(scaleBubbleSizeMediaChart, mediasData, countries_population);
+      domainMediaBubbleSize(scaleBubbleSizeMediaChart, mediasData, countries_population);
+      domainTweetBubbleSize(scaleBubbleSizeTweetChart, tweetSources);
+      console.log(scaleBubbleSizeTweetChart.domain());
       var mediasData = formatMediasData(mediasData);
 
       // CREATION des visualisations
@@ -43,7 +47,11 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
       // Création du mediaBubbles
       createMediaBubblesXAxis(mediaAxisGroup, yMediasPosition, xMediasPositions.min - axisMargin, xMediasPositions.max + axisMargin);
 
-      setUpMediaChart(tweetsChartGroup,mediaBubblesGroup,mediaSources,tweetSources,countries_population,scaleBubbleSizeMediaChart, mediasData, xMedias)
+      var initPosition = {"x":xMedias(0), "y": 100};
+
+      createMediaBubbleChart(mediaBubblesGroup, mediaSources, initPosition, tweetsChartGroup, tweetSources, xMedias, localization.getFormattedNumber,scaleBubbleSizeMediaChart, scaleBubbleSizeTweetChart, mediasData);
+
+      //setUpMediaChart(tweetsChartGroup,mediaBubblesGroup,mediaSources,tweetSources,countries_population,scaleBubbleSizeMediaChart, scaleBubbleSizeTweetChart, mediasData, xMedias)
     });
   });
 });

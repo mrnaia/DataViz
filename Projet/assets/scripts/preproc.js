@@ -30,9 +30,9 @@ function createSources(data){
       sources[tweet.searchTerm]  = {"number_tweets_and_RT":0,"cumul_sentiment":0,"tweets":[]};
     }
     //nombre de retweets
-    sources[tweet.searchTerm].number_tweets_and_RT += +1 + +tweet.retweet_count;
+    sources[tweet.searchTerm].number_tweets_and_RT += 1 + +tweet.retweet_count;
     //sentiment
-    sources[tweet.searchTerm].cumul_sentiment += parseFloat(tweet.sentiment)*(1 + tweet.retweet_count);
+    sources[tweet.searchTerm].cumul_sentiment += +tweet.sentiment*(1 + +tweet.retweet_count);
     //ajout de la ligne des données du tweets dans le tableau de sortie
     sources[tweet.searchTerm].tweets = sources[tweet.searchTerm].tweets.concat([tweet]);
   })
@@ -83,13 +83,18 @@ function formatMediasData(data){
   return output;
 }
 
-function domainBubbleSize(scale, data, pays){
-  //console.log(data);
+function domainMediaBubbleSize(scale, data, pays){
   let min = d3.min(data, d => Math.sqrt(d.Followers/pays[d.Pays])); // la plus petite date des datas
   let max = d3.max(data, d => Math.sqrt(d.Followers/pays[d.Pays])); // la date la plus récente
-  //console.log(min, max);
   scale.domain([min,max]);
 }
+
+function domainTweetBubbleSize(scale, tweetsSources){
+  let min = d3.min(Object.values(tweetsSources), d => d3.min(d.tweets, tweet => +tweet.retweet_count));
+  let max = d3.max(Object.values(tweetsSources), d => d3.max(d.tweets, tweet => +tweet.retweet_count));
+  scale.domain([min, max]);
+}
+
 
 function colorCountry(){
   var scale = d3.scaleOrdinal().range(Object.values(countriesColors)).domain(Object.keys(countriesColors));

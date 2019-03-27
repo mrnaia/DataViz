@@ -14,7 +14,6 @@ function seperateTweets(d){
     return 0;
   }
 }
-var attractionPoints = [[400,700],[800,700],[1200,700]] //The coordinates of the points of attraction
 function attractionCenterX(d){
   return attractionPoints[seperateTweets(d)+1][0]
 }
@@ -30,11 +29,10 @@ function runTweetSimulation(source,bubbleGroups,xBubbleScale){
     .velocityDecay(0.2)
     .force('x', d3.forceX().strength(forceStrength).x(attractionCenterX))
     .force('y', d3.forceY().strength(forceStrength).y(attractionCenterY))
-    .force('collide', d3.forceCollide(d => Math.sqrt(xBubbleScale(d.retweet_count)) +0.5))
+    .force('collide', d3.forceCollide(d => Math.sqrt(xBubbleScale(+d.retweet_count)) + collisionTweetMargin))
     .on('tick', d => tweetTicked(d,bubbleGroups,xBubbleScale));
   simulation.nodes(source);
 }
-
 
 function tweetTicked(d,bubbleGroups,x) {
     bubbleGroups.select("circle")
@@ -42,6 +40,6 @@ function tweetTicked(d,bubbleGroups,x) {
       .attr('cy', function (d) { return d.y; });
 
     bubbleGroups.select("svg")
-      .attr('x', function (d) { return placeBird(d.x,d.y,Math.sqrt(x(d.retweet_count))).x; })
-      .attr('y', function (d) { return placeBird(d.x,d.y,Math.sqrt(x(d.retweet_count))).y; });
+      .attr('x', function (d) { return placeBird(d.x,d.y,Math.sqrt(x(+d.retweet_count))).x; })
+      .attr('y', function (d) { return placeBird(d.x,d.y,Math.sqrt(x(+d.retweet_count))).y; });
 }

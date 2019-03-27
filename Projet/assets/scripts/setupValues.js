@@ -23,3 +23,8 @@ var yMediasPosition = 100;
 var center = {"x": 0, "y": yMediasPosition}
 
 // TWEETS BUBBLE CHART
+var tweetBubblesSize = {min: 40, max: 50000};
+
+var attractionPoints = [[400,700],[800,700],[1200,700]] //The coordinates of the points of attraction
+
+var collisionTweetMargin = 1;
