@@ -1,6 +1,6 @@
 
 function splitCountry(checked,mediaG,data, scaleBubbles, mediaXScale, mediasData){
-  console.log(data);
+  //console.log(data);
   /*mediaG.selectAll("circle")
     .transition()
     .duration(1000)
@@ -10,14 +10,14 @@ function splitCountry(checked,mediaG,data, scaleBubbles, mediaXScale, mediasData
         return
       }
     });*/
-    console.log(mediasData);
+    //console.log(mediasData);
     if(checked){
       dataQuebec=data.filter(function(el){
         if(el.name in mediasData){
           return mediasData[el.name].Pays == "Quebec";
         }
         else{
-          console.log("else");
+          //console.log("else");
           return;
         }});
         dataFrance=data.filter(function(el){
@@ -25,7 +25,7 @@ function splitCountry(checked,mediaG,data, scaleBubbles, mediaXScale, mediasData
             return mediasData[el.name].Pays == "France";
           }
           else{
-            console.log("else");
+            //console.log("else");
             return;
           }
         });

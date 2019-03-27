@@ -97,7 +97,7 @@ function createMediaBubbleChart(g,mediaSources,initPosition, tweetsG, tweetSourc
   mediaBubbleGroups.call(mediaTip);
   var checkPays = d3.select("#filterCountry");
   checkPays.on("click", function(d){
-    console.log(this.checked);
+    //console.log(this.checked);
     splitCountry(this.checked, mediaBubbleGroups, mediaSources, scaleBubbleSizeMediaChart, mediaXScale, mediasData);
   });
 
