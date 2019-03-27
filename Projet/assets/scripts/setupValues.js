@@ -4,7 +4,11 @@ var svgSetup = {height: "1000", width: "100%"};
 // MEDIA BUBBLE CHART
 
 //Values of population for the 'countries'
-var pays_population = {France: 67190000, Quebec: 8390000};
+var countries_population = {France: 67190000, Quebec: 8390000};
+
+//Bubble colors legend
+var countriesColors = {France: "#000", Quebec: "#ddd"};
+var categoriesColors = {Tele: "#9adb0f", Ecrit: "#1ad5f2", Radio: "#ed8210"};
 
 // How many pixels of axis are beyond the range of bubbles ?
 var axisMargin = 50;

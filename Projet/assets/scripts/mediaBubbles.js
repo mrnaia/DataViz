@@ -10,7 +10,7 @@ function mediaxScaleDomain(x,source){
 }
 
 
-function setUpMediaChart(tweetsChartGroup,mediaChartGroup,mediaSources,tweetSources, pays_population,scaleBubbleSizeMediaChart, mediasData, xBubbleScale){
+function setUpMediaChart(tweetsChartGroup,mediaChartGroup,mediaSources,tweetSources, countries_population,scaleBubbleSizeMediaChart, mediasData, xBubbleScale){
 
   var initPosition = {"x":xBubbleScale(0), "y": 100};
   //var initPosition = {"x":(minXCoord+maxXCoord)/2, "y":yCoord};
@@ -23,42 +23,27 @@ function setUpMediaChart(tweetsChartGroup,mediaChartGroup,mediaSources,tweetSour
     .offset([-10, 0]);
 
   //Creation
-  var bubbleGroups = createMediaBubbleChart(mediaChartGroup,mediaSources,initPosition,tweetsChartGroup,tweetSources,mediaTip,localization.getFormattedNumber,pays_population,scaleBubbleSizeMediaChart, mediasData);
+  var bubbleGroups = createMediaBubbleChart(mediaChartGroup,mediaSources,initPosition,tweetsChartGroup,tweetSources,mediaTip,localization.getFormattedNumber,countries_population,scaleBubbleSizeMediaChart, mediasData);
 
   mediaTip.html(function(d) {
     return getMediaTipText.call(this, d,localization.getFormattedNumber)
   });
   bubbleGroups.call(mediaTip);
 
-  runMediaSimulation(mediaSources, bubbleGroups, scaleBubbleSizeMediaChart,xBubbleScale, mediasData, pays_population);
+  runMediaSimulation(mediaSources, bubbleGroups, scaleBubbleSizeMediaChart,xBubbleScale, mediasData, countries_population);
 }
 
 
 /**
- * Crée les axes du graphique à bulles des médias.
+ * Crée les axes horizontaux du graphique à bulles des médias.
  *
- * @param g       Le groupe SVG dans lequel le graphique à bulles doit être dessiné.
- * @param xAxis   L'axe X.
- * @param yAxis   L'axe Y.
- * @param height  La hauteur du graphique.
- * @param width   La largeur du graphique.
+ * @param g       Le groupe SVG dans lequel l'axe doit être dessiné.
+ * @param y   La position en Y de l'axe à afficher.
+ * @param x1   L'abscisse gauche du début de l'axe.
+ * @param x2  L'abscisse droit de la fin de l'axe.
  */
-function createMediaBubblesAxis(g, y, x1, x2) {
+function createMediaBubblesXAxis(g, y, x1, x2) {
   // Dessiner l'axe des abscisses du graphique.
-
-  /*
-  // Axe horizontal
-  g.append("g")
-    .attr("class", "x axis")
-    .attr("transform", "translate(" + 0 + "," + height/4 + ")")
-    .call(xAxis); //axe
-  g.append("text")
-    .attr("x", 1000)
-    .attr("y", height/4 - 2)
-    .style("text-anchor", "end")
-    .text("Positivité des tweets") //nom de l'axe
-  */
-
   for (let i=0; i<6; i++){
     g.append("line")
     .attr("x1", x1)
@@ -69,8 +54,6 @@ function createMediaBubblesAxis(g, y, x1, x2) {
     //.attr("stroke-width", "1px")
     .attr("opacity", 0.5)
   }
-
-
 }
 
 /**
@@ -82,7 +65,7 @@ function createMediaBubblesAxis(g, y, x1, x2) {
  * @param tweetsGg       Le groupe dans lequel le graphique à bulles des tweets doit être dessiné.
  * @param tweetSources  les donneés : les tweets associiés à un média (issus du fichier csv non modifié)
  */
-function createMediaBubbleChart(g,mediaSources,initPosition,tweetsG,tweetSources, tip,formatNumber,pays_population,scaleBubbleSizeMediaChart, mediasData){
+function createMediaBubbleChart(g,mediaSources,initPosition,tweetsG,tweetSources, tip,formatNumber,countries_population,scaleBubbleSizeMediaChart, mediasData){
   console.log(mediasData);
   var mediaBubbleGroups = g.selectAll("g").data(mediaSources);
   var countryColor = colorCountry();
@@ -94,7 +77,7 @@ function createMediaBubbleChart(g,mediaSources,initPosition,tweetsG,tweetSources
   mediaG.append("circle")
     .attr("r",function(d){
       if(d.name in mediasData){
-          return scaleBubbleSizeMediaChart(mediasData[d.name].Followers/pays_population[mediasData[d.name].Pays]);
+          return scaleBubbleSizeMediaChart(mediasData[d.name].Followers/countries_population[mediasData[d.name].Pays]);
       }
       else{
         //console.log("pas d'infos");

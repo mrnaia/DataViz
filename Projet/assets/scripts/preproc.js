@@ -83,7 +83,7 @@ function formatMediasData(data){
   return output;
 }
 
-function scaleBubbleSize(scale, data, pays){
+function domainBubbleSize(scale, data, pays){
   //console.log(data);
   let min = d3.min(data, d => Math.sqrt(d.Followers/pays[d.Pays])); // la plus petite date des datas
   let max = d3.max(data, d => Math.sqrt(d.Followers/pays[d.Pays])); // la date la plus récente
@@ -92,11 +92,10 @@ function scaleBubbleSize(scale, data, pays){
 }
 
 function colorCountry(){
-  //var scale = d3.scaleOrdinal().range(["#cddcf4", "#ffb7b7"]).domain(["Quebec","France"]);
-  var scale = d3.scaleOrdinal().range(["#000", "#ddd"]).domain(["Quebec","France"]);
+  var scale = d3.scaleOrdinal().range(Object.values(countriesColors)).domain(Object.keys(countriesColors));
   return scale;
 }
 function colorCategory(){
-  var scale = d3.scaleOrdinal().range(["#0cd3a8", "#3e80f2", "#ed8210"]).domain(["Tele", "Ecrit", "Radio"]);
+  var scale = d3.scaleOrdinal().range(Object.values(categoriesColors)).domain(Object.keys(categoriesColors));
   return scale;
 }

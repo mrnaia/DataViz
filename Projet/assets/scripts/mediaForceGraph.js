@@ -7,7 +7,7 @@ function ticked() {
 //var center = {"x": 0, "y": 100}
 
 //fonction qui maintient les cercles de chaque tweet d'un même groupe ensemble
-function runMediaSimulation(source,bubbleGroups,sizeBubbleScale,xBubbleScale, mediasData, pays_population){
+function runMediaSimulation(source,bubbleGroups,sizeBubbleScale,xBubbleScale, mediasData, countries_population){
   var forceStrength = 0.035;
   var simulation = d3.forceSimulation()
     .velocityDecay(0.2)
@@ -15,7 +15,7 @@ function runMediaSimulation(source,bubbleGroups,sizeBubbleScale,xBubbleScale, me
     .force('y', d3.forceY().strength(forceStrength).y(center.y))
     .force('collide', d3.forceCollide(function(d){
       if(d.name in mediasData){
-        return sizeBubbleScale(mediasData[d.name].Followers/pays_population[mediasData[d.name].Pays]) + 2;
+        return sizeBubbleScale(mediasData[d.name].Followers/countries_population[mediasData[d.name].Pays]) + 2;
       }
       else{
         return 10+0.5;
