@@ -28,7 +28,7 @@ var initPosition = {"x": (xMediasPositions.min + xMediasPositions.max)/2, "y": y
 var center = {"x": 0, "y": yMediasPosition}
 
 // Space in number of pixels between each category separated
-var interCategorySpace = 200;
+var interCategorySpace = 100;
 // Variable that contains the number of categories displayed
 var nbCategoriesDisplayed = 1;
 
