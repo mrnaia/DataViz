@@ -88,8 +88,8 @@ function updateMediaBubblesXAxis(g) {
   lines.selectAll(".Quebec")
     .transition()
     .duration(1000)
-    .attr("y2", yMediasPosition + interCategorySpace)
     .attr("y1", yMediasPosition + interCategorySpace)
+    .attr("y2", yMediasPosition + interCategorySpace)
   //France doesn't move
 }
 
