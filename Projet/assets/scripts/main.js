@@ -1,12 +1,13 @@
 //on récupère le fichier csv qui contient les tweets
 d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
   d3.dsv("|","./data/QuebecMedia.csv").then(function(quebec_data) {
-    d3.dsv(",", "./data/categories.csv").then(function(mediasData) {
+    d3.dsv(",", "./data/categories.csv").then(function(medias_data) {
 
       //Preprocessing
+      var mediasData = formatMediasData(medias_data);
       var tweetSources = createSources(france_data.concat(quebec_data));
-      var mediaSources = createMediaSources(tweetSources);
-
+      var mediaSources = createMediaSources(tweetSources,mediasData);
+      
       //Range definitions
       //Medias
       var scaleBubbleSizeMediaChart =  d3.scaleLinear().range([mediaBubblesSize.min, mediaBubblesSize.max]);
@@ -14,9 +15,8 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
       //Tweets
       var scaleBubbleSizeTweetChart =  d3.scaleLinear().range([tweetBubblesSize.min, tweetBubblesSize.max]);
 
-      domainMediaBubbleSize(scaleBubbleSizeMediaChart, mediasData, countries_population);
+      domainMediaBubbleSize(scaleBubbleSizeMediaChart, medias_data, countries_population);
       domainTweetBubbleSize(scaleBubbleSizeTweetChart, tweetSources);
-      var mediasData = formatMediasData(mediasData);
 
       // CREATION des visualisations
 
@@ -48,7 +48,7 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
       createMediaBubblesXAxis(mediaXAxisGroup);
       createMediaBubblesYAxis(mediaYAxisGroup, xMedias);
       createMediaBubbleChart(mediaBubblesGroup, mediaSources, initPosition, tweetsChartGroup, tweetSources, xMedias, localization.getFormattedNumber,scaleBubbleSizeMediaChart, scaleBubbleSizeTweetChart, mediasData);
-      
+
     });
   });
 });
