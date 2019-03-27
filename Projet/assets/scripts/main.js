@@ -45,6 +45,7 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
       // Création du mediaBubbles
       createMediaBubblesXAxis(mediaAxisGroup, yMediasPosition, xMediasPositions.min - axisMargin, xMediasPositions.max + axisMargin);
       createMediaBubbleChart(mediaBubblesGroup, mediaSources, initPosition, tweetsChartGroup, tweetSources, xMedias, localization.getFormattedNumber,scaleBubbleSizeMediaChart, scaleBubbleSizeTweetChart, mediasData);
+      
     });
   });
 });
