@@ -5,6 +5,7 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
 
       //Preprocessing
       var mediasData = formatMediasData(medias_data);
+      console.log(mediasData);
       var tweetSources = createSources(france_data.concat(quebec_data));
       var mediaSources = createMediaSources(tweetSources, mediasData);
       var mediaSplitMetadata = createMediaSplitMetadata();

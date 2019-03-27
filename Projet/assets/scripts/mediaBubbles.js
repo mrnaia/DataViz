@@ -202,9 +202,8 @@ function updateFilterCheck() {
 
 function getMediaTipText(d, formatNumber){
   var tipText = "";
-  tipText += "[Insert real media name]<br>"
-  tipText += "<span><strong>" + d.name + "</strong></span><br>";
-  tipText += "<span>Sentiment moyen: <strong>" + formatNumber(d.mean_sentiment) + "</strong></span><br>";
+  tipText += "<span><strong>"+ d.fullName +"</strong> - <em>"+ d.name + "</em></span><br>";
+  tipText += "<span>Sentiment moyen: <strong style='color:"+d3.interpolateRdYlGn((d.mean_sentiment+0.5))+"'>" + formatNumber(d.mean_sentiment) + "</strong></span><br>";
   tipText += "<span>Nombre de tweet et retweet moyen: <strong>" + formatNumber(d.number_tweets_and_RT) + "</strong></span>";
   return tipText;
 

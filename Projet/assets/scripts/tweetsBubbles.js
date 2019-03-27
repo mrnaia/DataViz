@@ -51,7 +51,7 @@ function getTweetTipText(d, formatNumber){
   var tipText = "";
   tipText += "<span>Text: <strong>" + d.full_text + "</strong></span><br>";
   tipText += "<span>Nombre de retweets: <strong>" + formatNumber(+d.retweet_count) + "</strong></span><br>";
-  tipText += "<span>Sentiment: <strong>" + formatNumber(+d.sentiment) + "</strong></span><br>";
+  tipText += "<span>Sentiment: <strong style='color:"+d3.interpolateRdYlGn((+d.sentiment/2+0.5))+"'>" + formatNumber(+d.sentiment) + "</strong></span><br>";
   return tipText;
 }
 //TODO
