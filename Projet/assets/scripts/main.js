@@ -17,7 +17,7 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
 
       //DOMAIN definitions
       //Medias
-      domainMediaBubbleSize(scaleBubbleSizeMediaChart, mediasData, countries_population);
+      domainMediaBubbleSize(scaleBubbleSizeMediaChart, medias_data, countries_population);
       domainMediaXPosition(xMedias, mediaSources);
       //Tweets
       domainTweetBubbleSize(scaleBubbleSizeTweetChart, tweetSources);
