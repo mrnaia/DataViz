@@ -122,10 +122,10 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
   mediaG.append("circle")
     .attr("r",function(d){
       if(d.name in mediasData){
-          return scaleBubbleSizeMediaChart(mediasData[d.name].Followers/countries_population[mediasData[d.name].Pays]);
+        return scaleBubbleSizeMediaChart(+mediasData[d.name].Followers/+countries_population[d.Pays]);
       }
       else{
-        //console.log("pas d'infos");
+        console.log("pas d'infos");
         return 10;
       }
     })
@@ -133,12 +133,12 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
   .attr("style","opacity:1")
   .attr("fill",function(d){
     if([d.name] in mediasData){
-      return countryColor(mediasData[d.name].Pays);//d3.interpolateRdYlGn(d.mean_sentiment/2 +0.5))
+      return countryColor(d.Pays);//d3.interpolateRdYlGn(d.mean_sentiment/2 +0.5))
     }
   })
   .attr("stroke", function(d){
     if([d.name] in mediasData){
-      return borderColor(mediasData[d.name].Categorie);
+      return borderColor(d.Categorie);
     }
   })
   .attr("stroke-width", 3)
@@ -162,12 +162,13 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
 
   mediaBubbleGroups.call(mediaTip);
 
+  /*
   var checkPays = d3.select("#filterCountry");
   checkPays.on("click", function(d){
     //console.log(this.checked);
     splitCountry(this.checked, mediaBubbleGroups, mediaSources, scaleBubbleSizeMediaChart, mediaXScale, mediasData);
   });
-
+  */
   runMediaSimulation(mediaSources, mediaBubbleGroups, scaleBubbleSizeMediaChart, mediaXScale, mediasData, center);
 }
 

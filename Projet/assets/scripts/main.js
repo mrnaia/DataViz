@@ -1,13 +1,14 @@
 //on récupère le fichier csv qui contient les tweets
 d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
   d3.dsv("|","./data/QuebecMedia.csv").then(function(quebec_data) {
-    d3.dsv(",", "./data/categories.csv").then(function(mediasData) {
+    d3.dsv(",", "./data/categories.csv").then(function(medias_data) {
 
-      //PREPROCESSING
+      //Preprocessing
+      var mediasData = formatMediasData(medias_data);
       var tweetSources = createSources(france_data.concat(quebec_data));
-      var mediaSources = createMediaSources(tweetSources);
+      var mediaSources = createMediaSources(tweetSources,mediasData);
 
-      //RANGE definitions
+      //Range definitions
       //Medias
       var scaleBubbleSizeMediaChart =  d3.scaleLinear().range([mediaBubblesSize.min, mediaBubblesSize.max]);
       var xMedias = d3.scaleLinear().range([xMediasPositions.min, xMediasPositions.max]);
@@ -20,9 +21,6 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
       domainMediaXPosition(xMedias, mediaSources);
       //Tweets
       domainTweetBubbleSize(scaleBubbleSizeTweetChart, tweetSources);
-
-      //FORMAT
-      var mediasData = formatMediasData(mediasData);
 
       // CREATION VIZ
 

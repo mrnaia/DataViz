@@ -64,10 +64,11 @@ function createSources(data){
   *                      ...
   *                    ]
   */
-function createMediaSources(tweetSources){
+function createMediaSources(tweetSources, mediasData){
   var mediaSources = []
   for(var media in tweetSources){
-    mediaSources.push({"name": media, "number_tweets_and_RT":tweetSources[media].number_tweets_and_RT,"mean_sentiment":tweetSources[media].mean_sentiment})
+    var mediaInfo = mediasData[media];
+    mediaSources.push({name: media, Pays:mediaInfo.Pays, Categorie: mediaInfo.Categorie, number_tweets_and_RT:tweetSources[media].number_tweets_and_RT,mean_sentiment:tweetSources[media].mean_sentiment})
   }
   return mediaSources;
 }
