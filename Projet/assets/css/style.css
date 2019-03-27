@@ -41,3 +41,7 @@ body {
   stroke-width: 1px;
   opacity: 1;
 }
+
+label {
+  cursor: pointer;
+}
