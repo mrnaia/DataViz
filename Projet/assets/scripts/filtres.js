@@ -11,36 +11,49 @@ function splitCountry(checked,mediaG,data, scaleBubbles, mediaXScale, mediasData
       }
     });*/
     //console.log(mediasData);
-    if(checked){
-      dataQuebec=data.filter(function(el){
-        if(el.name in mediasData){
+    if (checked){
+      dataQuebec = data.filter(function(el){
+        if (el.name in mediasData){
           return mediasData[el.name].Pays == "Quebec";
-        }
-        else{
+        } else {
           //console.log("else");
           return;
         }});
-        dataFrance=data.filter(function(el){
-          if(el.name in mediasData){
-            return mediasData[el.name].Pays == "France";
-          }
-          else{
-            //console.log("else");
-            return;
-          }
-        });
+      dataFrance = data.filter(function(el){
+        if (el.name in mediasData){
+          return mediasData[el.name].Pays == "France";
+        } else {
+          //console.log("else");
+          return;
+        }
+      });
+
+      nbCategoriesDisplayed *= 2;
 
 
+      //TODO : only one simulation for performance
+      //Au lieu de refaire des simulations : cf le force des tweets qui sont
+      //attirés par différents points attracteurs. re Runner la meme simulation qui recupere
+      //l etat des filtres pour determiner les points attracteurs cf
+      //.force('x', d3.forceX().strength(forceStrength).x(attractionCenterX))
+      //.force('y', d3.forceY().strength(forceStrength).y(attractionCenterY))
+
+      //Avec attractionCenterX ou Y des fonctions qui prennent d en entree (chaque entree)
+      // si on rajoute dans le preproc le "country" de chaque media on determine le point d'attraction (surtout en x)
       yMediasPosition = 300;
       runMediaSimulation(dataQuebec, mediaG, scaleBubbles, mediaXScale, mediasData);
-
       yMediasPosition = 100;
       runMediaSimulation(dataFrance, mediaG, scaleBubbles, mediaXScale, mediasData);
 
-    }
-    else{
+    } else {
+      nbCategoriesDisplayed /= 2;
+
+
       runMediaSimulation(data, mediaG, scaleBubbles, mediaXScale, mediasData);
     }
+
+    updateMediaBubblesYAxis(d3.select("#mediaXAxis"));
+    updateMediaBubblesXAxis(d3.select("#mediaYAxis"))
 
   }
 

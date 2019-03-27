@@ -15,9 +15,12 @@ body {
   border-radius: 10px;
 }
 
-
+#mediaBubbleChart circle {
+  opacity: 0.6 !important;
+}
 #mediaBubbleChart circle:hover {
   cursor: pointer;
+  opacity: 1 !important;
 }
 
 .hoverMedia {

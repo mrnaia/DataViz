@@ -24,7 +24,7 @@ function createMediaBubblesXAxis(g) {
   var x2 = xMediasPositions.max + axisMarginX;
 
   for (let i=0; i<6; i++){
-    g.append("line")
+    let xAxisLine = g.append("line")
     .attr("x1", x1)
     .attr("x2", x2)
     .attr("y1", y)
@@ -32,6 +32,15 @@ function createMediaBubblesXAxis(g) {
     .attr("stroke", "grey")
     //.attr("stroke-width", "1px")
     .attr("opacity", 0.5)
+
+    //Assign class for countries
+    if (i<3) {
+      xAxisLine.classed("Quebec");
+    } else {
+      xAxisLine.classed("France");
+    }
+    //Assign class for categories
+    xAxisLine.classed(Object.keys(categoriesColors)[i%3])
   }
 }
 
@@ -43,32 +52,45 @@ function createMediaBubblesYAxis(g, xMedias) {
     let sentimentValue = i/10;
     if (verticalAxisBoundValues.min < sentimentValue && sentimentValue < verticalAxisBoundValues.max) {
       let xVal = xMedias(sentimentValue);
+      //Draw vertical line
       var verticalLine = g.append("line")
         .attr("x1", xVal)
         .attr("x2", xVal)
-        .attr("y1", yMediasPosition + axisMarginY)
-        .attr("y2", yMediasPosition - axisMarginY)
+        .attr("y1", yMediasPosition - axisMarginY)
+        .attr("y2", yMediasPosition + axisMarginY + interCategorySpace*(nbCategoriesDisplayed-1) )
         .attr("stroke", "grey")
         .attr("opacity", 0.5)
         .style("stroke-dasharray", "3 3");
+      //Add text label
+      var sentimentLabel = g.append("text")
+        .text(sentimentValue)
+        .attr("text-anchor", "middle")
+        .attr("x", xVal)
+        .attr("y", yMediasPosition - axisMarginY - 5)
+        .attr("fill", "grey")
       if (i == 0) {
         verticalLine.attr("opacity", 1)
           .style("stroke-dasharray", "4 4");
+        sentimentLabel.attr("font-weight", "bold");
       }
     }
   }
-  /*
-  for (let i=0; i<6; i++){
-    g.append("line")
-    .attr("x1", x1)
-    .attr("x2", x2)
-    .attr("y1", y)
-    .attr("y2", y)
-    .attr("stroke", "grey")
-    //.attr("stroke-width", "1px")
-    .attr("opacity", 0.5)
-  }
-  */
+}
+
+function updateMediaBubblesYAxis(g) {
+  g.selectAll("line")
+    .transition()
+    .duration(1000)
+    .attr("y2", yMediasPosition + axisMarginY + interCategorySpace*(nbCategoriesDisplayed-1))
+}
+function updateMediaBubblesXAxis(g) {
+  let lines = g.selectAll("line")
+  lines.selectAll(".Quebec")
+    .transition()
+    .duration(1000)
+    .attr("y2", yMediasPosition + interCategorySpace)
+    .attr("y1", yMediasPosition + interCategorySpace)
+  //France doesn't move
 }
 
 /**
@@ -136,6 +158,7 @@ function createMediaBubbleChart(g,mediaSources,initPosition, tweetsG, tweetSourc
   mediaBubbleGroups = mediaBubbleGroups.merge(mediaG);
 
   mediaBubbleGroups.call(mediaTip);
+
   var checkPays = d3.select("#filterCountry");
   checkPays.on("click", function(d){
     //console.log(this.checked);
@@ -148,7 +171,7 @@ function createMediaBubbleChart(g,mediaSources,initPosition, tweetsG, tweetSourc
 function getMediaTipText(d, formatNumber){
   var tipText = "";
   console.log("d => " + d.toString());
-  tipText += "<br>"
+  tipText += "[Insert real media name]<br>"
   tipText += "<span><strong>" + d.name + "</strong></span><br>";
   tipText += "<span>Sentiment moyen: <strong>" + formatNumber(d.mean_sentiment) + "</strong></span><br>";
   tipText += "<span>Nombre de tweet et retweet moyen: <strong>" + formatNumber(d.number_tweets_and_RT) + "</strong></span>";
