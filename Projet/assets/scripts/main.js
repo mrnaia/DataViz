@@ -39,19 +39,12 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
         .attr("id", "mediaBubbles")
 
       // Echelles
-      var mediaChartBounds = mediaChartGroup.node().getBoundingClientRect()
-
+      //var mediaChartBounds = mediaChartGroup.node().getBoundingClientRect()
       mediaxScaleDomain(xMedias, mediaSources);
-
 
       // Création du mediaBubbles
       createMediaBubblesXAxis(mediaAxisGroup, yMediasPosition, xMediasPositions.min - axisMargin, xMediasPositions.max + axisMargin);
-
-      var initPosition = {"x":xMedias(0), "y": 100};
-
       createMediaBubbleChart(mediaBubblesGroup, mediaSources, initPosition, tweetsChartGroup, tweetSources, xMedias, localization.getFormattedNumber,scaleBubbleSizeMediaChart, scaleBubbleSizeTweetChart, mediasData);
-
-      //setUpMediaChart(tweetsChartGroup,mediaBubblesGroup,mediaSources,tweetSources,countries_population,scaleBubbleSizeMediaChart, scaleBubbleSizeTweetChart, mediasData, xMedias)
     });
   });
 });

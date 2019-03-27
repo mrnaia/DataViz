@@ -1,6 +1,7 @@
 // GLOBAL SVG
 var svgSetup = {height: "1000", width: "100%"};
 
+
 // MEDIA BUBBLE CHART
 
 //Values of population for the 'countries'
@@ -21,10 +22,15 @@ var xMediasPositions = {min: 0 + axisMargin, max: 500 + axisMargin};
 var yMediasPosition = 100;
 
 var center = {"x": 0, "y": yMediasPosition}
+// Initial position in the SVG of media Bubbles before begin of simulation
+var initPosition = {"x": (xMediasPositions.min + xMediasPositions.max)/2, "y": 100};
+
 
 // TWEETS BUBBLE CHART
+
+// Min and Max values of tweets bubbles sizes
 var tweetBubblesSize = {min: 40, max: 50000};
-
-var attractionPoints = [[400,700],[800,700],[1200,700]] //The coordinates of the points of attraction
-
+// X and Y values of the 3 attraction points for tweets
+var attractionPoints = [[400,700], [800,700], [1200,700]]
+// Size of the collision Tweets margin
 var collisionTweetMargin = 1;
