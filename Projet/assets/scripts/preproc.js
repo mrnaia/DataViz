@@ -9,13 +9,13 @@
   * @param data      Données provenant du fichier CSV.
   * @return Object
   *                    {
-  *                      $NomDuMedia$: {
+  *                      "@NomDuMedia": {
   *                      number_tweets_and_RT: number //How many tweets + retweets
   *                      cumul_sentiment: number //The total sentiment score weighted by the retweet_count
                           mean_sentiment
   *                      tweets: [
                             id : unique à l'intérieur d'un média
-  *                        //toutes les infos du teweet (full_text, date, retweetes, likes, comptes,sentiment...)
+  *                        //toutes les infos du tweet (full_text, date, retweetes, likes, comptes,sentiment...)
   *                      ]}
   *                      ...
   *                    }

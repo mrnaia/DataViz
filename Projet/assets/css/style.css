@@ -20,6 +20,13 @@ body {
   cursor: pointer;
 }
 
+.hoverMedia {
+  opacity: 1 !important;
+}
+.notHoverMedia {
+  opacity: 0.3 !important;
+}
+
 #tweetBubbleChart circle {
   fill: rgba(250,250,250,1);
   stroke : rgba(240,240,240,1);

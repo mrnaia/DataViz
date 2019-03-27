@@ -8,14 +8,14 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
       var mediaSources = createMediaSources(tweetSources);
 
       //Range definitions
+      //Medias
       var scaleBubbleSizeMediaChart =  d3.scaleLinear().range([mediaBubblesSize.min, mediaBubblesSize.max]);
-      var scaleBubbleSizeTweetChart =  d3.scaleLinear().range([tweetBubblesSize.min, tweetBubblesSize.max]);
-
       var xMedias = d3.scaleLinear().range([xMediasPositions.min, xMediasPositions.max]);
+      //Tweets
+      var scaleBubbleSizeTweetChart =  d3.scaleLinear().range([tweetBubblesSize.min, tweetBubblesSize.max]);
 
       domainMediaBubbleSize(scaleBubbleSizeMediaChart, mediasData, countries_population);
       domainTweetBubbleSize(scaleBubbleSizeTweetChart, tweetSources);
-      console.log(scaleBubbleSizeTweetChart.domain());
       var mediasData = formatMediasData(mediasData);
 
       // CREATION des visualisations
@@ -33,8 +33,10 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
         .attr("id", "tweetBubbleChart")
 
       // ajout d'un groupe pour les bulles des médias et pour les axes horizontaux
-      var mediaAxisGroup = mediaChartGroup.append("g")
-        .attr("id", "mediaAxis")
+      var mediaXAxisGroup = mediaChartGroup.append("g")
+        .attr("id", "mediaXAxis")
+      var mediaYAxisGroup = mediaChartGroup.append("g")
+        .attr("id", "mediaYAxis")
       var mediaBubblesGroup = mediaChartGroup.append("g")
         .attr("id", "mediaBubbles")
 
@@ -43,7 +45,8 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
       mediaxScaleDomain(xMedias, mediaSources);
 
       // Création du mediaBubbles
-      createMediaBubblesXAxis(mediaAxisGroup, yMediasPosition, xMediasPositions.min - axisMargin, xMediasPositions.max + axisMargin);
+      createMediaBubblesXAxis(mediaXAxisGroup);
+      createMediaBubblesYAxis(mediaYAxisGroup, xMedias);
       createMediaBubbleChart(mediaBubblesGroup, mediaSources, initPosition, tweetsChartGroup, tweetSources, xMedias, localization.getFormattedNumber,scaleBubbleSizeMediaChart, scaleBubbleSizeTweetChart, mediasData);
     });
   });

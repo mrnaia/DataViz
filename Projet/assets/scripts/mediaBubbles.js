@@ -16,8 +16,13 @@ function mediaxScaleDomain(x,source){
  * @param x1   L'abscisse gauche du début de l'axe.
  * @param x2  L'abscisse droit de la fin de l'axe.
  */
-function createMediaBubblesXAxis(g, y, x1, x2) {
+function createMediaBubblesXAxis(g) {
   // Dessiner l'axe des abscisses du graphique.
+
+  var y = yMediasPosition;
+  var x1 = xMediasPositions.min - axisMarginX;
+  var x2 = xMediasPositions.max + axisMarginX;
+
   for (let i=0; i<6; i++){
     g.append("line")
     .attr("x1", x1)
@@ -28,6 +33,42 @@ function createMediaBubblesXAxis(g, y, x1, x2) {
     //.attr("stroke-width", "1px")
     .attr("opacity", 0.5)
   }
+}
+
+function createMediaBubblesYAxis(g, xMedias) {
+  // Dessiner les axes verticaux du graphique.
+  var verticalAxisBoundValues = {min: xMedias.invert(xMediasPositions.min - axisMarginX), max: xMedias.invert(xMediasPositions.max + axisMarginX)};
+
+  for (let i=-10 ; i<=10 ; i++) {
+    let sentimentValue = i/10;
+    if (verticalAxisBoundValues.min < sentimentValue && sentimentValue < verticalAxisBoundValues.max) {
+      let xVal = xMedias(sentimentValue);
+      var verticalLine = g.append("line")
+        .attr("x1", xVal)
+        .attr("x2", xVal)
+        .attr("y1", yMediasPosition + axisMarginY)
+        .attr("y2", yMediasPosition - axisMarginY)
+        .attr("stroke", "grey")
+        .attr("opacity", 0.5)
+        .style("stroke-dasharray", "3 3");
+      if (i == 0) {
+        verticalLine.attr("opacity", 1)
+          .style("stroke-dasharray", "4 4");
+      }
+    }
+  }
+  /*
+  for (let i=0; i<6; i++){
+    g.append("line")
+    .attr("x1", x1)
+    .attr("x2", x2)
+    .attr("y1", y)
+    .attr("y2", y)
+    .attr("stroke", "grey")
+    //.attr("stroke-width", "1px")
+    .attr("opacity", 0.5)
+  }
+  */
 }
 
 /**
@@ -51,7 +92,7 @@ function createMediaBubbleChart(g,mediaSources,initPosition, tweetsG, tweetSourc
   var borderColor = colorCategory();
   //console.log("createMediaBubbleChart");
   //console.log(mediaBubbleGroups);
-  var mediaG = mediaBubbleGroups.enter().append("g");
+  var mediaG = mediaBubbleGroups.enter().append("g"); //mediaG is the group over each media circle
   //pour chaque media on crée un cercle
   mediaG.append("circle")
     .attr("r",function(d){
@@ -81,16 +122,16 @@ function createMediaBubbleChart(g,mediaSources,initPosition, tweetsG, tweetSourc
     d.y = initPosition.y+Math.random()*5;
     return d;
   })
-  .attr("cy",d => d.x)
-  .attr("cx",d => d.y)
-  .on("click",function(d){
+  .attr("cx", d => d.x)
+  .attr("cy", d => d.y)
+  .on("click", function(d){
     var mouseCoordinates= d3.mouse(this);
-    var initPosition = {"x":mouseCoordinates[0],"y":mouseCoordinates[1]}
+    var initPosition = {"x":mouseCoordinates[0], "y":mouseCoordinates[1]}
     launchTweetsBubbleChart(tweetsG,scaleBubbleSizeTweetChart,tweetSources[d.name].tweets,initPosition,formatNumber)
     //setUpTweetChart(tweetsG,tweetSources[d.name].tweets,initPosition,formatNumber)
   })
-  .on('mouseover', mediaTip.show) //affiche les infobulles quand on passe la souris sur un cercle
-  .on("mouseout", mediaTip.hide);
+  .on('mouseover', mediaTip.show)
+  .on('mouseout', mediaTip.hide);
 
   mediaBubbleGroups = mediaBubbleGroups.merge(mediaG);
 
@@ -98,8 +139,11 @@ function createMediaBubbleChart(g,mediaSources,initPosition, tweetsG, tweetSourc
 
   runMediaSimulation(mediaSources, mediaBubbleGroups, scaleBubbleSizeMediaChart, mediaXScale, mediasData);
 }
+
 function getMediaTipText(d, formatNumber){
   var tipText = "";
+  console.log("d => " + d.toString());
+  tipText += "<br>"
   tipText += "<span><strong>" + d.name + "</strong></span><br>";
   tipText += "<span>Sentiment moyen: <strong>" + formatNumber(d.mean_sentiment) + "</strong></span><br>";
   tipText += "<span>Nombre de tweet et retweet moyen: <strong>" + formatNumber(d.number_tweets_and_RT) + "</strong></span>";

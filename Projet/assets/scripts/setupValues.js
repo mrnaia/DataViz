@@ -11,19 +11,19 @@ var countries_population = {France: 67190000, Quebec: 8390000};
 var countriesColors = {France: "#000", Quebec: "#ddd"};
 var categoriesColors = {Tele: "#9adb0f", Ecrit: "#1ad5f2", Radio: "#ed8210"};
 
-// How many pixels of axis are beyond the range of bubbles ?
-var axisMargin = 50;
+// How many pixels of horizontal axis are beyond the range of bubbles ?
+var axisMarginX = 50;
+// How many pixels of vertical axis are beyons the horizontal axis ?
+var axisMarginY = 70;
 
 // Min and max in pixels of the radius of media bubbles
 var mediaBubblesSize = {min: 5, max: 50};
 // Min and max X positions of the media chart in the SVG
-var xMediasPositions = {min: 0 + axisMargin, max: 500 + axisMargin};
+var xMediasPositions = {min: 0 + axisMarginX, max: 500 + axisMarginX};
 // Y position (from the top of SVG) of the first media chart
 var yMediasPosition = 100;
-
-var center = {"x": 0, "y": yMediasPosition}
 // Initial position in the SVG of media Bubbles before begin of simulation
-var initPosition = {"x": (xMediasPositions.min + xMediasPositions.max)/2, "y": 100};
+var initPosition = {"x": (xMediasPositions.min + xMediasPositions.max)/2, "y": yMediasPosition};
 
 
 // TWEETS BUBBLE CHART

@@ -47,10 +47,10 @@ function launchTweetsBubbleChart(bubbleChartGroup,xBubbleScale,source,initPositi
 }
   // https://stackoverflow.com/questions/11978995/how-to-change-color-of-svg-image-using-css-jquery-svg-image-replacement
   // https://stackoverflow.com/questions/24933430/img-src-svg-changing-the-fill-color
-function  getTweetTipText(d,formatNumber){
+function getTweetTipText(d, formatNumber){
   var tipText = "";
   tipText += "<span>Text: <strong>" + d.full_text + "</strong></span><br>";
-  tipText += "<span>Nombre de retweet: <strong>" + formatNumber(+d.retweet_count) + "</strong></span><br>";
+  tipText += "<span>Nombre de retweets: <strong>" + formatNumber(+d.retweet_count) + "</strong></span><br>";
   tipText += "<span>Sentiment: <strong>" + formatNumber(+d.sentiment) + "</strong></span><br>";
   return tipText;
 }
