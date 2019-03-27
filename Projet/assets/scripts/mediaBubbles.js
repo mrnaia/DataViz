@@ -40,6 +40,7 @@ function createMediaBubblesYAxis(g, xMedias) {
     let sentimentValue = i/10;
     if (verticalAxisBoundValues.min < sentimentValue && sentimentValue < verticalAxisBoundValues.max) {
       let xVal = xMedias(sentimentValue);
+
       //Draw vertical line
       var verticalLine = g.append("line")
         .attr("x1", xVal)
@@ -49,18 +50,32 @@ function createMediaBubblesYAxis(g, xMedias) {
         .attr("stroke", "grey")
         .attr("opacity", 0.5)
         .style("stroke-dasharray", "3 3");
+
       //Add text label
-      var sentimentLabel = g.append("text")
+      var sentimentLabelUp = g.append("text")
         .text(sentimentValue)
         .attr("text-anchor", "middle")
         .attr("x", xVal)
         .attr("y", yMediasPosition - axisMarginY - 5)
         .attr("fill", "grey")
+
+      // Add invisible labels at bottom
+      var sentimentLabelBottom = g.append("text")
+        .text(sentimentValue)
+        .attr("text-anchor", "middle")
+        .attr("x", xVal)
+        .attr("y", yMediasPosition + interCategorySpace*(nbCategoriesDisplayed-1) + axisMarginY + 17)
+        .attr("fill", "grey")
+        .classed("bottomLabel", true);
+
+      //Change zero style
       if (i == 0) {
         verticalLine.attr("opacity", 1)
-          .style("stroke-dasharray", "4 4");
-        sentimentLabel.attr("font-weight", "bold");
+        .style("stroke-dasharray", "4 4");
+        sentimentLabelUp.attr("font-weight", "bold");
+        sentimentLabelBottom.attr("font-weight", "bold");
       }
+
     }
   }
 }
@@ -77,10 +92,17 @@ function updateMediaBubblesXAxis() {
 
 function updateMediaBubblesYAxis() {
   var g = d3.select("#mediaYAxis");
+
   g.selectAll("line")
     .transition()
     .duration(transitionAxisDuration)
-    .attr("y2", yMediasPosition + axisMarginY + interCategorySpace*(nbCategoriesDisplayed-1))
+    .attr("y2", yMediasPosition + axisMarginY + interCategorySpace*(nbCategoriesDisplayed-1));
+
+  g.selectAll("text.bottomLabel")
+    .transition()
+    .duration(transitionAxisDuration)
+    .attr("opacity", d => +(nbCategoriesDisplayed>1))
+    .attr("y", yMediasPosition + interCategorySpace*(nbCategoriesDisplayed-1) + axisMarginY + 17)
 }
 
 function updateMediaBubblesAxis() {
