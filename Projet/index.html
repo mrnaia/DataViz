@@ -6,6 +6,10 @@
     <link rel="stylesheet" href="assets/css/style.css">
   </head>
   <body>
+    <div class = "filtres">
+      <input type="checkbox" id="filterCountry" name="filtre1" value="Country" checked = "false"> Séparer France/Québec<br>
+       <input type="checkbox" name="filtre2" value="Type" checked="false"> Séparer par type de média<br>
+    </div>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="assets/libs/d3.js"></script>
     <script type="text/javascript" src="assets/libs/d3-tip.js"></script>
@@ -19,6 +23,7 @@
     <script type="text/javascript" src="assets/scripts/tweetsForceGraph.js"></script>
     <script type="text/javascript" src="assets/scripts/mediaBubbles.js"></script>
     <script type="text/javascript" src="assets/scripts/mediaForceGraph.js"></script>
+    <script type="text/javascript" src="assets/scripts/filtres.js"></script>
     <script type="text/javascript" src="assets/scripts/main.js"></script>
   </body>
 </html>
