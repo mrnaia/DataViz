@@ -71,6 +71,6 @@ function filterMediaBubbles(simulation, forceStrength){
   simulation.force('y', d3.forceY().strength(forceStrength).y(attractionCenterYMedia))
   simulation.restart();
   simulation.alpha(1);
-  updateMediaBubblesYAxis(d3.select("#mediaXAxis"));
-  updateMediaBubblesXAxis(d3.select("#mediaYAxis"));
+  updateMediaBubblesXAxis(d3.select("#mediaXAxis"));
+  updateMediaBubblesYAxis(d3.select("#mediaYAxis"));
 }
