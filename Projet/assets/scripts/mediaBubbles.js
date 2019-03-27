@@ -5,7 +5,7 @@ function mediaSizeScaleDomain(x,source){
   x.domain([d3.min(source,(d) => +d.number_tweets_and_RT),d3.max(source,(d) => +d.number_tweets_and_RT)]);
 }
 
-function mediaxScaleDomain(x,source){
+function domainMediaXPosition(x,source){
   x.domain([d3.min(source,(d) => +d.mean_sentiment),d3.max(source,(d) => +d.mean_sentiment)]);
 }
 /**
@@ -24,23 +24,25 @@ function createMediaBubblesXAxis(g) {
   var x2 = xMediasPositions.max + axisMarginX;
 
   for (let i=0; i<6; i++){
-    let xAxisLine = g.append("line")
-    .attr("x1", x1)
-    .attr("x2", x2)
-    .attr("y1", y)
-    .attr("y2", y)
-    .attr("stroke", "grey")
-    //.attr("stroke-width", "1px")
-    .attr("opacity", 0.5)
+    var xAxisLine = g.append("line")
+      .attr("x1", x1)
+      .attr("x2", x2)
+      .attr("y1", y)
+      .attr("y2", y)
+      .attr("stroke", "grey")
+      //.attr("stroke-width", "1px")
+      .attr("opacity", 0.5)
 
     //Assign class for countries
     if (i<3) {
+      console.log("Quebec");
       xAxisLine.classed("Quebec");
     } else {
+      console.log("France");
       xAxisLine.classed("France");
     }
     //Assign class for categories
-    xAxisLine.classed(Object.keys(categoriesColors)[i%3])
+    //xAxisLine.classed(Object.keys(categoriesColors)[i%3])
   }
 }
 
@@ -77,20 +79,21 @@ function createMediaBubblesYAxis(g, xMedias) {
   }
 }
 
-function updateMediaBubblesYAxis(g) {
-  g.selectAll("line")
-    .transition()
-    .duration(1000)
-    .attr("y2", yMediasPosition + axisMarginY + interCategorySpace*(nbCategoriesDisplayed-1))
-}
 function updateMediaBubblesXAxis(g) {
-  let lines = g.selectAll("line")
+  var lines = g.selectAll("line")
   lines.selectAll(".Quebec")
     .transition()
     .duration(1000)
     .attr("y1", yMediasPosition + interCategorySpace)
     .attr("y2", yMediasPosition + interCategorySpace)
   //France doesn't move
+}
+
+function updateMediaBubblesYAxis(g) {
+  g.selectAll("line")
+    .transition()
+    .duration(1000)
+    .attr("y2", yMediasPosition + axisMarginY + interCategorySpace*(nbCategoriesDisplayed-1))
 }
 
 /**
@@ -102,7 +105,7 @@ function updateMediaBubblesXAxis(g) {
  * @param tweetsGg       Le groupe dans lequel le graphique à bulles des tweets doit être dessiné.
  * @param tweetSources  les donneés : les tweets associiés à un média (issus du fichier csv non modifié)
  */
-function createMediaBubbleChart(g,mediaSources,initPosition, tweetsG, tweetSources, mediaXScale,formatNumber,scaleBubbleSizeMediaChart, scaleBubbleSizeTweetChart, mediasData){
+function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXScale,formatNumber,scaleBubbleSizeMediaChart, scaleBubbleSizeTweetChart, mediasData){
   var mediaTip = d3.tip()
     .attr('class', 'd3-tip')
     .attr('width', 100)
@@ -148,7 +151,7 @@ function createMediaBubbleChart(g,mediaSources,initPosition, tweetsG, tweetSourc
   .attr("cy", d => d.y)
   .on("click", function(d){
     var mouseCoordinates= d3.mouse(this);
-    var initPosition = {"x":mouseCoordinates[0], "y":mouseCoordinates[1]}
+    let initPosition = {"x":mouseCoordinates[0], "y":mouseCoordinates[1]}
     launchTweetsBubbleChart(tweetsG,scaleBubbleSizeTweetChart,tweetSources[d.name].tweets,initPosition,formatNumber)
     //setUpTweetChart(tweetsG,tweetSources[d.name].tweets,initPosition,formatNumber)
   })
@@ -170,7 +173,6 @@ function createMediaBubbleChart(g,mediaSources,initPosition, tweetsG, tweetSourc
 
 function getMediaTipText(d, formatNumber){
   var tipText = "";
-  console.log("d => " + d.toString());
   tipText += "[Insert real media name]<br>"
   tipText += "<span><strong>" + d.name + "</strong></span><br>";
   tipText += "<span>Sentiment moyen: <strong>" + formatNumber(d.mean_sentiment) + "</strong></span><br>";

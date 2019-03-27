@@ -52,8 +52,8 @@ function splitCountry(checked,mediaG,data, scaleBubbles, mediaXScale, mediasData
       runMediaSimulation(data, mediaG, scaleBubbles, mediaXScale, mediasData);
     }
 
-    updateMediaBubblesYAxis(d3.select("#mediaXAxis"));
-    updateMediaBubblesXAxis(d3.select("#mediaYAxis"))
+    updateMediaBubblesXAxis(d3.select("#mediaXAxis"));
+    updateMediaBubblesYAxis(d3.select("#mediaYAxis"))
 
   }
 
