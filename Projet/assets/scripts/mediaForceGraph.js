@@ -49,8 +49,11 @@ function runMediaSimulation(source,bubbleGroups,sizeBubbleScale, xBubbleScale, m
     simulation.force('y', d3.forceY().strength(forceStrength).y(attractionCenterYMedia))
     simulation.restart();
     simulation.alpha(1);
-    updateMediaBubblesYAxis(d3.select("#mediaXAxis"));
-    updateMediaBubblesXAxis(d3.select("#mediaYAxis"));
+    console.log("avant");
+    updateMediaBubblesXAxis(d3.select("#mediaXAxis"));
+    console.log("après X");
+    updateMediaBubblesYAxis(d3.select("#mediaYAxis"));
+    console.log("après Y");
     //splitCountry(this.checked, mediaBubbleGroups, mediaSources, scaleBubbleSizeMediaChart, mediaXScale, mediasData);
   });
 }

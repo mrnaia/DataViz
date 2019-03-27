@@ -35,14 +35,12 @@ function createMediaBubblesXAxis(g) {
 
     //Assign class for countries
     if (i<3) {
-      console.log("Quebec");
-      xAxisLine.classed("Quebec");
+      xAxisLine.classed("France", true);
     } else {
-      console.log("France");
-      xAxisLine.classed("France");
+      xAxisLine.classed("Quebec", true);
     }
     //Assign class for categories
-    //xAxisLine.classed(Object.keys(categoriesColors)[i%3])
+    xAxisLine.classed(Object.keys(categoriesColors)[i%3], true);
   }
 }
 
@@ -80,8 +78,7 @@ function createMediaBubblesYAxis(g, xMedias) {
 }
 
 function updateMediaBubblesXAxis(g) {
-  var lines = g.selectAll("line")
-  lines.selectAll(".Quebec")
+  var lines = g.selectAll("line.Quebec")
     .transition()
     .duration(1000)
     .attr("y1", yMediasPosition + interCategorySpace)
