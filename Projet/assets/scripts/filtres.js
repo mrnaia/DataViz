@@ -32,18 +32,14 @@ function splitCountry(checked,mediaG,data, scaleBubbles, mediaXScale, mediasData
 
 
       yMediasPosition = 300;
-
-      center = {"x": 0, "y": yMediasPosition};
-      runMediaSimulation(dataQuebec, mediaG, scaleBubbles, mediaXScale, mediasData, center);
+      runMediaSimulation(dataQuebec, mediaG, scaleBubbles, mediaXScale, mediasData);
 
       yMediasPosition = 100;
-
-      center = {"x": 0, "y": yMediasPosition}
-      runMediaSimulation(dataFrance, mediaG, scaleBubbles, mediaXScale, mediasData, center);
+      runMediaSimulation(dataFrance, mediaG, scaleBubbles, mediaXScale, mediasData);
 
     }
     else{
-      runMediaSimulation(data, mediaG, scaleBubbles, mediaXScale, mediasData, center);
+      runMediaSimulation(data, mediaG, scaleBubbles, mediaXScale, mediasData);
     }
 
   }

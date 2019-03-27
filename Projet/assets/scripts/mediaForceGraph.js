@@ -4,10 +4,9 @@ function ticked() {
     .attr('cx', function (d) { return nodes[d.id].x; })
     .attr('cy', function (d) { return nodes[d.id].y; });
 }
-//var center = {"x": 0, "y": 100}
 
 //fonction qui maintient les cercles de chaque tweet d'un même groupe ensemble
-function runMediaSimulation(source,bubbleGroups,sizeBubbleScale, xBubbleScale, mediasData, center){
+function runMediaSimulation(source,bubbleGroups,sizeBubbleScale, xBubbleScale, mediasData){
   var forceStrength = 0.035;
   var simulation = d3.forceSimulation()
     .velocityDecay(0.2)
