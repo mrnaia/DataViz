@@ -7,7 +7,7 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
       var mediasData = formatMediasData(medias_data);
       var tweetSources = createSources(france_data.concat(quebec_data));
       var mediaSources = createMediaSources(tweetSources,mediasData);
-      
+
       //Range definitions
       //Medias
       var scaleBubbleSizeMediaChart =  d3.scaleLinear().range([mediaBubblesSize.min, mediaBubblesSize.max]);
@@ -15,10 +15,14 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
       //Tweets
       var scaleBubbleSizeTweetChart =  d3.scaleLinear().range([tweetBubblesSize.min, tweetBubblesSize.max]);
 
+      //DOMAIN definitions
+      //Medias
       domainMediaBubbleSize(scaleBubbleSizeMediaChart, medias_data, countries_population);
+      domainMediaXPosition(xMedias, mediaSources);
+      //Tweets
       domainTweetBubbleSize(scaleBubbleSizeTweetChart, tweetSources);
 
-      // CREATION des visualisations
+      // CREATION VIZ
 
       // création du svg
       var svg = d3.select("body")
@@ -40,14 +44,12 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
       var mediaBubblesGroup = mediaChartGroup.append("g")
         .attr("id", "mediaBubbles")
 
-      // Echelles
-      //var mediaChartBounds = mediaChartGroup.node().getBoundingClientRect()
-      mediaxScaleDomain(xMedias, mediaSources);
+      //var mediaChartBounds = mediaChartGroup.node().getBoundingClientRect() //To compute the new bounds after CSS applied
 
       // Création du mediaBubbles
       createMediaBubblesXAxis(mediaXAxisGroup);
       createMediaBubblesYAxis(mediaYAxisGroup, xMedias);
-      createMediaBubbleChart(mediaBubblesGroup, mediaSources, initPosition, tweetsChartGroup, tweetSources, xMedias, localization.getFormattedNumber,scaleBubbleSizeMediaChart, scaleBubbleSizeTweetChart, mediasData);
+      createMediaBubbleChart(mediaBubblesGroup, mediaSources, tweetsChartGroup, tweetSources, xMedias, localization.getFormattedNumber,scaleBubbleSizeMediaChart, scaleBubbleSizeTweetChart, mediasData);
 
     });
   });
