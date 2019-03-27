@@ -25,8 +25,6 @@ var yMediasPosition = 100;
 // Initial position in the SVG of media Bubbles before begin of simulation
 var initPosition = {"x": (xMediasPositions.min + xMediasPositions.max)/2, "y": yMediasPosition};
 
-var center = {"x": 0, "y": yMediasPosition}; //TODO how to remove it, useless
-
 // Space in number of pixels between each category separated
 var interCategorySpace = 100;
 
