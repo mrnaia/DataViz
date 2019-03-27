@@ -57,10 +57,11 @@ function createSources(data){
   * @param tweetSources      L'object au format de la sortie de la fonction précedente
   * @return Object
   *                    [
-  *                    { name: $NomDuMedia$
-  *                      number_tweets_and_RT: number //How many tweets + retweets
-                          mean_sentiment : number
-                        }
+  *                      {
+  *                        name: $NomDuMedia$
+  *                        number_tweets_and_RT: number //How many tweets + retweets
+  *                        mean_sentiment : number
+  *                      }
   *                      ...
   *                    ]
   */
@@ -75,13 +76,25 @@ function createMediaSources(tweetSources, mediasData){
 
 function formatMediasData(data){
   var output = {};
-  data.forEach((media) =>{
+  data.forEach((media) => {
     //console.log(media);
 
     output[media.Compte] = {Categorie : media.Categorie, Followers : media.Followers, Nom : media.Nom, Pays : media.Pays};
     //output[media.Compte] = {Categorie : media.Categorie, Followers : media.Followers, Pays : media.Pays};
   })
   return output;
+}
+
+function createMediaSplitMetadata() {
+  var countries = Object.keys(countriesColors);
+  var categories = Object.keys(categoriesColors);
+  var axisData = [];
+  countries.forEach(country => {
+    categories.forEach(category => {
+      axisData.push({country: country, category: category});
+    });
+  });
+  return axisData;
 }
 
 function domainMediaBubbleSize(scale, data, pays){

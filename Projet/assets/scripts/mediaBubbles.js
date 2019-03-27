@@ -16,32 +16,20 @@ function domainMediaXPosition(x,source){
  * @param x1   L'abscisse gauche du début de l'axe.
  * @param x2  L'abscisse droit de la fin de l'axe.
  */
-function createMediaBubblesXAxis(g) {
+function createMediaBubblesXAxis(g, xAxisMetadata) {
   // Dessiner l'axe des abscisses du graphique.
+  var xAxisLine = g.selectAll("line")
+    .data(xAxisMetadata)
+    .enter()
+    .append("line")
 
-  var y = yMediasPosition;
-  var x1 = xMediasPositions.min - axisMarginX;
-  var x2 = xMediasPositions.max + axisMarginX;
-
-  for (let i=0; i<6; i++){
-    var xAxisLine = g.append("line")
-      .attr("x1", x1)
-      .attr("x2", x2)
-      .attr("y1", y)
-      .attr("y2", y)
-      .attr("stroke", "grey")
-      //.attr("stroke-width", "1px")
-      .attr("opacity", 0.5)
-
-    //Assign class for countries
-    if (i<3) {
-      xAxisLine.classed("France", true);
-    } else {
-      xAxisLine.classed("Quebec", true);
-    }
-    //Assign class for categories
-    xAxisLine.classed(Object.keys(categoriesColors)[i%3], true);
-  }
+  xAxisLine.attr("x1", xMediasPositions.min - axisMarginX)
+    .attr("x2", xMediasPositions.max + axisMarginX)
+    .attr("y1", d => getMediaYPosition(d.country, d.category))
+    .attr("y2", d => getMediaYPosition(d.country, d.category))
+    .attr("stroke", "grey")
+    //.attr("stroke-width", "1px")
+    .attr("opacity", 0.5)
 }
 
 function createMediaBubblesYAxis(g, xMedias) {
@@ -77,20 +65,36 @@ function createMediaBubblesYAxis(g, xMedias) {
   }
 }
 
-function updateMediaBubblesXAxis(g) {
-  var lines = g.selectAll("line.Quebec")
+function updateMediaBubblesXAxis() {
+  var g = d3.select("#mediaXAxis");
+  var lines = g.selectAll("line")
     .transition()
-    .duration(1000)
-    .attr("y1", yMediasPosition + interCategorySpace)
-    .attr("y2", yMediasPosition + interCategorySpace)
+    .duration(transitionAxisDuration)
+    .attr("y1", d => getMediaYPosition(d.country, d.category))
+    .attr("y2", d => getMediaYPosition(d.country, d.category))
   //France doesn't move
 }
 
-function updateMediaBubblesYAxis(g) {
+function updateMediaBubblesYAxis() {
+  var g = d3.select("#mediaYAxis");
   g.selectAll("line")
     .transition()
-    .duration(1000)
+    .duration(transitionAxisDuration)
     .attr("y2", yMediasPosition + axisMarginY + interCategorySpace*(nbCategoriesDisplayed-1))
+}
+
+function updateMediaBubblesAxis() {
+  if (countryChecked && categoryChecked) {
+    nbCategoriesDisplayed = 6;
+  } else if (countryChecked) {
+    nbCategoriesDisplayed = 2;
+  } else if (categoryChecked) {
+    nbCategoriesDisplayed = 3;
+  } else {
+    nbCategoriesDisplayed = 1;
+  }
+  updateMediaBubblesXAxis();
+  updateMediaBubblesYAxis();
 }
 
 /**
@@ -167,6 +171,11 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
   });
   */
   runMediaSimulation(mediaSources, mediaBubbleGroups, scaleBubbleSizeMediaChart, mediaXScale, mediasData, center);
+}
+
+function updateFilterCheck() {
+  countryChecked = d3.select("#filterCountry").property("checked");
+  categoryChecked = d3.select("#filterCategory").property("checked");
 }
 
 function getMediaTipText(d, formatNumber){

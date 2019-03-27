@@ -5,24 +5,21 @@ function ticked() {
     .attr('cy', function (d) { return nodes[d.id].y; });
 }
 
-function attractionCenterYMedia(d){
-  var countryChecked = d3.select("#filterCountry").property("checked");
-  var categoryChecked = d3.select("#filterCategory").property("checked");
-  var locationIndex = 0
-  if(d.Pays == "Quebec" && countryChecked){
+function getMediaYPosition(country, category) {
+  var locationIndex = 0;
+  if(country == "Quebec" && countryChecked){
     locationIndex++;
   }
   if(categoryChecked){
     var categories = Object.keys(categoriesColors);
-    if(countryChecked){
-      locationIndex = 3*locationIndex + categories.indexOf(d.Categorie);
+    if (countryChecked) {
+      locationIndex = 3*locationIndex + categories.indexOf(category);
     } else {
-      locationIndex+= categories.indexOf(d.Categorie);
+      locationIndex += categories.indexOf(category);
     }
   }
-  return yMediasPosition + locationIndex * interCategorySpace
+  return yMediasPosition + locationIndex * interCategorySpace;
 }
-
 
 //fonction qui maintient les cercles de chaque tweet d'un même groupe ensemble
 function runMediaSimulation(source,bubbleGroups,sizeBubbleScale, xBubbleScale, mediasData){
@@ -30,7 +27,7 @@ function runMediaSimulation(source,bubbleGroups,sizeBubbleScale, xBubbleScale, m
   var simulation = d3.forceSimulation()
     .velocityDecay(0.2)
     .force('x', d3.forceX().strength(forceStrength).x(d => xBubbleScale(d.mean_sentiment)))
-    .force('y', d3.forceY().strength(forceStrength).y(attractionCenterYMedia))
+    .force('y', d3.forceY().strength(forceStrength).y(d => getMediaYPosition(d.Pays, d.Categorie) ))
     .force('collide', d3.forceCollide(function(d){
       if(d.name in mediasData){
         return sizeBubbleScale(mediasData[d.name].Followers/countries_population[mediasData[d.name].Pays]) + 2;
@@ -44,7 +41,7 @@ function runMediaSimulation(source,bubbleGroups,sizeBubbleScale, xBubbleScale, m
   simulation.nodes(source);
 
   //Rerun simulation to filter
-  d3.select("#filterCountry").on("click", () => filterMediaBubbles(simulation,forceStrength));
+  d3.select("#filterCountry").on("click", () => filterMediaBubbles(simulation, forceStrength));
   d3.select("#filterCategory").on("click", () => filterMediaBubbles(simulation, forceStrength));
 }
 
@@ -56,21 +53,11 @@ function mediaTicked(d,bubbleGroups,x) {
 }
 
 function filterMediaBubbles(simulation, forceStrength){
-  var countryChecked = d3.select("#filterCountry").property("checked");
-  var categoryChecked = d3.select("#filterCategory").property("checked");
-  if(countryChecked && categoryChecked) {
-    nbCategoriesDisplayed = 6;
-  } else if(countryChecked){
-    nbCategoriesDisplayed = 2;
-  } else if(categoryChecked){
-    nbCategoriesDisplayed = 3;
-  } else{
-    nbCategoriesDisplayed = 1;
-  }
+  updateFilterCheck();
   //Changed attraction center
-  simulation.force('y', d3.forceY().strength(forceStrength).y(attractionCenterYMedia))
+  simulation.force('y', d3.forceY().strength(forceStrength).y((d => getMediaYPosition(d.Pays, d.Categorie))))
   simulation.restart();
   simulation.alpha(1);
-  updateMediaBubblesXAxis(d3.select("#mediaXAxis"));
-  updateMediaBubblesYAxis(d3.select("#mediaYAxis"));
+
+  updateMediaBubblesAxis();
 }

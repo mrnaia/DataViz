@@ -6,9 +6,13 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
       //Preprocessing
       var mediasData = formatMediasData(medias_data);
       var tweetSources = createSources(france_data.concat(quebec_data));
-      var mediaSources = createMediaSources(tweetSources,mediasData);
+      var mediaSources = createMediaSources(tweetSources, mediasData);
+      var mediaSplitMetadata = createMediaSplitMetadata();
 
-      //Range definitions
+      //Init filter checkbox values
+      updateFilterCheck();
+
+      //RANGE definitions
       //Medias
       var scaleBubbleSizeMediaChart =  d3.scaleLinear().range([mediaBubblesSize.min, mediaBubblesSize.max]);
       var xMedias = d3.scaleLinear().range([xMediasPositions.min, xMediasPositions.max]);
@@ -47,8 +51,9 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
       //var mediaChartBounds = mediaChartGroup.node().getBoundingClientRect() //To compute the new bounds after CSS applied
 
       // Création du mediaBubbles
-      createMediaBubblesXAxis(mediaXAxisGroup);
+      createMediaBubblesXAxis(mediaXAxisGroup, mediaSplitMetadata);
       createMediaBubblesYAxis(mediaYAxisGroup, xMedias);
+      updateMediaBubblesAxis();
       createMediaBubbleChart(mediaBubblesGroup, mediaSources, tweetsChartGroup, tweetSources, xMedias, localization.getFormattedNumber,scaleBubbleSizeMediaChart, scaleBubbleSizeTweetChart, mediasData);
 
     });

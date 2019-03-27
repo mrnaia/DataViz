@@ -25,11 +25,18 @@ var yMediasPosition = 100;
 // Initial position in the SVG of media Bubbles before begin of simulation
 var initPosition = {"x": (xMediasPositions.min + xMediasPositions.max)/2, "y": yMediasPosition};
 
-var center = {"x": 0, "y": yMediasPosition}
+var center = {"x": 0, "y": yMediasPosition}; //TODO how to remove it, useless
 
 // Space in number of pixels between each category separated
 var interCategorySpace = 100;
-// Variable that contains the number of categories displayed
+
+// Transition axis duration in ms
+var transitionAxisDuration = 500;
+
+// Global values for checkboxes
+var countryChecked;
+var categoryChecked;
+// Global variable that contains the number of categories displayed
 var nbCategoriesDisplayed = 1;
 
 // TWEETS BUBBLE CHART
@@ -37,6 +44,6 @@ var nbCategoriesDisplayed = 1;
 // Min and Max values of tweets bubbles sizes
 var tweetBubblesSize = {min: 40, max: 50000};
 // X and Y values of the 3 attraction points for tweets
-var attractionPoints = [[400,700], [800,700], [1200,700]]
+var attractionPoints = [[400, 700], [800, 700], [1200, 700]];
 // Size of the collision Tweets margin
 var collisionTweetMargin = 1;
