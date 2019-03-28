@@ -21,7 +21,7 @@ var mediaBubblesSize = {min: 5, max: 50};
 // Min and max X positions of the media chart in the SVG
 var xMediasPositions = {min: 0 + axisMarginX, max: 500 + axisMarginX};
 // Y position (from the top of SVG) of the first media chart
-var yMediasPosition = 100;
+var yMediasPosition = 130;
 // Initial position in the SVG of media Bubbles before begin of simulation
 var initPosition = {"x": (xMediasPositions.min + xMediasPositions.max)/2, "y": yMediasPosition};
 
@@ -43,6 +43,8 @@ var nbCategoriesDisplayed = 1;
 var tweetBubblesSize = {min: 40, max: 50000};
 // X and Y values of the 3 attraction points for tweets
 var attractionPoints = [[400, 700], [800, 700], [1200, 700]];
+// Percentage of svg width between right svg border and left attractor center
+var leftPositionPercentageAttractionPoint = 20;
 // Size of the collision Tweets margin
 var collisionTweetMargin = 1;
 var forceStrengthTweet = 0.03;
