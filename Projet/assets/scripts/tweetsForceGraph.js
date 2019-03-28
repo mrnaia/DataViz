@@ -19,21 +19,7 @@ function attractionCenterX(d){
 }
 
 function attractionCenterY(d){
-  updateFilterCheck();
-
-  if(categoryChecked && countryChecked){
-    return yMediasPosition + 6* interCategorySpace;
-  }
-  else if (!categoryChecked && !countryChecked){
-    return yMediasPosition + interCategorySpace;
-  }
-  else if(categoryChecked){
-    return yMediasPosition + 3* interCategorySpace;
-  }
-  else{
-    return yMediasPosition + 2* interCategorySpace;
-  }
-  return attractionPoints[seperateTweets(d)+1][1]
+  return yMediasPosition + nbCategoriesDisplayed*interCategorySpace + tweetMarginTop + 200;
 }
 
 //fonction qui maintient les cercles de chaque tweet d'un même groupe ensemble
@@ -46,7 +32,6 @@ function runTweetSimulation(source,bubbleGroups,xBubbleScale){
     .force('collide', d3.forceCollide(d => Math.sqrt(xBubbleScale(+d.retweet_count)) + collisionTweetMargin))
     .on('tick', d => tweetTicked(d,bubbleGroups,xBubbleScale));
   simulationTweet.nodes(source);
-  scrollToTweet();
 }
 function updateTweetChart(){
   updateFilterCheck();
@@ -54,13 +39,6 @@ function updateTweetChart(){
   simulationTweet.force('y', d3.forceY().strength(forceStrengthTweet).y(attractionCenterY))
   simulationTweet.restart();
   simulationTweet.alpha(1);
-
-function scrollToTweet(){
-  window.scrollTo(0, yMediasPosition + interCategorySpace* nbCategoriesDisplayed);
-  scrolldelay = setTimeout(pageScroll,10);
-}
-
-
 }
 
 function tweetTicked(d,bubbleGroups,x) {

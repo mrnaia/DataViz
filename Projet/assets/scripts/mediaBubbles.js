@@ -6,8 +6,13 @@ function mediaSizeScaleDomain(x,source){
 }
 
 function domainMediaXPosition(x,source){
-  x.domain([d3.min(source,(d) => +d.mean_sentiment),d3.max(source,(d) => +d.mean_sentiment)]);
+  var maxAbsSentiment = d3.max(source, d => Math.abs(+d.mean_sentiment));
+  x.domain([-maxAbsSentiment, maxAbsSentiment]);
+  //x.domain([d3.min(source,(d) => +d.mean_sentiment),d3.max(source,(d) => +d.mean_sentiment)]);
 }
+
+
+
 /**
  * Crée les axes horizontaux du graphique à bulles des médias.
  *
@@ -192,6 +197,7 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
       d3.selectAll("#mediaBubbles circle").classed("notHoveredMedia",true);
 
       launchTweetsBubbleChart(tweetsG,scaleBubbleSizeTweetChart,tweetSources[d.name].tweets,initPosition,formatNumber)
+      scrollToTweet();
     }
   })
   .on('mouseover', function(d){
@@ -227,6 +233,14 @@ function getMediaTipText(d, formatNumber){
   tipText += "<span>Nombre de tweet et retweet moyen: <strong>" + formatNumber(d.number_tweets_and_RT) + "</strong></span>";
   return tipText;
 
+}
+
+function scrollToTweet(){
+  var nb_scroll = 1;
+  var distanceToScroll =  yMediasPosition + interCategorySpace* nbCategoriesDisplayed - window.pageYOffset;
+  var timer = setTimeout(function(){
+    window.scrollBy(0, distanceToScroll/nb_scroll);
+  },500);
 }
   // https://stackoverflow.com/questions/11978995/how-to-change-color-of-svg-image-using-css-jquery-svg-image-replacement
   // https://stackoverflow.com/questions/24933430/img-src-svg-changing-the-fill-color

@@ -1,4 +1,8 @@
 /***** General style *****/
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0px auto auto;
   font-family: Arial, sans-serif;
