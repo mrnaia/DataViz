@@ -24,7 +24,7 @@ function attractionCenterY(d){
 
 //fonction qui maintient les cercles de chaque tweet d'un même groupe ensemble
 function runTweetSimulation(source,bubbleGroups,xBubbleScale){
-
+  tweetSimuDone = false;
   simulationTweet = d3.forceSimulation()
     .velocityDecay(0.2)
     .force('x', d3.forceX().strength(forceStrengthTweet).x(attractionCenterX))
@@ -32,10 +32,11 @@ function runTweetSimulation(source,bubbleGroups,xBubbleScale){
     .force('collide', d3.forceCollide(d => Math.sqrt(xBubbleScale(+d.retweet_count)) + collisionTweetMargin))
     .on('tick', d => tweetTicked(d,bubbleGroups,xBubbleScale,simulationTweet.alpha()));
   simulationTweet.nodes(source);
-
+  d3.selectAll("#tweetBubbleChart g").style("cursor","wait");
 }
 function updateTweetChart(){
   updateFilterCheck();
+  d3.selectAll("#tweetBubbleChart g").style("cursor","default");
   //Changed attraction center
   simulationTweet.force('y', d3.forceY().strength(forceStrengthTweet).y(attractionCenterY))
   simulationTweet.restart();
@@ -43,12 +44,15 @@ function updateTweetChart(){
 }
 
 function tweetTicked(d,bubbleGroups,x,alpha) {
-    bubbleGroups.select("circle")
-      .attr('cx', function (d) { return d.x; })
-      .attr('cy', function (d) { return d.y; });
+  if(!tweetSimuDone && alpha<fractionToShowTip){
+    tweetSimuDone = true;
+    d3.selectAll("#tweetBubbleChart g").style("cursor","default");
+  }
+  bubbleGroups.select("circle")
+    .attr('cx', function (d) { return d.x; })
+    .attr('cy', function (d) { return d.y; });
 
-    bubbleGroups.select("svg")
-      .attr('x', function (d) { return placeBird(d.x,d.y,Math.sqrt(x(+d.retweet_count))).x; })
-      .attr('y', function (d) { return placeBird(d.x,d.y,Math.sqrt(x(+d.retweet_count))).y; });
-    tweetSimulationAlpha = alpha;
+  bubbleGroups.select("svg")
+    .attr('x', function (d) { return placeBird(d.x,d.y,Math.sqrt(x(+d.retweet_count))).x; })
+    .attr('y', function (d) { return placeBird(d.x,d.y,Math.sqrt(x(+d.retweet_count))).y; });
 }

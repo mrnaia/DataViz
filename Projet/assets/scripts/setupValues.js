@@ -57,5 +57,5 @@ var forceStrengthTweet = 0.02;
 var simulationTweet;
 var tweetChartActive = false;
 
-var tweetSimulationAlpha;
+var tweetSimuDone;
 var fractionToShowTip = 0.5;

@@ -13,11 +13,8 @@ function createTweetsBubbleChart(g,x,source,initPosition,$svg,tip){
   var bubbleGroups = g.selectAll("g").data(source);
   var tweetG = bubbleGroups.enter().append("g")
   .on('mouseover',function(d){
-    if(tweetSimulationAlpha<fractionToShowTip){
-      d3.select(this).style("cursor","default");
+    if(tweetSimuDone){
       tip.show(d);
-    } else{
-      d3.select(this).style("cursor","wait");
     }
   }) //affiche les infobulles quand on passe la souris sur un cercle
   .on("mouseout", tip.hide);
