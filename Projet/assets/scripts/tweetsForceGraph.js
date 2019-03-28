@@ -19,7 +19,7 @@ function attractionCenterX(d){
 }
 
 function attractionCenterY(d){
-  return yMediasPosition + nbCategoriesDisplayed*interCategorySpace + tweetMarginTop + 200;
+  return yMediasPosition + nbCategoriesDisplayed*interCategorySpace + tweetVerticalMargin + 200;
 }
 
 //fonction qui maintient les cercles de chaque tweet d'un même groupe ensemble

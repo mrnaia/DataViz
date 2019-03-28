@@ -21,6 +21,7 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
         .append("svg")
         .attr("width", svgSetup.width)
         .attr("height", svgSetup.height)
+        .attr("id","mediaSVG")
 
       // création des 2 groupes des 2 viz
       var mediaChartGroup = svg.append("g")

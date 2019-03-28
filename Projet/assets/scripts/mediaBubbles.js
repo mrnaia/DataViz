@@ -143,6 +143,18 @@ function updateMediaBubblesYAxis() {
     .attr("y", yMediasPosition + interCategorySpace*(nbCategoriesDisplayed-1) + axisMarginY + 17)
 }
 
+function updateSvgSize(){
+  var svg = d3.select("#mediaSVG")
+  var height = yMediasPosition + interCategorySpace*(nbCategoriesDisplayed+1);
+  console.log(tweetChartActive);
+  if(tweetChartActive){
+    height+= tweetHeight + 2*tweetVerticalMargin;
+  }
+  svg.transition()
+  .duration(transitionAxisDuration)
+  .attr("height",height)
+}
+
 function updateMediaBubblesAxis() {
   if (countryChecked && categoryChecked) {
     nbCategoriesDisplayed = 6;
@@ -155,6 +167,7 @@ function updateMediaBubblesAxis() {
   }
   updateMediaBubblesXAxis();
   updateMediaBubblesYAxis();
+  updateSvgSize();
 }
 
 /**
@@ -220,6 +233,7 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
       d3.select("#media"+d.name.substring(1)).classed("selectedMedia", false);
       tweetsG.selectAll("g").remove()
       mediaG.selectAll("circle").classed("notSelectedMedia", false);
+      tweetChartActive = false;
     }
     else{
       //Change style
@@ -231,6 +245,8 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
 
       launchTweetsBubbleChart(tweetsG,scaleBubbleSizeTweetChart,tweetSources[d.name].tweets,initPosition,formatNumber)
       scrollToTweet();
+      tweetChartActive = true;
+      updateMediaBubblesAxis();
     }
   })
   .on('mouseover', function(d){

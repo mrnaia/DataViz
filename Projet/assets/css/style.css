@@ -49,6 +49,10 @@ svg {
   transition: opacity 250ms ease;
 }
 
+.selectedMedia{
+  stroke-dasharray: 3 1;
+}
+
 #tweetBubbleChart circle {
   fill: rgba(250,250,250,1);
   stroke : rgba(240,240,240,1);
