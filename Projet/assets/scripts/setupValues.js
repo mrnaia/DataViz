@@ -46,7 +46,7 @@ var attractionPoints = [[400, 700], [800, 700], [1200, 700]];
 // Percentage of svg width between right svg border and left attractor center
 var leftPositionPercentageAttractionPoint = 20;
 // Separation between media chart and tweet chart in px
-var tweetMarginTop = 20;
+var tweetVerticalMargin = 20;
 // height tweets chart in px
 //TODO une taille pour chaque media a changer
 var tweetHeight = 200;
