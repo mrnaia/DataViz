@@ -20,7 +20,7 @@ function attractionCenterX(d){
 
 function attractionCenterY(d){
   updateFilterCheck();
-  
+
   if(categoryChecked && countryChecked){
     return yMediasPosition + 6* interCategorySpace;
   }
@@ -46,7 +46,7 @@ function runTweetSimulation(source,bubbleGroups,xBubbleScale){
     .force('collide', d3.forceCollide(d => Math.sqrt(xBubbleScale(+d.retweet_count)) + collisionTweetMargin))
     .on('tick', d => tweetTicked(d,bubbleGroups,xBubbleScale));
   simulationTweet.nodes(source);
-
+  window.scrollTo(0, yMediasPosition + interCategorySpace* nbCategoriesDisplayed);
 
 }
 function updateTweetChart(){
