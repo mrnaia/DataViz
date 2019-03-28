@@ -32,8 +32,6 @@ function runTweetSimulation(source,bubbleGroups,xBubbleScale){
     .force('collide', d3.forceCollide(d => Math.sqrt(xBubbleScale(+d.retweet_count)) + collisionTweetMargin))
     .on('tick', d => tweetTicked(d,bubbleGroups,xBubbleScale));
   simulationTweet.nodes(source);
-
-
 }
 function updateTweetChart(){
   updateFilterCheck();
@@ -41,9 +39,6 @@ function updateTweetChart(){
   simulationTweet.force('y', d3.forceY().strength(forceStrengthTweet).y(attractionCenterY))
   simulationTweet.restart();
   simulationTweet.alpha(1);
-
-
-
 }
 
 function tweetTicked(d,bubbleGroups,x) {
