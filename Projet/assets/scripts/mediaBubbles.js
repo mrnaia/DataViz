@@ -6,8 +6,13 @@ function mediaSizeScaleDomain(x,source){
 }
 
 function domainMediaXPosition(x,source){
-  x.domain([d3.min(source,(d) => +d.mean_sentiment),d3.max(source,(d) => +d.mean_sentiment)]);
+  var maxAbsSentiment = d3.max(source, d => Math.abs(+d.mean_sentiment));
+  x.domain([-maxAbsSentiment, maxAbsSentiment]);
+  //x.domain([d3.min(source,(d) => +d.mean_sentiment),d3.max(source,(d) => +d.mean_sentiment)]);
 }
+
+
+
 /**
  * Crée les axes horizontaux du graphique à bulles des médias.
  *

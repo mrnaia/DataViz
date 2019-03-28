@@ -19,21 +19,7 @@ function attractionCenterX(d){
 }
 
 function attractionCenterY(d){
-  updateFilterCheck();
-  
-  if(categoryChecked && countryChecked){
-    return yMediasPosition + 6* interCategorySpace;
-  }
-  else if (!categoryChecked && !countryChecked){
-    return yMediasPosition + interCategorySpace;
-  }
-  else if(categoryChecked){
-    return yMediasPosition + 3* interCategorySpace;
-  }
-  else{
-    return yMediasPosition + 2* interCategorySpace;
-  }
-  return attractionPoints[seperateTweets(d)+1][1]
+  return yMediasPosition + nbCategoriesDisplayed*interCategorySpace + tweetMarginTop + 200;
 }
 
 //fonction qui maintient les cercles de chaque tweet d'un même groupe ensemble
