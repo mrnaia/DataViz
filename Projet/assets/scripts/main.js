@@ -2,10 +2,11 @@
 d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
   d3.dsv("|","./data/QuebecMedia.csv").then(function(quebec_data) {
     d3.dsv(",", "./data/categories.csv").then(function(medias_data) {
+      //console.log("countries");
 
       //Preprocessing
       var mediasData = formatMediasData(medias_data);
-      console.log(mediasData);
+      //console.log(mediasData);
       var tweetSources = createSources(france_data.concat(quebec_data));
       var mediaSources = createMediaSources(tweetSources, mediasData);
       var mediaSplitMetadata = createMediaSplitMetadata();
@@ -56,7 +57,7 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
       createMediaBubblesYAxis(mediaYAxisGroup, xMedias);
       updateMediaBubblesAxis();
       createMediaBubbleChart(mediaBubblesGroup, mediaSources, tweetsChartGroup, tweetSources, xMedias, localization.getFormattedNumber,scaleBubbleSizeMediaChart, scaleBubbleSizeTweetChart, mediasData);
-
+      legend(svg);
     });
   });
 });
