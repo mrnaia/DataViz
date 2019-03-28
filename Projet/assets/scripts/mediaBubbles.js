@@ -177,11 +177,20 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
   .on("click", function(d){
     var mouseCoordinates= d3.mouse(this);
     let initPosition = {"x":mouseCoordinates[0], "y":mouseCoordinates[1]}
-    mediaG.selectAll("circle").classed("selectedMedia", false);
-    
-    d3.select("#media"+d.name.substring(1)).classed("selectedMedia", true);
 
-    launchTweetsBubbleChart(tweetsG,scaleBubbleSizeTweetChart,tweetSources[d.name].tweets,initPosition,formatNumber)
+    if(d3.select("#media"+d.name.substring(1)).classed("selectedMedia")){
+      d3.select("#media"+d.name.substring(1)).classed("selectedMedia", false);
+      tweetsG.selectAll("g").remove()
+    }
+    else{
+      mediaG.selectAll("circle").classed("selectedMedia", false);
+
+      d3.select("#media"+d.name.substring(1)).classed("selectedMedia", true);
+      launchTweetsBubbleChart(tweetsG,scaleBubbleSizeTweetChart,tweetSources[d.name].tweets,initPosition,formatNumber)
+    }
+
+
+
     //setUpTweetChart(tweetsG,tweetSources[d.name].tweets,initPosition,formatNumber)
   })
   .on('mouseover', mediaTip.show)
