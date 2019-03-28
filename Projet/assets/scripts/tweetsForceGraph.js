@@ -15,7 +15,7 @@ function seperateTweets(d){
   }
 }
 function attractionCenterX(d){
-  return attractionPoints[seperateTweets(d)+1][0]
+  return attractionPoints[seperateTweets(d)+1][0];
 }
 
 function attractionCenterY(d){
