@@ -15,12 +15,12 @@ body {
   border-radius: 10px;
 }
 
-#mediaBubbleChart circle {
+#mediaBubbleChart circle:not(:hover) {
   opacity: 0.6 !important;
 }
-#mediaBubbleChart circle:hover {
+#mediaBubbleChart circle {
   cursor: pointer;
-  opacity: 1 !important;
+  /*opacity: 1 !important;*/
 }
 
 .hoverMedia {
@@ -41,8 +41,8 @@ body {
   stroke-width: 1px;
   opacity: 1;
 }
-.selectedMedia{
-  
+#mediaBubbleChart circle.selectedMedia{
+  opacity: 1 !important;
 }
 label {
   cursor: pointer;
