@@ -53,6 +53,6 @@ var tweetHeight = 200;
 
 // Size of the collision Tweets margin
 var collisionTweetMargin = 1;
-var forceStrengthTweet = 0.03;
+var forceStrengthTweet = 0.02;
 var simulationTweet;
 var tweetChartActive = false;
