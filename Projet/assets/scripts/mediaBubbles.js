@@ -222,13 +222,14 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
   })
   .attr("stroke-width", 3)
   .datum(function(d){
-    d.x = initPosition.x+Math.random()*5;
-    d.y = initPosition.y+Math.random()*5;
+    d.x = initPosition.x+ +d.mean_sentiment*5000 + (Math.random()-0.5)*2*5;
+    d.y = initPosition.y+(Math.random()-0.5)*2*10;
     return d;
   })
   .attr("cx", d => d.x)
   .attr("cy", d => d.y)
   .on("click", function(d){
+    d3.select("body").style("cursor","progress");
     var mouseCoordinates= d3.mouse(this);
     let initPosition = {"x":mouseCoordinates[0], "y":mouseCoordinates[1]}
 
@@ -289,9 +290,11 @@ function getMediaTipText(d, formatNumber){
 }
 
 function scrollToTweet(){
+  d3.select("body").style("cursor","progress");
   var nb_scroll = 1;
   var distanceToScroll =  yMediasPosition + interCategorySpace* nbCategoriesDisplayed - window.pageYOffset;
   var timer = setTimeout(function(){
+    d3.select("body").style("cursor","default");
     window.scrollBy(0, distanceToScroll/nb_scroll);
   },500);
 }

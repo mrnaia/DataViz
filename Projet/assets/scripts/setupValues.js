@@ -70,3 +70,6 @@ var collisionTweetMargin = 1;
 var forceStrengthTweet = 0.02;
 var simulationTweet;
 var tweetChartActive = false;
+
+var tweetSimuDone;
+var fractionToShowTip = 0.5;
