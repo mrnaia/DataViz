@@ -1,41 +1,55 @@
 // GLOBAL SVG
-var svgSetup = {height: "1000", width: "100%"};
+var svgSetup = {height: "0", width: "100%"};
+var svgBounds;
 
 
 // MEDIA BUBBLE CHART
 
 //Values of population for the 'countries'
-var countries_population = {France: 67190000, Quebec: 8390000};
+const countries_population = {France: 67190000, Quebec: 8390000};
 
 //Bubble colors legend
-var countriesColors = {France: "#000", Quebec: "#ddd"};
-var categoriesColors = {Tele: "#9adb0f", Ecrit: "#1ad5f2", Radio: "#ed8210"};
+const countriesColors = {France: "#000", Quebec: "#ddd"};
+const categoriesColors = {Tele: "#9adb0f", Ecrit: "#1ad5f2", Radio: "#ed8210"};
+
+// Percentage value must be setup, the other one is calculated at init
 
 // How many pixels of horizontal axis are beyond the range of bubbles ?
-var axisMarginX = 50;
-// How many pixels of vertical axis are beyons the horizontal axis ?
-var axisMarginY = 70;
+const axisMarginXPercentage = 5;
+var axisMarginX; //computed at init, px
+// How many pixels of vertical axis are beyond the horizontal axis ?
+const axisMarginYPercentage = 10;
+var axisMarginY; //computed at init, px
 
+// Min and max of radius of media bubbles in % of svg width
+const mediaBubblesSizePercentage = {min:0.5, max: 10};
 // Min and max in pixels of the radius of media bubbles
-var mediaBubblesSize = {min: 5, max: 50};
-// Min and max X positions of the media chart in the SVG
-var xMediasPositions = {min: 0 + axisMarginX, max: 500 + axisMarginX};
-// Y position (from the top of SVG) of the first media chart
-var yMediasPosition = 200;
-// Initial position in the SVG of media Bubbles before begin of simulation
-var initPosition = {"x": (xMediasPositions.min + xMediasPositions.max)/2, "y": yMediasPosition};
+var mediaBubblesSize; //Computed at init, {min: px, max: px}
 
+// Min and max X positions of the media chart in the SVG
+var xMediasPositions; //computed at init {min: px, max: px}
+
+//Margin over the media chart for title and legend
+const topMediaMarginY = 100; //px
+// Y position (from the top of SVG) of the first media chart
+var yMediasPosition;
+
+// Initial position in the SVG of media Bubbles before begin of simulation
+var initPosition; //computed at init, {x: px, y: px}
+
+// coef to determine the interCategorySpace
+const interCategorySpaceCoef = 1.3;
 // Space in number of pixels between each category separated
-var interCategorySpace = 100;
+var interCategorySpace; //computed at init px
 
 // Transition axis duration in ms
-var transitionAxisDuration = 500;
+const transitionAxisDuration = 500;
 
 // Global values for checkboxes
-var countryChecked;
-var categoryChecked;
+var countryChecked; //bool
+var categoryChecked; //bool
 // Global variable that contains the number of categories displayed
-var nbCategoriesDisplayed = 1;
+var nbCategoriesDisplayed; //1, 2, 3 or 6
 
 // TWEETS BUBBLE CHART
 
