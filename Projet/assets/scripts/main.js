@@ -13,20 +13,6 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
       //Init filter checkbox values
       updateFilterCheck();
 
-      //RANGE definitions
-      //Medias
-      var scaleBubbleSizeMediaChart =  d3.scaleLinear().range([mediaBubblesSize.min, mediaBubblesSize.max]);
-      var xMedias = d3.scaleLinear().range([xMediasPositions.min, xMediasPositions.max]);
-      //Tweets
-      var scaleBubbleSizeTweetChart =  d3.scaleLinear().range([tweetBubblesSize.min, tweetBubblesSize.max]);
-
-      //DOMAIN definitions
-      //Medias
-      domainMediaBubbleSize(scaleBubbleSizeMediaChart, medias_data, countries_population);
-      domainMediaXPosition(xMedias, mediaSources);
-      //Tweets
-      domainTweetBubbleSize(scaleBubbleSizeTweetChart, tweetSources);
-
       // CREATION VIZ
 
       // création du svg
@@ -49,7 +35,25 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
       var mediaBubblesGroup = mediaChartGroup.append("g")
         .attr("id", "mediaBubbles")
 
-      //var mediaChartBounds = mediaChartGroup.node().getBoundingClientRect() //To compute the new bounds after CSS applied
+      var svgBounds = svg.node().getBoundingClientRect(); //To compute the new bounds after CSS applied
+      xMediasPositions = {min: 0 + axisMarginX, max: svgBounds.width - axisMarginX};
+      attractionPoints = [[svgBounds.width*20/100, 1000], [svgBounds.width/2, 1000], [svgBounds.width*(1-20/100), 1000]];
+
+      //RANGE definitions
+      //Medias
+      var scaleBubbleSizeMediaChart =  d3.scaleLinear().range([mediaBubblesSize.min, mediaBubblesSize.max]);
+      var xMedias = d3.scaleLinear().range([xMediasPositions.min, xMediasPositions.max]);
+      //Tweets
+      var scaleBubbleSizeTweetChart =  d3.scaleLinear().range([tweetBubblesSize.min, tweetBubblesSize.max]);
+
+      //DOMAIN definitions
+      //Medias
+      domainMediaBubbleSize(scaleBubbleSizeMediaChart, medias_data, countries_population);
+      domainMediaXPosition(xMedias, mediaSources);
+      //Tweets
+      domainTweetBubbleSize(scaleBubbleSizeTweetChart, tweetSources);
+
+
 
       // Création du mediaBubbles
       createMediaBubblesXAxis(mediaXAxisGroup, mediaSplitMetadata);
