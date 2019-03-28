@@ -21,7 +21,7 @@ var mediaBubblesSize = {min: 5, max: 50};
 // Min and max X positions of the media chart in the SVG
 var xMediasPositions = {min: 0 + axisMarginX, max: 500 + axisMarginX};
 // Y position (from the top of SVG) of the first media chart
-var yMediasPosition = 130;
+var yMediasPosition = 200;
 // Initial position in the SVG of media Bubbles before begin of simulation
 var initPosition = {"x": (xMediasPositions.min + xMediasPositions.max)/2, "y": yMediasPosition};
 

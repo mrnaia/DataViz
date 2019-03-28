@@ -15,6 +15,11 @@ svg {
   margin: auto;
 }
 
+.legend{
+  /*display: block;*/
+  border: 1px black solid;
+}
+
 .d3-tip {
   line-height: 1;
   max-width: 500px;
