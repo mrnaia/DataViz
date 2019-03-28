@@ -60,4 +60,8 @@ function filterMediaBubbles(simulation, forceStrength){
   simulation.alpha(1);
 
   updateMediaBubblesAxis();
+
+  if(tweetChartActive){
+    updateTweetChart();
+  }
 }

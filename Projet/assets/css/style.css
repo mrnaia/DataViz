@@ -41,7 +41,9 @@ body {
   stroke-width: 1px;
   opacity: 1;
 }
-
+.selectedMedia{
+  
+}
 label {
   cursor: pointer;
 }

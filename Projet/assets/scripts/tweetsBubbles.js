@@ -31,6 +31,7 @@ function createTweetsBubbleChart(g,x,source,initPosition,$svg,tip){
 }
 //récupère l'image de l'oiseau puis crée le graphique
 function launchTweetsBubbleChart(bubbleChartGroup,xBubbleScale,source,initPosition,formatNumber){
+    tweetChartActive = true;
     jQuery.get("assets/images/bird.svg", function(svgData) {
       var $svg = jQuery(svgData).find('svg');
       var tip = d3.tip()

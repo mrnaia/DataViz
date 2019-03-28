@@ -45,3 +45,6 @@ var tweetBubblesSize = {min: 40, max: 50000};
 var attractionPoints = [[400, 700], [800, 700], [1200, 700]];
 // Size of the collision Tweets margin
 var collisionTweetMargin = 1;
+var forceStrengthTweet = 0.03;
+var simulationTweet;
+var tweetChartActive = false;

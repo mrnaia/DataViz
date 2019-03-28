@@ -128,6 +128,7 @@ function updateMediaBubblesAxis() {
  * @param tweetsGg       Le groupe dans lequel le graphique à bulles des tweets doit être dessiné.
  * @param tweetSources  les donneés : les tweets associiés à un média (issus du fichier csv non modifié)
  */
+
 function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXScale,formatNumber,scaleBubbleSizeMediaChart, scaleBubbleSizeTweetChart, mediasData){
   var mediaTip = d3.tip()
     .attr('class', 'd3-tip')
@@ -143,6 +144,7 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
   var mediaG = mediaBubbleGroups.enter().append("g"); //mediaG is the group over each media circle
   //pour chaque media on crée un cercle
   mediaG.append("circle")
+    .attr("id", d=>"media"+d.name.substring(1))
     .attr("r",function(d){
       if(d.name in mediasData){
         return scaleBubbleSizeMediaChart(+mediasData[d.name].Followers/+countries_population[d.Pays]);
@@ -175,6 +177,10 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
   .on("click", function(d){
     var mouseCoordinates= d3.mouse(this);
     let initPosition = {"x":mouseCoordinates[0], "y":mouseCoordinates[1]}
+    mediaG.selectAll("circle").classed("selectedMedia", false);
+    
+    d3.select("#media"+d.name.substring(1)).classed("selectedMedia", true);
+
     launchTweetsBubbleChart(tweetsG,scaleBubbleSizeTweetChart,tweetSources[d.name].tweets,initPosition,formatNumber)
     //setUpTweetChart(tweetsG,tweetSources[d.name].tweets,initPosition,formatNumber)
   })
