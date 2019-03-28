@@ -4,6 +4,13 @@ body {
   font-family: Arial, sans-serif;
 }
 
+svg {
+  display: block;
+  border: 1px black solid;
+  width: 80%;
+  margin: auto;
+}
+
 .d3-tip {
   line-height: 1;
   max-width: 500px;
