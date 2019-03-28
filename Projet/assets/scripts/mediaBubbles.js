@@ -181,32 +181,30 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
     if(d3.select("#media"+d.name.substring(1)).classed("selectedMedia")){
       d3.select("#media"+d.name.substring(1)).classed("selectedMedia", false);
       tweetsG.selectAll("g").remove()
+      mediaG.selectAll("circle").classed("notSelectedMedia", false);
     }
     else{
       //Change style
       mediaG.selectAll("circle").classed("selectedMedia", false);
+      mediaG.selectAll("circle").classed("notSelectedMedia", true);
       d3.select("#media"+d.name.substring(1)).classed("selectedMedia", true);
-      d3.selectAll("#mediaBubbles circle").classed("notHoveredMedia",false);
-      d3.selectAll("#mediaBubbles circle").classed("hoveredMedia",false);
-
+      d3.select("#media"+d.name.substring(1)).classed("notSelectedMedia", false);
+      d3.selectAll("#mediaBubbles circle").classed("notHoveredMedia",true);
 
       launchTweetsBubbleChart(tweetsG,scaleBubbleSizeTweetChart,tweetSources[d.name].tweets,initPosition,formatNumber)
     }
-
   })
   .on('mouseover', function(d){
-    d3.selectAll("#mediaBubbles circle").classed("hoveredMedia",false);
     d3.selectAll("#mediaBubbles circle").classed("notHoveredMedia",true);
+    d3.select(this).classed("notSelectedMedia",false);
     d3.select(this).classed("notHoveredMedia",false);
-    d3.select(this).classed("hoveredMedia",true);
     mediaTip.show(d);
   })
   .on('mouseout', function(d){
-    if(!d3.select(this).classed("selectedMedia")){
-      console.log("Not Selected");
-      d3.selectAll("#mediaBubbles circle").classed("notHoveredMedia",false);
-      d3.selectAll("#mediaBubbles circle").classed("hoveredMedia",true);
-    }
+    d3.selectAll("#mediaBubbles circle").classed("notHoveredMedia",false);
+    if(tweetsG.selectAll("g")._groups[0].length !== 0){
+      d3.select(this).classed("notSelectedMedia",true);
+    };
     mediaTip.hide(d);
   })
 

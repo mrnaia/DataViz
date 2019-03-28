@@ -17,14 +17,15 @@ body {
 
 #mediaBubbleChart circle:hover {
   cursor: pointer;
-}
-
-.hoveredMedia{
-  opacity: 1 !important;
-  transition: opacity 250ms ease;
+/*  opacity: 1 !important;*/
 }
 
 .notHoveredMedia {
+  opacity: 0.6 !important;
+  transition: opacity 250ms ease;
+}
+
+#mediaBubbleChart circle.notSelectedMedia {
   opacity: 0.6 !important;
   transition: opacity 250ms ease;
 }
