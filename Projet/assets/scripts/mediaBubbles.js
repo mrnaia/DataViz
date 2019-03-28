@@ -177,12 +177,22 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
   .on("click", function(d){
     var mouseCoordinates= d3.mouse(this);
     let initPosition = {"x":mouseCoordinates[0], "y":mouseCoordinates[1]}
-    mediaG.selectAll("circle").classed("selectedMedia", false);
 
-    d3.select("#media"+d.name.substring(1)).classed("selectedMedia", true);
+    if(d3.select("#media"+d.name.substring(1)).classed("selectedMedia")){
+      d3.select("#media"+d.name.substring(1)).classed("selectedMedia", false);
+      tweetsG.selectAll("g").remove()
+    }
+    else{
+      //Change style
+      mediaG.selectAll("circle").classed("selectedMedia", false);
+      d3.select("#media"+d.name.substring(1)).classed("selectedMedia", true);
+      d3.selectAll("#mediaBubbles circle").classed("notHoveredMedia",false);
+      d3.selectAll("#mediaBubbles circle").classed("hoveredMedia",false);
 
-    launchTweetsBubbleChart(tweetsG,scaleBubbleSizeTweetChart,tweetSources[d.name].tweets,initPosition,formatNumber)
-    //setUpTweetChart(tweetsG,tweetSources[d.name].tweets,initPosition,formatNumber)
+
+      launchTweetsBubbleChart(tweetsG,scaleBubbleSizeTweetChart,tweetSources[d.name].tweets,initPosition,formatNumber)
+    }
+
   })
   .on('mouseover', function(d){
     d3.selectAll("#mediaBubbles circle").classed("hoveredMedia",false);
@@ -192,23 +202,18 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
     mediaTip.show(d);
   })
   .on('mouseout', function(d){
-    d3.selectAll("#mediaBubbles circle").classed("notHoveredMedia",false);
-    d3.selectAll("#mediaBubbles circle").classed("hoveredMedia",true);
+    if(!d3.select(this).classed("selectedMedia")){
+      console.log("Not Selected");
+      d3.selectAll("#mediaBubbles circle").classed("notHoveredMedia",false);
+      d3.selectAll("#mediaBubbles circle").classed("hoveredMedia",true);
+    }
     mediaTip.hide(d);
   })
-//  .on('mouseout', mediaTip.hide);
 
   mediaBubbleGroups = mediaBubbleGroups.merge(mediaG);
 
   mediaBubbleGroups.call(mediaTip);
 
-  /*
-  var checkPays = d3.select("#filterCountry");
-  checkPays.on("click", function(d){
-    //console.log(this.checked);
-    splitCountry(this.checked, mediaBubbleGroups, mediaSources, scaleBubbleSizeMediaChart, mediaXScale, mediasData);
-  });
-  */
   runMediaSimulation(mediaSources, mediaBubbleGroups, scaleBubbleSizeMediaChart, mediaXScale, mediasData);
 }
 
