@@ -37,6 +37,7 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
         .attr("id", "mediaBubbles")
 
       var svgBounds = svg.node().getBoundingClientRect(); //To compute the new bounds after CSS applied
+
       xMediasPositions = {min: 0 + axisMarginX, max: svgBounds.width - axisMarginX};
       attractionPoints = [[svgBounds.width*20/100, 1000], [svgBounds.width/2, 1000], [svgBounds.width*(1-20/100), 1000]];
 
@@ -61,7 +62,7 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
       createMediaBubblesYAxis(mediaYAxisGroup, xMedias);
       updateMediaBubblesAxis();
       createMediaBubbleChart(mediaBubblesGroup, mediaSources, tweetsChartGroup, tweetSources, xMedias, localization.getFormattedNumber,scaleBubbleSizeMediaChart, scaleBubbleSizeTweetChart, mediasData);
-      legend(svg);
+      legend(svg, svgBounds);
     });
   });
 });
