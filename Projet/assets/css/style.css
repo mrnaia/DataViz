@@ -24,8 +24,11 @@ body {
   opacity: 0.6 !important;
   transition: opacity 250ms ease;
 }
+:not(.notHoveredMedia){
+  transition: opacity 250ms ease;
+}
 
-#mediaBubbleChart circle.notSelectedMedia {
+.notSelectedMedia {
   opacity: 0.6 !important;
   transition: opacity 250ms ease;
 }
@@ -44,10 +47,7 @@ body {
 #mediaBubbleChart circle.selectedMedia{
   opacity: 1 !important;
 }
-:not(circle.selectedMedia){
-  opacity: 0.6 !important;
-  transition: opacity 250ms ease;
-}
+
 label {
   cursor: pointer;
 }
