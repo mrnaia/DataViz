@@ -23,18 +23,39 @@ function domainMediaXPosition(x,source){
  */
 function createMediaBubblesXAxis(g, xAxisMetadata) {
   // Dessiner l'axe des abscisses du graphique.
-  var xAxisLine = g.selectAll("line")
+  var xAxisLine = g.selectAll("g")
     .data(xAxisMetadata)
     .enter()
-    .append("line")
+    .append("g")
 
-  xAxisLine.attr("x1", xMediasPositions.min - axisMarginX)
+
+  xAxisLine.append("line")
+    .attr("x1", xMediasPositions.min - axisMarginX)
     .attr("x2", xMediasPositions.max + axisMarginX)
     .attr("y1", d => getMediaYPosition(d.country, d.category))
     .attr("y2", d => getMediaYPosition(d.country, d.category))
     .attr("stroke", "grey")
     //.attr("stroke-width", "1px")
-    .attr("opacity", 0.5)
+    .attr("opacity", 0.5);
+
+    xAxisLine.append("text")
+    .text(d=>d.country)
+    .attr("text-anchor", "middle")
+    .attr("x", 30)
+    .attr("y", d => getMediaYPosition(d.country, d.category)-10)
+    .attr("fill", "black")
+    .attr("class", "textCountry")
+    .attr("opacity",0);
+
+    xAxisLine.append("text")
+    .text(d=>d.category)
+    .attr("text-anchor", "middle")
+    .attr("x", 30)
+    .attr("y", d => getMediaYPosition(d.country, d.category)+25)
+    .attr("fill", "black")
+    .attr("class", "textCategory")
+    .attr("opacity",0);
+
 }
 
 function createMediaBubblesYAxis(g, xMedias) {
@@ -91,7 +112,19 @@ function updateMediaBubblesXAxis() {
     .transition()
     .duration(transitionAxisDuration)
     .attr("y1", d => getMediaYPosition(d.country, d.category))
-    .attr("y2", d => getMediaYPosition(d.country, d.category))
+    .attr("y2", d => getMediaYPosition(d.country, d.category));
+
+  var textsCategory = g.selectAll("text.textCategory")
+      .transition()
+      .duration(transitionAxisDuration)
+      .attr("y", d => getMediaYPosition(d.country, d.category)+25)
+      .attr("opacity", d=> categoryChecked?1:0);
+  var textsCountry = g.selectAll("text.textCountry")
+      .transition()
+      .duration(transitionAxisDuration)
+      .attr("y", d => getMediaYPosition(d.country, d.category)-10)
+      .attr("opacity", d=> countryChecked?1:0);
+
   //France doesn't move
 }
 
