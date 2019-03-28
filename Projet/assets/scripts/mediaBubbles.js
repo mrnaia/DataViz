@@ -178,14 +178,25 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
     var mouseCoordinates= d3.mouse(this);
     let initPosition = {"x":mouseCoordinates[0], "y":mouseCoordinates[1]}
     mediaG.selectAll("circle").classed("selectedMedia", false);
-    
+
     d3.select("#media"+d.name.substring(1)).classed("selectedMedia", true);
 
     launchTweetsBubbleChart(tweetsG,scaleBubbleSizeTweetChart,tweetSources[d.name].tweets,initPosition,formatNumber)
     //setUpTweetChart(tweetsG,tweetSources[d.name].tweets,initPosition,formatNumber)
   })
-  .on('mouseover', mediaTip.show)
-  .on('mouseout', mediaTip.hide);
+  .on('mouseover', function(d){
+    d3.selectAll("#mediaBubbles circle").classed("hoveredMedia",false);
+    d3.selectAll("#mediaBubbles circle").classed("notHoveredMedia",true);
+    d3.select(this).classed("notHoveredMedia",false);
+    d3.select(this).classed("hoveredMedia",true);
+    mediaTip.show(d);
+  })
+  .on('mouseout', function(d){
+    d3.selectAll("#mediaBubbles circle").classed("notHoveredMedia",false);
+    d3.selectAll("#mediaBubbles circle").classed("hoveredMedia",true);
+    mediaTip.hide(d);
+  })
+//  .on('mouseout', mediaTip.hide);
 
   mediaBubbleGroups = mediaBubbleGroups.merge(mediaG);
 

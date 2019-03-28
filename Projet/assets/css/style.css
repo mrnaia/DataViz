@@ -14,20 +14,23 @@ body {
   background: rgba(0, 0, 0, 0.8);
   border-radius: 10px;
 }
-
+/*
 #mediaBubbleChart circle {
   opacity: 0.6 !important;
 }
+*/
 #mediaBubbleChart circle:hover {
   cursor: pointer;
-  opacity: 1 !important;
 }
 
-.hoverMedia {
+.hoveredMedia{
   opacity: 1 !important;
+  transition: opacity 250ms ease;
 }
-.notHoverMedia {
-  opacity: 0.3 !important;
+
+.notHoveredMedia {
+  opacity: 0.6 !important;
+  transition: opacity 250ms ease;
 }
 
 #tweetBubbleChart circle {
@@ -42,7 +45,7 @@ body {
   opacity: 1;
 }
 .selectedMedia{
-  
+
 }
 label {
   cursor: pointer;
