@@ -25,7 +25,7 @@ function legend(svg, svgBounds){
   .style("fill", "white")
   .attr("stroke-width", 0.5);
 
-console.log(svgBounds.right);
+//console.log(svgBounds.right);
   var counter = 0;
   var legendColors = legend.append("g");
   Object.keys(countriesColors).forEach(function(element){
