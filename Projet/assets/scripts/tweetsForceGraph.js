@@ -46,8 +46,7 @@ function runTweetSimulation(source,bubbleGroups,xBubbleScale){
     .force('collide', d3.forceCollide(d => Math.sqrt(xBubbleScale(+d.retweet_count)) + collisionTweetMargin))
     .on('tick', d => tweetTicked(d,bubbleGroups,xBubbleScale));
   simulationTweet.nodes(source);
-  window.scrollTo(0, yMediasPosition + interCategorySpace* nbCategoriesDisplayed);
-
+  scrollToTweet();
 }
 function updateTweetChart(){
   updateFilterCheck();
@@ -56,6 +55,10 @@ function updateTweetChart(){
   simulationTweet.restart();
   simulationTweet.alpha(1);
 
+function scrollToTweet(){
+  window.scrollTo(0, yMediasPosition + interCategorySpace* nbCategoriesDisplayed);
+  scrolldelay = setTimeout(pageScroll,10);
+}
 
 
 }
