@@ -6,9 +6,9 @@ function ticked() {
 }
 
 function seperateTweets(d){
-  if(d.sentiment<-0.2){
+  if(d.sentiment<-0.15){
     return -1;
-  } else if(d.sentiment>0.2){
+  } else if(d.sentiment>0.15){
     return 1;
   } else {
     return 0;
@@ -30,8 +30,9 @@ function runTweetSimulation(source,bubbleGroups,xBubbleScale){
     .force('x', d3.forceX().strength(forceStrengthTweet).x(attractionCenterX))
     .force('y', d3.forceY().strength(forceStrengthTweet).y(attractionCenterY))
     .force('collide', d3.forceCollide(d => Math.sqrt(xBubbleScale(+d.retweet_count)) + collisionTweetMargin))
-    .on('tick', d => tweetTicked(d,bubbleGroups,xBubbleScale));
+    .on('tick', d => tweetTicked(d,bubbleGroups,xBubbleScale,simulationTweet.alpha()));
   simulationTweet.nodes(source);
+
 }
 function updateTweetChart(){
   updateFilterCheck();
@@ -41,7 +42,7 @@ function updateTweetChart(){
   simulationTweet.alpha(1);
 }
 
-function tweetTicked(d,bubbleGroups,x) {
+function tweetTicked(d,bubbleGroups,x,alpha) {
     bubbleGroups.select("circle")
       .attr('cx', function (d) { return d.x; })
       .attr('cy', function (d) { return d.y; });
@@ -49,4 +50,5 @@ function tweetTicked(d,bubbleGroups,x) {
     bubbleGroups.select("svg")
       .attr('x', function (d) { return placeBird(d.x,d.y,Math.sqrt(x(+d.retweet_count))).x; })
       .attr('y', function (d) { return placeBird(d.x,d.y,Math.sqrt(x(+d.retweet_count))).y; });
+    tweetSimulationAlpha = alpha;
 }

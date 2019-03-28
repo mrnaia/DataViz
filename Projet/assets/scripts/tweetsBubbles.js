@@ -12,7 +12,14 @@ function createTweetsBubbleChart(g,x,source,initPosition,$svg,tip){
   g.selectAll("g").remove()
   var bubbleGroups = g.selectAll("g").data(source);
   var tweetG = bubbleGroups.enter().append("g")
-  .on('mouseover', tip.show) //affiche les infobulles quand on passe la souris sur un cercle
+  .on('mouseover',function(d){
+    if(tweetSimulationAlpha<fractionToShowTip){
+      d3.select(this).style("cursor","default");
+      tip.show(d);
+    } else{
+      d3.select(this).style("cursor","wait");
+    }
+  }) //affiche les infobulles quand on passe la souris sur un cercle
   .on("mouseout", tip.hide);
   //pour chaque tweet on crée un cercle
   tweetG.append("circle")
@@ -21,8 +28,12 @@ function createTweetsBubbleChart(g,x,source,initPosition,$svg,tip){
   .attr("cy",100)
   .attr("id",d => d.id)
   .datum(function(d){
-    d.x = initPosition.x+Math.random()*5;
-    d.y = initPosition.y+Math.random()*5;
+    var randomx = (Math.random()-0.5)*2*50;
+    if(d.sentiment==0){
+      randomx = (Math.random()-0.5)*2*250
+    }
+    d.x = initPosition.x+ +d.sentiment*500 + randomx;
+    d.y = initPosition.y+(Math.random()-0.5)*2 *250;
     replaceSVG($svg, d.id, 100, 100, Math.sqrt(x(+d.retweet_count)),+d.sentiment); //on le place dans le groupe correspondant à son sentiment (positif, neutre, negatif)
     return d;
   })
@@ -55,10 +66,3 @@ function getTweetTipText(d, formatNumber){
   tipText += "<span>Sentiment: <strong style='color:"+d3.interpolateRdYlGn((+d.sentiment/2+0.5))+"'>" + formatNumber(+d.sentiment) + "</strong></span><br>";
   return tipText;
 }
-//TODO
-  /*
-  window.setInterval(function() {
-  var elem = document.getElementById('data');
-  elem.scrollTop = elem.scrollHeight;
-}, 5000);
-  */
