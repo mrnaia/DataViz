@@ -1,14 +1,14 @@
 "use strict";
-
+/*
 function mediaSizeScaleDomain(x,source){
   // TODO: Change size in respect with popularity
   x.domain([d3.min(source,(d) => +d.number_tweets_and_RT),d3.max(source,(d) => +d.number_tweets_and_RT)]);
 }
+*/
 
 function domainMediaXPosition(x,source){
   var maxAbsSentiment = d3.max(source, d => Math.abs(+d.mean_sentiment));
   x.domain([-maxAbsSentiment, maxAbsSentiment]);
-  //x.domain([d3.min(source,(d) => +d.mean_sentiment),d3.max(source,(d) => +d.mean_sentiment)]);
 }
 
 
@@ -155,7 +155,7 @@ function updateSvgSize(){
   .attr("height",height)
 }
 
-function updateMediaBubblesAxis() {
+function updateNbCategoriesDisplayed() {
   if (countryChecked && categoryChecked) {
     nbCategoriesDisplayed = 6;
   } else if (countryChecked) {
@@ -165,6 +165,10 @@ function updateMediaBubblesAxis() {
   } else {
     nbCategoriesDisplayed = 1;
   }
+}
+
+function updateMediaBubblesAxis() {
+  //updateNbCategoriesDisplayed();
   updateMediaBubblesXAxis();
   updateMediaBubblesYAxis();
   updateSvgSize();
@@ -274,6 +278,7 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
 function updateFilterCheck() {
   countryChecked = d3.select("#filterCountry").property("checked");
   categoryChecked = d3.select("#filterCategory").property("checked");
+  updateNbCategoriesDisplayed();
 }
 
 function getMediaTipText(d, formatNumber){

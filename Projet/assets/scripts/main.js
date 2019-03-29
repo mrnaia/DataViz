@@ -37,10 +37,8 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
       var mediaBubblesGroup = mediaChartGroup.append("g")
         .attr("id", "mediaBubbles")
 
-      var svgBounds = svg.node().getBoundingClientRect(); //To compute the new bounds after CSS applied
-
-      xMediasPositions = {min: 0 + axisMarginX, max: svgBounds.width - axisMarginX};
-      attractionPoints = [[svgBounds.width*20/100, 1000], [svgBounds.width/2, 1000], [svgBounds.width*(1-20/100), 1000]];
+      updateWindowSize(svg);
+      window.addEventListener("resize", function() { updateWindowSize(svg); });
 
       //RANGE definitions
       //Medias
