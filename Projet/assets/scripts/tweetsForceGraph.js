@@ -18,7 +18,7 @@ function attractionCenterX(d){
   return attractionPoints[seperateTweets(d)+1][0];
 }
 
-function attractionCenterY(d){
+function attractionCenterY(){
   return yMediasPosition + nbCategoriesDisplayed*interCategorySpace + tweetVerticalMargin + 200;
 }
 
@@ -37,10 +37,19 @@ function runTweetSimulation(source,bubbleGroups,xBubbleScale){
 function updateTweetChart(){
   updateFilterCheck();
   d3.selectAll("#tweetBubbleChart g").style("cursor","default");
-  //Changed attraction center
-  simulationTweet.force('y', d3.forceY().strength(forceStrengthTweet).y(attractionCenterY))
-  simulationTweet.restart();
-  simulationTweet.alpha(1);
+  d3.select("#tweetBubbleChart")
+  .transition()
+  .ease(d3.easeSin)
+  .duration(transitionAxisDuration)
+  .attr("transform", function(){
+    var translation = +attractionCenterY() - this.getBoundingClientRect().y - tweetHeight/2;
+    var transform = d3.select(this).attr("transform");
+    if(transform){
+      var oldTranslate = transform.split(",")[1].split(")")[0];
+      translation += +oldTranslate
+    }
+    return "translate(0," + translation + ")"
+  })
 }
 
 function tweetTicked(d,bubbleGroups,x,alpha) {

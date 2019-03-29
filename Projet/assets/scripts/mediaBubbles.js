@@ -110,6 +110,7 @@ function updateMediaBubblesXAxis() {
   var g = d3.select("#mediaXAxis");
   var lines = g.selectAll("line")
     .transition()
+    .ease(d3.easeCubic)
     .duration(transitionAxisDuration)
     .attr("y1", d => getMediaYPosition(d.country, d.category))
     .attr("y2", d => getMediaYPosition(d.country, d.category));
