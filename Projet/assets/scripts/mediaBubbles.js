@@ -230,7 +230,6 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
   .attr("cx", d => d.x)
   .attr("cy", d => d.y)
   .on("click", function(d){
-    d3.select("body").style("cursor","progress");
     var mouseCoordinates= d3.mouse(this);
     let initPosition = {"x":mouseCoordinates[0], "y":mouseCoordinates[1]}
 
@@ -247,6 +246,8 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
       d3.select("#media"+d.name.substring(1)).classed("selectedMedia", true);
       d3.select("#media"+d.name.substring(1)).classed("notSelectedMedia", false);
       d3.selectAll("#mediaBubbles circle").classed("notHoveredMedia",true);
+
+      d3.select("body").style("cursor","progress");
 
       launchTweetsBubbleChart(tweetsG,scaleBubbleSizeTweetChart,tweetSources[d.name].tweets,initPosition,formatNumber)
       scrollToTweet();
