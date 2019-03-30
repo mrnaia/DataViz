@@ -71,3 +71,7 @@ svg {
 label {
   cursor: pointer;
 }
+
+.title{
+  word-wrap: break-word;
+}

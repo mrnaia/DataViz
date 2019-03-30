@@ -40,7 +40,14 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
 
       xMediasPositions = {min: 0 + axisMarginX, max: svgBounds.width - axisMarginX};
       attractionPoints = [[svgBounds.width*20/100, 1000], [svgBounds.width/2, 1000], [svgBounds.width*(1-20/100), 1000]];
-
+      //ajout d'un titre
+      svg.append("text")
+      .attr("class","title")
+      .text("Analyse des sentiments des tweets addressés à différents médias en France et au Québec")
+      .attr("x",svgBounds.width/2)
+      .attr("y", 20)
+      .attr("width", svgBounds.width - 160)
+      .attr("text-anchor", "middle");
       //RANGE definitions
       //Medias
       var scaleBubbleSizeMediaChart =  d3.scaleLinear().range([mediaBubblesSize.min, mediaBubblesSize.max]);
