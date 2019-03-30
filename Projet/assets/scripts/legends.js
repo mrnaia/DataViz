@@ -85,6 +85,7 @@ function legendTweet(svg,g){
   //var legendImg  = new Image();
   //legendImg.onload()= function(){
   var heightSvg = yMediasPosition + interCategorySpace*nbCategoriesDisplayed + axisMarginY + tweetVerticalMargin;
+  updateSvgSize();
   var marginWidth = 4/100*svgBounds.width;
     var width = svgBounds.width-marginWidth;
     var marginHeight = 2/100*heightSvg;
@@ -92,8 +93,9 @@ function legendTweet(svg,g){
     var rectHeight = (tweetLegendHeight-marginHeight)/2;
     var accoladeTextHeight = (tweetLegendHeight-marginHeight)/2;
     var transform = "translate("+0+","+yMainImg+")";
-    console.log(transform);
+    //console.log(transform);
     var grp = svg.append("g").attr("id", "legendImage").attr("opacity", 0).attr("transform",transform).attr("height", tweetLegendHeight);
+    //console.log(d3.select("#legendImage").attr("transform").split(",")[1].split(")")[0]);
     grp.append("svg:image")
     .attr("class", "imgLegend")
     .attr("xlink:href", "assets/images/echelleCouleurs.png")

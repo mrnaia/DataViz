@@ -150,10 +150,11 @@ function updateSvgSize(){
   if(tweetChartActive){
     height += tweetHeight + tweetVerticalMargin + tweetVerticalMargin + tweetLegendHeight + tweetVerticalMargin;
   }
+  svgBounds.height = height;
   svg.transition()
     .duration(transitionAxisDuration)
     .attr("height", height);
-  svgBounds.height = height;
+
 }
 
 function updateNbCategoriesDisplayed() {
@@ -259,7 +260,15 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
 
       tweetChartActive = true;
       updateMediaBubblesAxis();
-      d3.select("#legendImage").attr("y", svgBounds.height-tweetLegendHeight-2);
+      var heightSvg = yMediasPosition + interCategorySpace*nbCategoriesDisplayed + axisMarginY + tweetVerticalMargin;
+      var marginHeight = 2/100*heightSvg;
+      var yMainImg = heightSvg - marginHeight - tweetLegendHeight + tweetHeight;
+      console.log(yMainImg);
+      let valueTransform = yMainImg-d3.select("#legendImage").attr("transform").split(",")[1].split(")")[0];
+      var transformLegend = "translate(0,"+yMainImg+")";
+      console.log(transformLegend);
+      console.log(d3.select("#legendImage").attr("transform").split(",")[1].split(")")[0]);
+      d3.select("#legendImage").attr("transform", transformLegend);
       d3.select("#legendImage").transition().duration(500).attr("opacity",1);
     }
   })

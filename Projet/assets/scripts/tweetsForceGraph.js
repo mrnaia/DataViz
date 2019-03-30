@@ -53,7 +53,13 @@ function updateTweetChart(){
 
     return "translate(0," + translation + ")";
   })
-  d3.select("#legendImage").transition().duration(500).attr("y", svgBounds.height-tweetLegendHeight-2);
+  var heightSvg = yMediasPosition + interCategorySpace*nbCategoriesDisplayed + axisMarginY + tweetVerticalMargin;
+  var marginHeight = 2/100*heightSvg;
+  var yMainImg = heightSvg - marginHeight - tweetLegendHeight + tweetHeight;
+  //let valueTransform = yMainImg-d3.select("#legendImage").attr("transform").split(",")[1].split(")")[0];
+  var transformLegend = "translate(0,"+yMainImg+")"; //yMainImg et pas valueTransform ??!!!!! Ca marche comme si translate prenait en fait la valeur finale en parametre et non de combien il doit translater...weird !!
+  d3.select("#legendImage").transition().duration(500).attr("transform", transformLegend);
+
   //updateSvgSize();
 }
 
