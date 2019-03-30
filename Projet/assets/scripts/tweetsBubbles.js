@@ -29,7 +29,7 @@ function createTweetsBubbleChart(g,x,source,initPosition,$svg,tip){
     if(d.sentiment==0){
       randomx = (Math.random()-0.5)*2*250
     }
-    d.x = initPosition.x+ +d.sentiment*500 + randomx;
+    d.x = initPosition.x+ +d.sentiment*1000 + randomx;
     d.y = initPosition.y+(Math.random()-0.5)*2 *250;
     replaceSVG($svg, d.id, 100, 100, Math.sqrt(x(+d.retweet_count)),+d.sentiment); //on le place dans le groupe correspondant à son sentiment (positif, neutre, negatif)
     return d;

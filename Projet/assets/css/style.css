@@ -73,5 +73,15 @@ label {
 }
 
 .title{
+  position: : fixed;
+  text-align: center;
   word-wrap: break-word;
+  width: 80%;
+  margin: auto;
+}
+
+@media only screen and (max-width: 600px) {
+  svg {
+    width: 99%;
+  }
 }
