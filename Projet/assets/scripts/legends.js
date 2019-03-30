@@ -87,6 +87,7 @@ function legendTweet(svg,g){
   var height = yMediasPosition + interCategorySpace*nbCategoriesDisplayed + axisMarginY + tweetVerticalMargin;
   console.log(svgBounds);
     svg.append("svg:image")
+    .attr("id", "legendImage")
     .attr("class", "imgLegend")
     .attr("xlink:href", "assets/images/echelleCouleurs.png")
     .attr("x",2/100*svgBounds.width)
