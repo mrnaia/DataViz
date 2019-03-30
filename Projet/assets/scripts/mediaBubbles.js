@@ -97,7 +97,7 @@ function createMediaBubblesYAxis(g, xMedias) {
       //Change zero style
       if (i == 0) {
         verticalLine.attr("opacity", 1)
-        .style("stroke-dasharray", "4 4");
+          .style("stroke-dasharray", "4 4");
         sentimentLabelUp.attr("font-weight", "bold");
         sentimentLabelBottom.attr("font-weight", "bold");
       }
@@ -146,7 +146,7 @@ function updateMediaBubblesYAxis() {
 
 function updateSvgSize(){
   var svg = d3.select("#mediaSVG")
-  var height = yMediasPosition + interCategorySpace*nbCategoriesDisplayed + axisMarginY + tweetVerticalMargin;
+  var height = yMediasPosition + interCategorySpace*(nbCategoriesDisplayed-1) + axisMarginY + tweetVerticalMargin;
   if(tweetChartActive){
     height += tweetHeight + tweetVerticalMargin + tweetVerticalMargin + tweetLegendHeight + tweetVerticalMargin;
   }
