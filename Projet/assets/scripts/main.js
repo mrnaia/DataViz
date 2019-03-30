@@ -63,7 +63,8 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
       createMediaBubblesYAxis(mediaYAxisGroup, xMedias);
       updateMediaBubblesAxis();
       createMediaBubbleChart(mediaBubblesGroup, mediaSources, tweetsChartGroup, tweetSources, xMedias, localization.getFormattedNumber,scaleBubbleSizeMediaChart, scaleBubbleSizeTweetChart, mediasData);
-      legend(svg, svgBounds);
+      var grouptweetChartLegend = svg.append("g").attr("class", "chartTweetAndLgend")
+      legend(svg, svgBounds, grouptweetChartLegend);
     });
   });
 });
