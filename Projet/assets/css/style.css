@@ -10,14 +10,27 @@ body {
 
 svg {
   display: block;
-  border: 1px black solid;
+  /*border: 1px black solid;*/
   width: 80%;
   margin: auto;
 }
 
+article {
+  width: 80%;
+  margin: auto;
+}
+
+
+h3{
+  position: : fixed;
+  text-align: center;
+  word-wrap: break-word;
+  width: 80%;
+  margin: auto;
+}
 .legend{
   /*display: block;*/
-  border: 1px black solid;
+  /*border: 1px black solid;*/
 }
 
 .d3-tip {
@@ -131,6 +144,6 @@ label input:checked + .checkbox .checkmark {
   }
 
   .imgLegend{
-    
+
   }
 }
