@@ -75,3 +75,9 @@ label {
 .title{
   word-wrap: break-word;
 }
+
+@media only screen and (max-width: 600px) {
+  svg {
+    width: 99%;
+  }
+}
