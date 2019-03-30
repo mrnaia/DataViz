@@ -79,4 +79,4 @@ var fractionToShowTip = 0.5;
 var collisionTweetMargin = 1;
 
 // Height of the gradient rectangle for color legend of tweets in px
-const tweetLegendHeight = 20;
+const tweetLegendHeight = 45;

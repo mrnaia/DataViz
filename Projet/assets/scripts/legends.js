@@ -84,18 +84,53 @@ function legendTweet(svg,g){
   //var gradient = svg.append("interpolateRdYlGn").attr('id', 'gradient');
   //var legendImg  = new Image();
   //legendImg.onload()= function(){
-  var height = yMediasPosition + interCategorySpace*nbCategoriesDisplayed + axisMarginY + tweetVerticalMargin;
-  console.log(svgBounds);
-    svg.append("svg:image")
-    .attr("id", "legendImage")
+  var heightSvg = yMediasPosition + interCategorySpace*nbCategoriesDisplayed + axisMarginY + tweetVerticalMargin;
+  var marginWidth = 4/100*svgBounds.width;
+    var width = svgBounds.width-marginWidth;
+    var marginHeight = 2/100*heightSvg;
+    var yMainImg = heightSvg - marginHeight - tweetLegendHeight + tweetHeight;
+    var rectHeight = (tweetLegendHeight-marginHeight)/2;
+    var accoladeTextHeight = (tweetLegendHeight-marginHeight)/2;
+    var transform = "translate("+0+","+yMainImg+")";
+    console.log(transform);
+    var grp = svg.append("g").attr("id", "legendImage").attr("opacity", 0).attr("transform",transform).attr("height", tweetLegendHeight);
+    grp.append("svg:image")
     .attr("class", "imgLegend")
     .attr("xlink:href", "assets/images/echelleCouleurs.png")
-    .attr("x",2/100*svgBounds.width)
-    .attr("y",height - 2/100*height - tweetLegendHeight)
+    .attr("x",marginWidth/2)
     .attr("preserveAspectRatio", "none")
-    .attr("width", svgBounds.width*(1-4/100))
-    .attr('height', tweetLegendHeight)
-    .attr("opacity", 0);
+    .attr("width",width )
+    .attr('height', rectHeight);
+
+    for(var i=0; i<3;i++){
+      var grplegende=grp.append("g");
+      grplegende.append("svg:image")
+      .attr("class", "imgAccolade")
+      .attr("xlink:href", "assets/images/accolade.png")
+      .attr("x",marginWidth/2+i*width/3)
+      .attr("y",rectHeight)
+      .attr("preserveAspectRatio", "none")
+      .attr("width", 1/3*width)
+      .attr('height', accoladeTextHeight/2);
+
+      grplegende.append("text")
+      .text(function(d){
+        if(i==0){
+          return "Sentiment négatif";
+        }
+        if(i==1){
+          return "Neutre";
+        }
+        if(i==2){
+          return "Sentiment positif";
+        }
+        return;
+      })
+      .attr("x",marginWidth/2+(i+1/2)*width/3)
+      .attr("y", rectHeight+accoladeTextHeight)
+      .attr("text-anchor", "middle")
+    }
+
 
   //}
   //legendImg.src = "../assets/images/echelleCouleurs.png";
