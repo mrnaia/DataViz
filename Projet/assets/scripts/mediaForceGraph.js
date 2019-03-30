@@ -55,9 +55,10 @@ function mediaTicked(d,bubbleGroups,x) {
 function filterMediaBubbles(simulation, forceStrength){
   updateFilterCheck();
   //Changed attraction center
-  simulation.force('y', d3.forceY().strength(forceStrength).y((d => getMediaYPosition(d.Pays, d.Categorie))))
-  simulation.restart();
-  simulation.alpha(1);
+  simulation.force('y', d3.forceY().strength(forceStrength*3).y((d => getMediaYPosition(d.Pays, d.Categorie))))
+  .velocityDecay(0.4)
+  .restart()
+  .alpha(1);
 
   updateMediaBubblesAxis();
 

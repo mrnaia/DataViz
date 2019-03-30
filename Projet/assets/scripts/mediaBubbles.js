@@ -1,14 +1,14 @@
 "use strict";
-
+/*
 function mediaSizeScaleDomain(x,source){
   // TODO: Change size in respect with popularity
   x.domain([d3.min(source,(d) => +d.number_tweets_and_RT),d3.max(source,(d) => +d.number_tweets_and_RT)]);
 }
+*/
 
 function domainMediaXPosition(x,source){
   var maxAbsSentiment = d3.max(source, d => Math.abs(+d.mean_sentiment));
   x.domain([-maxAbsSentiment, maxAbsSentiment]);
-  //x.domain([d3.min(source,(d) => +d.mean_sentiment),d3.max(source,(d) => +d.mean_sentiment)]);
 }
 
 
@@ -110,6 +110,7 @@ function updateMediaBubblesXAxis() {
   var g = d3.select("#mediaXAxis");
   var lines = g.selectAll("line")
     .transition()
+    .ease(d3.easeCubic)
     .duration(transitionAxisDuration)
     .attr("y1", d => getMediaYPosition(d.country, d.category))
     .attr("y2", d => getMediaYPosition(d.country, d.category));
@@ -143,7 +144,18 @@ function updateMediaBubblesYAxis() {
     .attr("y", yMediasPosition + interCategorySpace*(nbCategoriesDisplayed-1) + axisMarginY + 17)
 }
 
-function updateMediaBubblesAxis() {
+function updateSvgSize(){
+  var svg = d3.select("#mediaSVG")
+  var height = yMediasPosition + interCategorySpace*(nbCategoriesDisplayed+1);
+  if(tweetChartActive){
+    height+= tweetHeight + 2*tweetVerticalMargin;
+  }
+  svg.transition()
+  .duration(transitionAxisDuration)
+  .attr("height",height)
+}
+
+function updateNbCategoriesDisplayed() {
   if (countryChecked && categoryChecked) {
     nbCategoriesDisplayed = 6;
   } else if (countryChecked) {
@@ -153,8 +165,13 @@ function updateMediaBubblesAxis() {
   } else {
     nbCategoriesDisplayed = 1;
   }
+}
+
+function updateMediaBubblesAxis() {
+  //updateNbCategoriesDisplayed();
   updateMediaBubblesXAxis();
   updateMediaBubblesYAxis();
+  updateSvgSize();
 }
 
 /**
@@ -206,8 +223,8 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
   })
   .attr("stroke-width", 3)
   .datum(function(d){
-    d.x = initPosition.x+Math.random()*5;
-    d.y = initPosition.y+Math.random()*5;
+    d.x = initPosition.x+ +d.mean_sentiment*5000 + (Math.random()-0.5)*2*5;
+    d.y = initPosition.y+(Math.random()-0.5)*2*10;
     return d;
   })
   .attr("cx", d => d.x)
@@ -215,11 +232,13 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
   .on("click", function(d){
     var mouseCoordinates= d3.mouse(this);
     let initPosition = {"x":mouseCoordinates[0], "y":mouseCoordinates[1]}
+    tweetsG.attr("transform",""); //reset translation of tweet group
 
     if(d3.select("#media"+d.name.substring(1)).classed("selectedMedia")){
       d3.select("#media"+d.name.substring(1)).classed("selectedMedia", false);
       tweetsG.selectAll("g").remove()
       mediaG.selectAll("circle").classed("notSelectedMedia", false);
+      tweetChartActive = false;
     }
     else{
       //Change style
@@ -229,8 +248,12 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
       d3.select("#media"+d.name.substring(1)).classed("notSelectedMedia", false);
       d3.selectAll("#mediaBubbles circle").classed("notHoveredMedia",true);
 
+      d3.select("body").style("cursor","progress");
+
       launchTweetsBubbleChart(tweetsG,scaleBubbleSizeTweetChart,tweetSources[d.name].tweets,initPosition,formatNumber)
       scrollToTweet();
+      tweetChartActive = true;
+      updateMediaBubblesAxis();
     }
   })
   .on('mouseover', function(d){
@@ -257,6 +280,7 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
 function updateFilterCheck() {
   countryChecked = d3.select("#filterCountry").property("checked");
   categoryChecked = d3.select("#filterCategory").property("checked");
+  updateNbCategoriesDisplayed();
 }
 
 function getMediaTipText(d, formatNumber){
@@ -269,9 +293,11 @@ function getMediaTipText(d, formatNumber){
 }
 
 function scrollToTweet(){
+  d3.select("body").style("cursor","progress");
   var nb_scroll = 1;
   var distanceToScroll =  yMediasPosition + interCategorySpace* nbCategoriesDisplayed - window.pageYOffset;
   var timer = setTimeout(function(){
+    d3.select("body").style("cursor","default");
     window.scrollBy(0, distanceToScroll/nb_scroll);
   },500);
 }

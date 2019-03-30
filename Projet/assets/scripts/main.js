@@ -21,6 +21,7 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
         .append("svg")
         .attr("width", svgSetup.width)
         .attr("height", svgSetup.height)
+        .attr("id","mediaSVG")
 
       // création des 2 groupes des 2 viz
       var mediaChartGroup = svg.append("g")
@@ -36,10 +37,8 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
       var mediaBubblesGroup = mediaChartGroup.append("g")
         .attr("id", "mediaBubbles")
 
-      var svgBounds = svg.node().getBoundingClientRect(); //To compute the new bounds after CSS applied
-
-      xMediasPositions = {min: 0 + axisMarginX, max: svgBounds.width - axisMarginX};
-      attractionPoints = [[svgBounds.width*20/100, 1000], [svgBounds.width/2, 1000], [svgBounds.width*(1-20/100), 1000]];
+      updateWindowSize(svg);
+      window.addEventListener("resize", function() { updateWindowSize(svg); });
       //ajout d'un titre
       svg.append("text")
       .attr("class","title")
@@ -48,6 +47,7 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
       .attr("y", 20)
       .attr("width", svgBounds.width - 160)
       .attr("text-anchor", "middle");
+
       //RANGE definitions
       //Medias
       var scaleBubbleSizeMediaChart =  d3.scaleLinear().range([mediaBubblesSize.min, mediaBubblesSize.max]);
