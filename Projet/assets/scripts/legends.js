@@ -84,14 +84,17 @@ function legendTweet(svg,g){
   //var gradient = svg.append("interpolateRdYlGn").attr('id', 'gradient');
   //var legendImg  = new Image();
   //legendImg.onload()= function(){
+  var height = yMediasPosition + interCategorySpace*nbCategoriesDisplayed + axisMarginY + tweetVerticalMargin;
+  console.log(svgBounds);
     svg.append("svg:image")
     .attr("class", "imgLegend")
     .attr("xlink:href", "assets/images/echelleCouleurs.png")
-    .attr("x",0)
-    .attr("y",0)
+    .attr("x",2/100*svgBounds.width)
+    .attr("y",height - 2/100*height - tweetLegendHeight)
     .attr("preserveAspectRatio", "none")
-    .attr("width", svgBounds.width)
-    .attr('height', 25);
+    .attr("width", svgBounds.width*(1-4/100))
+    .attr('height', tweetLegendHeight)
+    .attr("opacity", 0);
 
   //}
   //legendImg.src = "../assets/images/echelleCouleurs.png";

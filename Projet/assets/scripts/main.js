@@ -44,7 +44,7 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
 
       updateWindowSize(svg);
       window.addEventListener("resize", function() { updateWindowSize(svg); });
-      
+
       //ajout d'un titre
 
 
