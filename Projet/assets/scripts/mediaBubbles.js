@@ -240,6 +240,7 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
       tweetsG.selectAll("g").remove()
       mediaG.selectAll("circle").classed("notSelectedMedia", false);
       tweetChartActive = false;
+      updateSvgSize();
       legendImagetweetsChart.transition().duration(500).attr("opacity",0);
     }
     else{
@@ -258,7 +259,8 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
 
       tweetChartActive = true;
       updateMediaBubblesAxis();
-      d3.select("#legendImage").transition().duration(500).attr("opacity",1).attr("y", svgBounds.height);
+      d3.select("#legendImage").attr("y", svgBounds.height-tweetLegendHeight-2);
+      d3.select("#legendImage").transition().duration(500).attr("opacity",1);
     }
   })
   .on('mouseover', function(d){

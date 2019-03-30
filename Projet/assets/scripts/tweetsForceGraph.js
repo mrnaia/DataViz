@@ -19,6 +19,7 @@ function attractionCenterX(d){
 }
 
 function attractionCenterY(){
+
   return yMediasPosition + nbCategoriesDisplayed*interCategorySpace + tweetVerticalMargin + 200;
 }
 
@@ -36,6 +37,7 @@ function runTweetSimulation(source,bubbleGroups,xBubbleScale){
 }
 function updateTweetChart(){
   updateFilterCheck();
+  console.log("here");
   d3.selectAll("#tweetBubbleChart g").style("cursor","default");
   d3.select("#tweetBubbleChart")
   .transition()
@@ -48,8 +50,11 @@ function updateTweetChart(){
       var oldTranslate = transform.split(",")[1].split(")")[0];
       translation += +oldTranslate
     }
-    return "translate(0," + translation + ")"
+
+    return "translate(0," + translation + ")";
   })
+  d3.select("#legendImage").transition().duration(500).attr("y", svgBounds.height-tweetLegendHeight-2);
+  //updateSvgSize();
 }
 
 function tweetTicked(d,bubbleGroups,x,alpha) {

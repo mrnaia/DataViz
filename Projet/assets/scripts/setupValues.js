@@ -63,7 +63,7 @@ var tweetBubblesSize;
 const leftPositionPercentageAttractionPoint = 20;
 // X and Y values of the 3 attraction points for tweets
 var attractionPoints; //[[px, px], [px, px], [px, px]]
-var tweetsYPosition
+var tweetsYPosition;
 // height tweets chart in px
 var tweetHeight = 300; //Calculated for each media // TODO
 
