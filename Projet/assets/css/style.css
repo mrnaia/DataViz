@@ -73,5 +73,9 @@ label {
 }
 
 .title{
+  position: : fixed;
+  text-align: center;
   word-wrap: break-word;
+  width: 80%;
+  margin: auto;
 }

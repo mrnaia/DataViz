@@ -3,7 +3,12 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
   d3.dsv("|","./data/QuebecMedia.csv").then(function(quebec_data) {
     d3.dsv(",", "./data/categories.csv").then(function(medias_data) {
       //console.log("countries");
-
+      //titleViz
+      d3.select("body")
+      .append("h3")
+      .attr("class","title")
+      .text("Analyse des sentiments des tweets addressés à différents médias en France et au Québec")
+      .attr("text-anchor", "middle");
       //Preprocessing
       var mediasData = formatMediasData(medias_data);
       //console.log(mediasData);
@@ -40,13 +45,7 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
       updateWindowSize(svg);
       window.addEventListener("resize", function() { updateWindowSize(svg); });
       //ajout d'un titre
-      svg.append("text")
-      .attr("class","title")
-      .text("Analyse des sentiments des tweets addressés à différents médias en France et au Québec")
-      .attr("x",svgBounds.width/2)
-      .attr("y", 20)
-      .attr("width", svgBounds.width - 160)
-      .attr("text-anchor", "middle");
+
 
       //RANGE definitions
       //Medias
