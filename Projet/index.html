@@ -21,9 +21,19 @@
 
       <h3>Analyse des sentiments des tweets addressés à différents médias en France et au Québec</h3>
 
-      <div class="filtres">
-        <label><input type="checkbox" id="filterCountry" name="filtre1" value="Country" checked> Séparer France/Québec</label><br>
-        <label><input type="checkbox" id="filterCategory" name="filtre2" value="Type"> Séparer par type de média</label><br>
+      <div class = "filtres">
+        <label class="checkContainer"><input type="checkbox" id="filterCountry" name="filtre1" value="Country">
+          <div class="checkbox">
+            <div class="checkmark">&#x2714</div>
+          </div>
+          <span>Séparer France/Québec</span>
+        </label><br>
+        <label class="checkContainer"> <input type="checkbox" id="filterCategory" name="filtre2" value="Type">
+          <div class="checkbox">
+            <div class="checkmark">&#x2714</div>
+          </div>
+          <span>Séparer par type de média</span>
+        </label><br>
       </div>
 
       <div id="sentimentViz"></div>
