@@ -1,5 +1,5 @@
 
-function legend(svg, svgBounds){
+function legend(svg, svgBounds, groupeTweetChart){
   //Object.keys(countriesColors)
   //console.log(countriesColors[])
   //categoriesColors
@@ -70,4 +70,38 @@ function legend(svg, svgBounds){
 
   })
 
+  legendTweet(svg,groupeTweetChart)
+
+}
+
+function legendTweet(svg,g){
+/*d3.interpolateRdYlGn(sentiment/2 +0.5)
+
+  <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" style="stop-color:rgb(255,255,0);stop-opacity:1" />
+        <stop offset="100%" style="stop-color:rgb(255,0,0);stop-opacity:1" />
+      </linearGradient>*/
+  //var gradient = svg.append("interpolateRdYlGn").attr('id', 'gradient');
+  //var legendImg  = new Image();
+  //legendImg.onload()= function(){
+  var height = yMediasPosition + interCategorySpace*nbCategoriesDisplayed + axisMarginY + tweetVerticalMargin;
+  console.log(svgBounds);
+    svg.append("svg:image")
+    .attr("class", "imgLegend")
+    .attr("xlink:href", "assets/images/echelleCouleurs.png")
+    .attr("x",2/100*svgBounds.width)
+    .attr("y",height - 2/100*height - tweetLegendHeight)
+    .attr("preserveAspectRatio", "none")
+    .attr("width", svgBounds.width*(1-4/100))
+    .attr('height', tweetLegendHeight)
+    .attr("opacity", 0);
+
+  //}
+  //legendImg.src = "../assets/images/echelleCouleurs.png";
+  /*g.append("rect")
+  .attr("width",svgBounds.width)
+  .attr("height",20)
+  .attr("x",0)
+  .attr("y",0)
+  .style("fill","url(#gradient)");*/
 }

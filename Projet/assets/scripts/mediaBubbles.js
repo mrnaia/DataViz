@@ -146,13 +146,13 @@ function updateMediaBubblesYAxis() {
 
 function updateSvgSize(){
   var svg = d3.select("#mediaSVG")
-  var height = yMediasPosition + interCategorySpace*(nbCategoriesDisplayed+1);
+  var height = yMediasPosition + interCategorySpace*nbCategoriesDisplayed + axisMarginY + tweetVerticalMargin;
   if(tweetChartActive){
-    height+= tweetHeight + 2*tweetVerticalMargin;
+    height += tweetHeight + tweetVerticalMargin + tweetVerticalMargin + tweetLegendHeight + tweetVerticalMargin;
   }
   svg.transition()
-  .duration(transitionAxisDuration)
-  .attr("height",height)
+    .duration(transitionAxisDuration)
+    .attr("height", height)
 }
 
 function updateNbCategoriesDisplayed() {

@@ -3,6 +3,7 @@ var svgSetup = {height: "0", width: "100%"};
 var svgBounds;
 
 
+
 // MEDIA BUBBLE CHART
 
 //Values of population for the 'countries'
@@ -53,23 +54,29 @@ var nbCategoriesDisplayed; //1, 2, 3 or 6
 
 // TWEETS BUBBLE CHART
 
+// Min and Max values of tweets bubbles sizes in percentage
+const tweetBubblesSizePercentage = {min: 5, max: 300};
 // Min and Max values of tweets bubbles sizes
-var tweetBubblesSize = {min: 40, max: 50000};
-// X and Y values of the 3 attraction points for tweets
-var attractionPoints = [[400, 700], [800, 700], [1200, 700]];
-// Percentage of svg width between right svg border and left attractor center
-var leftPositionPercentageAttractionPoint = 20;
-// Separation between media chart and tweet chart in px
-var tweetVerticalMargin = 20;
-// height tweets chart in px
-//TODO une taille pour chaque media a changer
-var tweetHeight = 200;
+var tweetBubblesSize;
 
+// Percentage of svg width between right svg border and left attractor center
+const leftPositionPercentageAttractionPoint = 20;
+// X and Y values of the 3 attraction points for tweets
+var attractionPoints; //[[px, px], [px, px], [px, px]]
+var tweetsYPosition
+// height tweets chart in px
+var tweetHeight = 300; //Calculated for each media // TODO
+
+// Separation between media chart and tweet chart in px
+const tweetVerticalMargin = 20;
+
+// Simulation setup values
+var forceStrengthTweet = 0.02;
+var tweetChartActive = false;
+var tweetSimuDone; //bool that says if tweets are displayed or not
+var fractionToShowTip = 0.5;
 // Size of the collision Tweets margin
 var collisionTweetMargin = 1;
-var forceStrengthTweet = 0.02;
-var simulationTweet;
-var tweetChartActive = false;
 
-var tweetSimuDone;
-var fractionToShowTip = 0.5;
+// Height of the gradient rectangle for color legend of tweets in px
+const tweetLegendHeight = 20;

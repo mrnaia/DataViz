@@ -129,4 +129,8 @@ label input:checked + .checkbox .checkmark {
   svg {
     width: 99%;
   }
+
+  .imgLegend{
+    
+  }
 }
