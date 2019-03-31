@@ -19,7 +19,7 @@ function attractionCenterX(d){
 }
 
 function attractionCenterY(){
-  return yMediasPosition + nbCategoriesDisplayed*interCategorySpace + tweetVerticalMargin + 200;
+  return yMediasPosition + (nbCategoriesDisplayed-1)*interCategorySpace + axisMarginY + tweetVerticalMargin +  tweetHeight/2;
 }
 
 //fonction qui maintient les cercles de chaque tweet d'un même groupe ensemble
@@ -42,10 +42,11 @@ function updateTweetChart(){
   .ease(d3.easeSin)
   .duration(transitionAxisDuration)
   .attr("transform", function(){
-    var translation = +attractionCenterY() - this.getBoundingClientRect().y - tweetHeight/2;
+    var translation = +attractionCenterY() - this.getBoundingClientRect().y + axisMarginY + tweetVerticalMargin +  tweetHeight/2;
     var transform = d3.select(this).attr("transform");
     if(transform){
       var oldTranslate = transform.split(",")[1].split(")")[0];
+      console.log(oldTranslate);
       translation += +oldTranslate
     }
     return "translate(0," + translation + ")"
