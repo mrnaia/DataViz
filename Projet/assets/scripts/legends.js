@@ -14,14 +14,14 @@ function legend(svg, svgBounds, groupeTweetChart){
   var hauteur_legende_cat = 3*diametre_circle + 2*interLegendYMargin;
   var hauteur_legende_color = 2*diametre_circle + interLegendYMargin;
 
-  var x_col2 = svgBounds.width-70;//-borderMargin;
-  var x_col1 = x_col2-90;;
+  var x_col2 = svgBounds.width-100;//-borderMargin;
+  var x_col1 = x_col2-90;
   var legend = svg.select('g').append("g").
   attr("class", "legend");
   hauteur_legende =  hauteur_legende_cat+diametre_circle + interLegendYMargin;
   largeur_legende = 170;
   legend.append("rect")
-  .attr("x",x_col1-2- diametre_circle)
+  .attr("x",x_col1 - 2 - diametre_circle)
   .attr("y", 0)
   .attr("width", largeur_legende)
   .attr("height",hauteur_legende)

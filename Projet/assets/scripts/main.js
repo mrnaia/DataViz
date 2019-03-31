@@ -62,6 +62,12 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
       createMediaBubblesXAxis(mediaXAxisGroup, mediaSplitMetadata);
       createMediaBubblesYAxis(mediaYAxisGroup, xMedias);
       updateMediaBubblesAxis();
+      //place filters
+      console.log(svgBounds);
+      d3.select(".filtres")
+      .attr("transform","translate("+svgBounds.x+","+svgBounds.y+")")
+      d3.select(".legend")
+      .attr("transform","translate("+svgBounds.x + svgBounds.width +","+svgBounds.y+")")
       var grouptweetChartLegend = svg.append("g").attr("class", "chartTweetAndLgend")
       legend(svg, svgBounds, grouptweetChartLegend); // a besoin d'etre appelé avant createMediaBubbleChart car set une valur utilisée pour psitionner le titre du chart
       createMediaBubbleChart(mediaBubblesGroup, mediaSources, tweetsChartGroup, tweetSources, xMedias, localization.getFormattedNumber,scaleBubbleSizeMediaChart, scaleBubbleSizeTweetChart, mediasData);

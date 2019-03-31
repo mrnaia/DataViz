@@ -11,7 +11,7 @@ body {
 svg {
   display: block;
   border: 1px black solid;
-  width: 80%;
+  width: 100%;
   margin: auto;
 }
 
@@ -85,8 +85,10 @@ h3{
   border: dashed 1px;
   width: auto;
   position: absolute;
+  /*
   left: 12%;
   top: 5%;
+  */
 }
 
 .checkContainer input {
@@ -138,8 +140,8 @@ label input:checked + .checkbox .checkmark {
   margin: auto;
 }
 
-@media only screen and (max-width: 600px) {
-  svg {
+@media only screen and (max-width: 700px) {
+  article {
     width: 99%;
   }
 
