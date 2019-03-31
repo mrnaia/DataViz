@@ -12,7 +12,8 @@ const countries_population = {France: 67190000, Quebec: 8390000};
 //Bubble colors legend
 const countriesColors = {France: "#000", Quebec: "#ddd"};
 const categoriesColors = {Tele: "#9adb0f", Ecrit: "#1ad5f2", Radio: "#ed8210"};
-
+var hauteur_legende;
+var largeur_legende;
 // Percentage value must be setup, the other one is calculated at init
 
 // How many pixels of horizontal axis are beyond the range of bubbles ?
@@ -63,7 +64,7 @@ var tweetBubblesSize;
 const leftPositionPercentageAttractionPoint = 20;
 // X and Y values of the 3 attraction points for tweets
 var attractionPoints; //[[px, px], [px, px], [px, px]]
-var tweetsYPosition
+var tweetsYPosition;
 // height tweets chart in px
 var tweetHeight = 300; //Calculated for each media // TODO
 
@@ -79,4 +80,4 @@ var fractionToShowTip = 0.5;
 var collisionTweetMargin = 1;
 
 // Height of the gradient rectangle for color legend of tweets in px
-const tweetLegendHeight = 20;
+const tweetLegendHeight = 45;

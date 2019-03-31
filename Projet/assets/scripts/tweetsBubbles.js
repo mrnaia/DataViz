@@ -8,8 +8,17 @@
  * @param initPosition
  * @param svg
  */
-function createTweetsBubbleChart(g,x,source,initPosition,$svg,tip){
+function createTweetsBubbleChart(g,x,source,initPosition,$svg,tip, mediaName){
   g.selectAll("g").remove()
+  g.select("#titreTweetChart").remove();
+  g.append("text")
+  .attr("id", "titreTweetChart")
+  .text("Sentiments des tweets du journal "+mediaName)
+  .attr("x",svgBounds.width/2)
+  .attr("y", yMediasPosition + interCategorySpace*nbCategoriesDisplayed+axisMarginY)
+  .style("font-weight", "bold")
+  .attr("text-anchor", "middle");
+
   var bubbleGroups = g.selectAll("g").data(source);
   var tweetG = bubbleGroups.enter().append("g")
   .on('mouseover',function(d){
@@ -38,7 +47,7 @@ function createTweetsBubbleChart(g,x,source,initPosition,$svg,tip){
   return bubbleGroups;
 }
 //récupère l'image de l'oiseau puis crée le graphique
-function launchTweetsBubbleChart(bubbleChartGroup,xBubbleScale,source,initPosition,formatNumber){
+function launchTweetsBubbleChart(bubbleChartGroup,xBubbleScale,source,initPosition,formatNumber, mediaName){
     tweetChartActive = true;
     jQuery.get("assets/images/bird.svg", function(svgData) {
       var $svg = jQuery(svgData).find('svg');
@@ -46,7 +55,7 @@ function launchTweetsBubbleChart(bubbleChartGroup,xBubbleScale,source,initPositi
         .attr('class', 'd3-tip')
         .attr('width',100)
         .offset([-10, 0]);
-      var bubbleGroups = createTweetsBubbleChart(bubbleChartGroup,xBubbleScale,source,initPosition,$svg,tip);
+      var bubbleGroups = createTweetsBubbleChart(bubbleChartGroup,xBubbleScale,source,initPosition,$svg,tip, mediaName);
       tip.html(function(d) {
         return getTweetTipText.call(this, d, formatNumber)
       });

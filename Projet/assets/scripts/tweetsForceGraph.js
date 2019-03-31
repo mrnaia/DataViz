@@ -34,9 +34,13 @@ function runTweetSimulation(source,bubbleGroups,xBubbleScale){
   simulationTweet.nodes(source);
   d3.selectAll("#tweetBubbleChart g").style("cursor","wait");
 }
+
 function updateTweetChart(){
   updateFilterCheck();
+
   d3.selectAll("#tweetBubbleChart g").style("cursor","default");
+  console.log(nbCategoriesDisplayed);
+  d3.select("#titreTweetChart").transition().duration(500).attr("y", yMediasPosition + interCategorySpace*nbCategoriesDisplayed+axisMarginY);
   d3.select("#tweetBubbleChart")
   .transition()
   .ease(d3.easeSin)
@@ -46,11 +50,19 @@ function updateTweetChart(){
     var transform = d3.select(this).attr("transform");
     if(transform){
       var oldTranslate = transform.split(",")[1].split(")")[0];
-      console.log(oldTranslate);
-      translation += +oldTranslate
+      translation += +oldTranslate;
     }
-    return "translate(0," + translation + ")"
+
+    return "translate(0," + translation + ")";
   })
+  var heightSvg = yMediasPosition + interCategorySpace*nbCategoriesDisplayed + axisMarginY + tweetVerticalMargin;
+  var marginHeight = 2/100*heightSvg;
+  var yMainImg = heightSvg - marginHeight - tweetLegendHeight + tweetHeight;
+  //let valueTransform = yMainImg-d3.select("#legendImage").attr("transform").split(",")[1].split(")")[0];
+  var transformLegend = "translate(0,"+yMainImg+")"; //yMainImg et pas valueTransform ??!!!!! Ca marche comme si translate prenait en fait la valeur finale en parametre et non de combien il doit translater...weird !!
+  d3.select("#legendImage").transition().duration(500).attr("transform", transformLegend);
+
+  //updateSvgSize();
 }
 
 function tweetTicked(d,bubbleGroups,x,alpha) {

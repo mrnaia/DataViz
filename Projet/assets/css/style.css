@@ -10,7 +10,7 @@ body {
 
 svg {
   display: block;
-  /*border: 1px black solid;*/
+  border: 1px black solid;
   width: 80%;
   margin: auto;
 }

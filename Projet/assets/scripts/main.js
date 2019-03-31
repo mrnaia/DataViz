@@ -62,9 +62,10 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
       createMediaBubblesXAxis(mediaXAxisGroup, mediaSplitMetadata);
       createMediaBubblesYAxis(mediaYAxisGroup, xMedias);
       updateMediaBubblesAxis();
-      createMediaBubbleChart(mediaBubblesGroup, mediaSources, tweetsChartGroup, tweetSources, xMedias, localization.getFormattedNumber,scaleBubbleSizeMediaChart, scaleBubbleSizeTweetChart, mediasData);
       var grouptweetChartLegend = svg.append("g").attr("class", "chartTweetAndLgend")
-      legend(svg, svgBounds, grouptweetChartLegend);
+      legend(svg, svgBounds, grouptweetChartLegend); // a besoin d'etre appelé avant createMediaBubbleChart car set une valur utilisée pour psitionner le titre du chart
+      createMediaBubbleChart(mediaBubblesGroup, mediaSources, tweetsChartGroup, tweetSources, xMedias, localization.getFormattedNumber,scaleBubbleSizeMediaChart, scaleBubbleSizeTweetChart, mediasData);
+
     });
   });
 });
