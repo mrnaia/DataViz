@@ -133,6 +133,16 @@ function legendTweet(svg,g){
       .attr("y", rectHeight+accoladeTextHeight)
       .attr("text-anchor", "middle")
     }
+    grplegende.append("text")
+    .text("-1")
+    .attr("x",marginWidth/2)
+    .attr("y", rectHeight+accoladeTextHeight)
+    .attr("text-anchor", "middle")
+    grplegende.append("text")
+    .text("+1")
+    .attr("x",width+marginWidth/2)
+    .attr("y", rectHeight+accoladeTextHeight)
+    .attr("text-anchor", "middle")
 
 
   //}
