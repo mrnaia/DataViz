@@ -35,10 +35,12 @@ function runTweetSimulation(source,bubbleGroups,xBubbleScale){
   simulationTweet.nodes(source);
   d3.selectAll("#tweetBubbleChart g").style("cursor","wait");
 }
+
 function updateTweetChart(){
   updateFilterCheck();
   console.log("here");
   d3.selectAll("#tweetBubbleChart g").style("cursor","default");
+  d3.select("#titreTweetChart").transition().duration(500).attr("y", yMediasPosition + interCategorySpace*nbCategoriesDisplayed+axisMarginY+tweetVerticalMargin);
   d3.select("#tweetBubbleChart")
   .transition()
   .ease(d3.easeSin)

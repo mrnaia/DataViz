@@ -18,12 +18,13 @@ function legend(svg, svgBounds, groupeTweetChart){
   var x_col1 = x_col2-90;;
   var legend = svg.select('g').append("g").
   attr("class", "legend");
-
+  hauteur_legende =  hauteur_legende_cat+diametre_circle + interLegendYMargin;
+  largeur_legende = 170;
   legend.append("rect")
   .attr("x",x_col1-2- diametre_circle)
   .attr("y", 0)
-  .attr("width", 300)
-  .attr("height", hauteur_legende_cat+diametre_circle + interLegendYMargin)
+  .attr("width", largeur_legende)
+  .attr("height",hauteur_legende)
   .attr("stroke", "black")
   .style("fill", "white")
   .attr("stroke-width", 0.5);

@@ -198,6 +198,12 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
   var borderColor = colorCategory();
   //console.log("createMediaBubbleChart");
   //console.log(mediaBubbleGroups);
+  g.append("text")
+  .text("Sentiment moyen des tweets par journal")
+  .attr("x",(svgBounds.width-largeur_legende)/2)
+  .attr("y", hauteur_legende)
+  .style("font-weight", "bold")
+  .attr("text-anchor", "middle");
   var mediaG = mediaBubbleGroups.enter().append("g"); //mediaG is the group over each media circle
   //pour chaque media on crée un cercle
   mediaG.append("circle")
@@ -253,8 +259,8 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
       d3.selectAll("#mediaBubbles circle").classed("notHoveredMedia",true);
 
       d3.select("body").style("cursor","progress");
-
-      launchTweetsBubbleChart(tweetsG,scaleBubbleSizeTweetChart,tweetSources[d.name].tweets,initPosition,formatNumber)
+      console.log(d);
+      launchTweetsBubbleChart(tweetsG,scaleBubbleSizeTweetChart,tweetSources[d.name].tweets,initPosition,formatNumber, d.fullName)
 
       scrollToTweet();
 
