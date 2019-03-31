@@ -38,9 +38,10 @@ function runTweetSimulation(source,bubbleGroups,xBubbleScale){
 
 function updateTweetChart(){
   updateFilterCheck();
-  console.log("here");
+
   d3.selectAll("#tweetBubbleChart g").style("cursor","default");
-  d3.select("#titreTweetChart").transition().duration(500).attr("y", yMediasPosition + interCategorySpace*nbCategoriesDisplayed+axisMarginY+tweetVerticalMargin);
+  console.log(nbCategoriesDisplayed);
+  d3.select("#titreTweetChart").transition().duration(500).attr("y", yMediasPosition + interCategorySpace*nbCategoriesDisplayed+axisMarginY);
   d3.select("#tweetBubbleChart")
   .transition()
   .ease(d3.easeSin)
@@ -50,7 +51,7 @@ function updateTweetChart(){
     var transform = d3.select(this).attr("transform");
     if(transform){
       var oldTranslate = transform.split(",")[1].split(")")[0];
-      translation += +oldTranslate
+      translation += +oldTranslate;
     }
 
     return "translate(0," + translation + ")";

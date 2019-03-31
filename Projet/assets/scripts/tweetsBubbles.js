@@ -10,12 +10,12 @@
  */
 function createTweetsBubbleChart(g,x,source,initPosition,$svg,tip, mediaName){
   g.selectAll("g").remove()
-  console.log(source);
+  g.select("#titreTweetChart").remove();
   g.append("text")
   .attr("id", "titreTweetChart")
   .text("Sentiments des tweets du journal "+mediaName)
   .attr("x",svgBounds.width/2)
-  .attr("y", yMediasPosition + interCategorySpace*nbCategoriesDisplayed+axisMarginY+tweetVerticalMargin)
+  .attr("y", yMediasPosition + interCategorySpace*nbCategoriesDisplayed+axisMarginY)
   .style("font-weight", "bold")
   .attr("text-anchor", "middle");
 

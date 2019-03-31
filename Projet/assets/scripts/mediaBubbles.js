@@ -26,7 +26,7 @@ function createMediaBubblesXAxis(g, xAxisMetadata) {
   var xAxisLine = g.selectAll("g")
     .data(xAxisMetadata)
     .enter()
-    .append("g")
+    .append("g");
 
 
   xAxisLine.append("line")
@@ -59,8 +59,60 @@ function createMediaBubblesXAxis(g, xAxisMetadata) {
 }
 
 function createMediaBubblesYAxis(g, xMedias) {
+  var longueurArrow = 40;
   // Dessiner les axes verticaux du graphique.
   var verticalAxisBoundValues = {min: xMedias.invert(xMediasPositions.min - axisMarginX), max: xMedias.invert(xMediasPositions.max + axisMarginX)};
+  var axisTitle = g.append("text")
+  .text("sentiment")
+  .attr("text-anchor", "middle")
+  .attr("x", xMedias(0))
+  .attr("y", yMediasPosition - axisMarginY - 20)
+  .attr("fill", "black");
+  var legendAxis = g.append("g");
+  g.append("svg:defs").append("svg:marker")
+      .attr("id", "triangle")
+      .attr("refX", 6)
+      .attr("refY", 6)
+      .attr("markerWidth", 30)
+      .attr("markerHeight", 30)
+      .attr("orient", "auto")
+      .append("path")
+      .attr("d", "M 0 0 12 6 0 12 3 6")
+      .style("fill", "black");
+
+  legendAxis.append("line")
+    .attr("class", "legend_arrow")
+    .attr("x1", xMedias(0)-30)
+    .attr("y1",yMediasPosition - axisMarginY - 20)
+    .attr("x2", xMedias(0)-30-longueurArrow)
+    .attr("y2", yMediasPosition - axisMarginY - 20)
+    .attr("stroke-width", 1)
+    .attr("stroke", "black")
+    .attr("marker-end", "url(#triangle)");
+    legendAxis.append("text")
+    .text("-")
+    .attr("text-anchor", "middle")
+    .attr("x", xMedias(0)-30-longueurArrow/2)
+    .attr("y", yMediasPosition - axisMarginY - 20)
+    .attr("fill", "black")
+
+  legendAxis.append("line")
+  .attr("class", "legend_arrow")
+  .attr("x1", xMedias(0)+30)
+  .attr("y1", yMediasPosition - axisMarginY - 20)
+  .attr("x2", xMedias(0)+30+longueurArrow)
+  .attr("y2", yMediasPosition - axisMarginY - 20)
+  .attr("stroke-width", 1)
+  .attr("stroke", "black")
+  .attr("marker-end", "url(#triangle)");
+  legendAxis.append("text")
+  .text("+")
+  .attr("text-anchor", "middle")
+  .attr("x", xMedias(0)+30+longueurArrow/2)
+  .attr("y", yMediasPosition - axisMarginY - 20)
+  .attr("fill", "black")
+
+
 
   for (let i=-10 ; i<=10 ; i++) {
     let sentimentValue = i/10;
@@ -85,6 +137,8 @@ function createMediaBubblesYAxis(g, xMedias) {
         .attr("y", yMediasPosition - axisMarginY - 5)
         .attr("fill", "grey")
 
+
+
       // Add invisible labels at bottom
       var sentimentLabelBottom = g.append("text")
         .text(sentimentValue)
@@ -108,7 +162,9 @@ function createMediaBubblesYAxis(g, xMedias) {
 
 function updateMediaBubblesXAxis() {
   var g = d3.select("#mediaXAxis");
-  var lines = g.selectAll("line")
+  var lines = g.selectAll("line").filter(function() {
+      return !this.classList.contains('legend_arrow')
+    })
     .transition()
     .ease(d3.easeCubic)
     .duration(transitionAxisDuration)
@@ -132,7 +188,9 @@ function updateMediaBubblesXAxis() {
 function updateMediaBubblesYAxis() {
   var g = d3.select("#mediaYAxis");
 
-  g.selectAll("line")
+  g.selectAll("line").filter(function() {
+      return !this.classList.contains('legend_arrow')
+    })
     .transition()
     .duration(transitionAxisDuration)
     .attr("y2", yMediasPosition + axisMarginY + interCategorySpace*(nbCategoriesDisplayed-1));
@@ -244,11 +302,12 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
 
     if(d3.select("#media"+d.name.substring(1)).classed("selectedMedia")){
       d3.select("#media"+d.name.substring(1)).classed("selectedMedia", false);
-      tweetsG.selectAll("g").remove()
+      tweetsG.selectAll("g").remove();
       mediaG.selectAll("circle").classed("notSelectedMedia", false);
       tweetChartActive = false;
       updateSvgSize();
-      legendImagetweetsChart.transition().duration(500).attr("opacity",0);
+      d3.select("#legendImage").transition().duration(500).attr("opacity",0);
+      tweetsG.select("#titreTweetChart").remove();
     }
     else{
       //Change style
@@ -259,7 +318,7 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
       d3.selectAll("#mediaBubbles circle").classed("notHoveredMedia",true);
 
       d3.select("body").style("cursor","progress");
-      console.log(d);
+
       launchTweetsBubbleChart(tweetsG,scaleBubbleSizeTweetChart,tweetSources[d.name].tweets,initPosition,formatNumber, d.fullName)
 
       scrollToTweet();
@@ -269,11 +328,11 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
       var heightSvg = yMediasPosition + interCategorySpace*nbCategoriesDisplayed + axisMarginY + tweetVerticalMargin;
       var marginHeight = 2/100*heightSvg;
       var yMainImg = heightSvg - marginHeight - tweetLegendHeight + tweetHeight;
-      console.log(yMainImg);
+
       let valueTransform = yMainImg-d3.select("#legendImage").attr("transform").split(",")[1].split(")")[0];
       var transformLegend = "translate(0,"+yMainImg+")";
-      console.log(transformLegend);
-      console.log(d3.select("#legendImage").attr("transform").split(",")[1].split(")")[0]);
+
+
       d3.select("#legendImage").attr("transform", transformLegend);
       d3.select("#legendImage").transition().duration(500).attr("opacity",1);
     }
