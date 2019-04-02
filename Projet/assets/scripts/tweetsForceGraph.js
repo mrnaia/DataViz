@@ -19,7 +19,7 @@ function attractionCenterX(d){
 }
 
 function attractionCenterY(){
-  return yMediasPosition + (nbCategoriesDisplayed-1)*interCategorySpace + axisMarginY + tweetVerticalMargin +  tweetHeight;
+  return yMediasPosition + (nbCategoriesDisplayed-1)*interCategorySpace + axisMarginY + tweetVerticalMargin + tweetLegendMargin + tweetHeight/2 ;
 }
 
 //fonction qui maintient les cercles de chaque tweet d'un même groupe ensemble
@@ -39,30 +39,53 @@ function updateTweetChart(){
   updateFilterCheck();
 
   d3.selectAll("#tweetBubbleChart g").style("cursor","default");
-  console.log(nbCategoriesDisplayed);
-  d3.select("#titreTweetChart").transition().duration(500).attr("y", yMediasPosition + interCategorySpace*nbCategoriesDisplayed+axisMarginY);
   d3.select("#tweetBubbleChart")
   .transition()
   .ease(d3.easeSin)
   .duration(transitionAxisDuration)
   .attr("transform", function(){
-    var translation = +attractionCenterY() - this.getBoundingClientRect().y + axisMarginY + tweetVerticalMargin;
+    //To use to translate bubbles and images
+    var translation = +attractionCenterY() - (this.getBoundingClientRect().y +  tweetHeight/2);// + axisMarginY + tweetVerticalMargin;
+
+    var newTranslate = translation
     var transform = d3.select(this).attr("transform");
     if(transform){
       var oldTranslate = transform.split(",")[1].split(")")[0];
-      translation += +oldTranslate;
+      newTranslate += +oldTranslate;
     }
-
-    return "translate(0," + translation + ")";
+    var legendImageBar = d3.select("#legendImage")
+    var legendImageBarTransform = legendImageBar.attr("transform");
+    var translationBar = translation;
+    if(legendImageBarTransform){
+      var oldTranslate = legendImageBarTransform.split(",")[1].split(")")[0];
+      translationBar += +oldTranslate;
+    }
+    legendImageBar.transition().duration(500).attr("transform", "translate(0," + translationBar + ")");
+    console.log("Bubbles");
+    console.log(newTranslate);
+    return "translate(0," + newTranslate + ")";
   })
+
+
+  //Update Image legend
+
+  /*
   var heightSvg = yMediasPosition + interCategorySpace*nbCategoriesDisplayed + axisMarginY + tweetVerticalMargin;
-  var marginHeight = 2/100*heightSvg;
-  var yMainImg = heightSvg - marginHeight - tweetLegendHeight + tweetHeight;
+  var yMainImg = attractionCenterY()+  tweetHeight/2 +  2/100*heightSvg; //heightSvg - marginHeight - tweetLegendHeight + tweetHeight;
+  var translationToApply = yMainImg - legendImageBar.node().getBoundingClientRect().y;
+
+  var transform = legendImageBar.attr("transform");
+  if(transform){
+    var oldTranslate = transform.split(",")[1].split(")")[0];
+    translation += +oldTranslate;
+  }
+
   //let valueTransform = yMainImg-d3.select("#legendImage").attr("transform").split(",")[1].split(")")[0];
   var transformLegend = "translate(0,"+yMainImg+")"; //yMainImg et pas valueTransform ??!!!!! Ca marche comme si translate prenait en fait la valeur finale en parametre et non de combien il doit translater...weird !!
   d3.select("#legendImage").transition().duration(500).attr("transform", transformLegend);
 
-  //updateSvgSize();
+  */
+  updateSvgSize();
 }
 
 function tweetTicked(d,bubbleGroups,x,alpha) {
