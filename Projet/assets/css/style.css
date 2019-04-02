@@ -69,6 +69,7 @@ h3{
 #tweetBubbleChart circle {
   fill: rgba(250,250,250,1);
   stroke : rgba(240,240,240,1);
+  stroke-width: 2px;
 }
 
 #tweetBubbleChart g:hover circle {
