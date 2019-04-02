@@ -44,28 +44,27 @@ function updateTweetChart(){
   .attr("transform", function(){
     //To use to translate bubbles and images
     var translation = (nbCategoriesDisplayed-previousNbCategoriesDisplayed)*interCategorySpace
-    //Bubbles + text
-    var transform = d3.select(this).attr("transform");
-    var newTranslate = translation
-    if(transform){
-      var oldTranslate = transform.split(",")[1].split(")")[0];
-      newTranslate += +oldTranslate;
-    }
+
     //Legend Image
     var legendImageBar = d3.select("#legendImage")
-    var legendImageBarTransform = legendImageBar.attr("transform");
-    var translationBar = translation;
-    if(legendImageBarTransform){
-      var oldTranslate = legendImageBarTransform.split(",")[1].split(")")[0];
-      translationBar += +oldTranslate;
-    }
     legendImageBar.transition()
     .ease(d3.easeSin)
     .duration(transitionAxisDuration)
-    .attr("transform", "translate(0," + translationBar + ")");
-    return "translate(0," + newTranslate + ")";
+    .attr("transform", computeTranslateeTransform(legendImageBar,translation));
+
+    //transform bubble group
+    return computeTranslateeTransform(d3.select(this),translation);
   })
   updateSvgSize();
+}
+
+function computeTranslateeTransform(d3Node,translation){
+  var nodeTransform = d3Node.attr("transform");
+  if(nodeTransform){
+    var oldTranslate = nodeTransform.split(",")[1].split(")")[0];
+    translation += +oldTranslate;
+  }
+  return "translate(0," + translation + ")";
 }
 
 function tweetTicked(d,bubbleGroups,x,alpha) {
