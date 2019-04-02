@@ -73,7 +73,7 @@ var tweetHeight = 500; //Calculated for each media // TODO
 const tweetVerticalMargin = 100;
 const tweetLegendMargin = 10;
 // Simulation setup values
-var forceStrengthTweet = 0.05;
+var forceStrengthTweet = 0.07;
 var tweetChartActive = false;
 var tweetSimuDone; //bool that says if tweets are displayed or not
 var fractionToShowTip = 0.5;

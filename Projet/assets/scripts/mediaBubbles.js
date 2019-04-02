@@ -313,6 +313,7 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
       tweetsG.select("#titreTweetChart").remove();
     }
     else{
+
       //Change style
       mediaG.selectAll("circle").classed("selectedMedia", false);
       mediaG.selectAll("circle").classed("notSelectedMedia", true);

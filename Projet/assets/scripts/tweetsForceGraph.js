@@ -26,9 +26,13 @@ function attractionCenterY(){
 function runTweetSimulation(source,bubbleGroups,xBubbleScale){
   tweetSimuDone = false;
   var simulationTweet = d3.forceSimulation()
-    .velocityDecay(0.25)
-    .force('x', d3.forceX().strength(forceStrengthTweet).x(attractionCenterX))
-    .force('y', d3.forceY().strength(forceStrengthTweet).y(attractionCenterY))
+    .velocityDecay(0.3)
+    .force('x', d3.forceX().strength(forceStrengthTweet).x(d => {
+      return attractionCenterX(d) + (Math.random()-0.5)*2 * svgBounds.width * 0.05;
+    }))
+    .force('y', d3.forceY().strength(forceStrengthTweet).y(d => {
+        return attractionCenterY() + (Math.random()-0.5)*2 * svgBounds.width * 0.05;
+      }))
     .force('collide', d3.forceCollide(d => Math.sqrt(xBubbleScale(+d.retweet_count)) + collisionTweetMargin))
     .on('tick', d => tweetTicked(d,bubbleGroups,xBubbleScale,simulationTweet.alpha()));
   simulationTweet.nodes(source);
