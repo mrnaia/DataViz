@@ -63,11 +63,12 @@ function createMediaBubblesYAxis(g, xMedias) {
   // Dessiner les axes verticaux du graphique.
   var verticalAxisBoundValues = {min: xMedias.invert(xMediasPositions.min - axisMarginX), max: xMedias.invert(xMediasPositions.max + axisMarginX)};
   var axisTitle = g.append("text")
-  .text("sentiment")
-  .attr("text-anchor", "middle")
-  .attr("x", xMedias(0))
-  .attr("y", yMediasPosition - axisMarginY - 20)
-  .attr("fill", "black");
+    .text("sentiment")
+    .attr("text-anchor", "middle")
+    .attr("x", xMedias(0))
+    .attr("y", yMediasPosition - axisMarginY - 30)
+    .attr("fill", "grey")
+    .attr("font-size", "0.8em")
   var legendAxis = g.append("g");
   g.append("svg:defs").append("svg:marker")
       .attr("id", "triangle")
@@ -78,39 +79,39 @@ function createMediaBubblesYAxis(g, xMedias) {
       .attr("orient", "auto")
       .append("path")
       .attr("d", "M 0 0 12 6 0 12 3 6")
-      .style("fill", "black");
+      .style("fill", "grey");
 
   legendAxis.append("line")
     .attr("class", "legend_arrow")
     .attr("x1", xMedias(0)-30)
-    .attr("y1",yMediasPosition - axisMarginY - 20)
+    .attr("y1",yMediasPosition - axisMarginY - 30)
     .attr("x2", xMedias(0)-30-longueurArrow)
-    .attr("y2", yMediasPosition - axisMarginY - 20)
+    .attr("y2", yMediasPosition - axisMarginY - 30)
     .attr("stroke-width", 1)
-    .attr("stroke", "black")
+    .attr("stroke", "grey")
     .attr("marker-end", "url(#triangle)");
     legendAxis.append("text")
     .text("-")
     .attr("text-anchor", "middle")
     .attr("x", xMedias(0)-30-longueurArrow/2)
-    .attr("y", yMediasPosition - axisMarginY - 20)
-    .attr("fill", "black")
+    .attr("y", yMediasPosition - axisMarginY - 30)
+    .attr("fill", "grey")
 
   legendAxis.append("line")
-  .attr("class", "legend_arrow")
-  .attr("x1", xMedias(0)+30)
-  .attr("y1", yMediasPosition - axisMarginY - 20)
-  .attr("x2", xMedias(0)+30+longueurArrow)
-  .attr("y2", yMediasPosition - axisMarginY - 20)
-  .attr("stroke-width", 1)
-  .attr("stroke", "black")
-  .attr("marker-end", "url(#triangle)");
+    .attr("class", "legend_arrow")
+    .attr("x1", xMedias(0)+30)
+    .attr("y1", yMediasPosition - axisMarginY - 30)
+    .attr("x2", xMedias(0)+30+longueurArrow)
+    .attr("y2", yMediasPosition - axisMarginY - 30)
+    .attr("stroke-width", 1)
+    .attr("stroke", "grey")
+    .attr("marker-end", "url(#triangle)");
   legendAxis.append("text")
-  .text("+")
-  .attr("text-anchor", "middle")
-  .attr("x", xMedias(0)+30+longueurArrow/2)
-  .attr("y", yMediasPosition - axisMarginY - 20)
-  .attr("fill", "black")
+    .text("+")
+    .attr("text-anchor", "middle")
+    .attr("x", xMedias(0)+30+longueurArrow/2)
+    .attr("y", yMediasPosition - axisMarginY - 30)
+    .attr("fill", "grey")
 
 
 
