@@ -66,13 +66,13 @@ const leftPositionPercentageAttractionPoint = 20;
 var attractionPoints; //[[px, px], [px, px], [px, px]]
 var tweetsYPosition;
 // height tweets chart in px
-var tweetHeight = 300; //Calculated for each media // TODO
+var tweetHeight = 500; //Calculated for each media // TODO
 
 // Separation between media chart and tweet chart in px
-const tweetVerticalMargin = 20;
-
+const tweetVerticalMargin = 100;
+const tweetLegendMargin = 10;
 // Simulation setup values
-var forceStrengthTweet = 0.02;
+var forceStrengthTweet = 0.05;
 var tweetChartActive = false;
 var tweetSimuDone; //bool that says if tweets are displayed or not
 var fractionToShowTip = 0.5;

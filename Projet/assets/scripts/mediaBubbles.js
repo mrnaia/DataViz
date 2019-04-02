@@ -206,7 +206,7 @@ function updateSvgSize(){
   var svg = d3.select("#mediaSVG")
   var height = yMediasPosition + interCategorySpace*(nbCategoriesDisplayed-1) + axisMarginY + tweetVerticalMargin;
   if(tweetChartActive){
-    height += tweetHeight + tweetVerticalMargin + tweetVerticalMargin + tweetLegendHeight + tweetVerticalMargin;
+    height += tweetHeight + tweetVerticalMargin + tweetLegendMargin*2;
   }
   svgBounds.height = height;
   svg.transition()
@@ -299,6 +299,7 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
     var mouseCoordinates= d3.mouse(this);
     let initPosition = {"x":mouseCoordinates[0], "y":mouseCoordinates[1]}
     tweetsG.attr("transform",""); //reset translation of tweet group
+    d3.select("#legendImage").attr("transform",""); //reset translation of tweet group
 
     if(d3.select("#media"+d.name.substring(1)).classed("selectedMedia")){
       d3.select("#media"+d.name.substring(1)).classed("selectedMedia", false);
@@ -325,11 +326,12 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
 
       tweetChartActive = true;
       updateMediaBubblesAxis();
+
       var heightSvg = yMediasPosition + interCategorySpace*nbCategoriesDisplayed + axisMarginY + tweetVerticalMargin;
       var marginHeight = 2/100*heightSvg;
-      var yMainImg = heightSvg - marginHeight - tweetLegendHeight + tweetHeight;
-
-      let valueTransform = yMainImg-d3.select("#legendImage").attr("transform").split(",")[1].split(")")[0];
+      //var yMainImg = heightSvg - marginHeight - tweetLegendHeight + tweetHeight;
+      var yMainImg = yMediasPosition + (nbCategoriesDisplayed-1)*interCategorySpace + axisMarginY + tweetVerticalMargin + tweetLegendMargin + tweetHeight/2 + tweetHeight/2 + tweetLegendMargin;
+      //let valueTransform = yMainImg-d3.select("#legendImage").attr("transform").split(",")[1].split(")")[0];
       var transformLegend = "translate(0,"+yMainImg+")";
 
 
@@ -376,7 +378,7 @@ function getMediaTipText(d, formatNumber){
 function scrollToTweet(){
   d3.select("body").style("cursor","progress");
   var nb_scroll = 1;
-  var distanceToScroll =  yMediasPosition + interCategorySpace* nbCategoriesDisplayed - window.pageYOffset;
+  var distanceToScroll =  attractionCenterY() - window.pageYOffset;
   var timer = setTimeout(function(){
     d3.select("body").style("cursor","default");
     window.scrollBy(0, distanceToScroll/nb_scroll);

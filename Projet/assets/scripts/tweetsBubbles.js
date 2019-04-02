@@ -15,7 +15,7 @@ function createTweetsBubbleChart(g,x,source,initPosition,$svg,tip, mediaName){
   .attr("id", "titreTweetChart")
   .text("Sentiments des tweets du journal "+mediaName)
   .attr("x",svgBounds.width/2)
-  .attr("y", yMediasPosition + interCategorySpace*nbCategoriesDisplayed+axisMarginY)
+  .attr("y", attractionCenterY() - tweetHeight/2 - tweetLegendMargin)
   .style("font-weight", "bold")
   .attr("text-anchor", "middle");
 
