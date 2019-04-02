@@ -217,6 +217,7 @@ function updateSvgSize(){
 }
 
 function updateNbCategoriesDisplayed() {
+  previousNbCategoriesDisplayed = nbCategoriesDisplayed;
   if (countryChecked && categoryChecked) {
     nbCategoriesDisplayed = 6;
   } else if (countryChecked) {
@@ -300,7 +301,7 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
     var mouseCoordinates= d3.mouse(this);
     let initPosition = {"x":mouseCoordinates[0], "y":mouseCoordinates[1]}
     tweetsG.attr("transform",""); //reset translation of tweet group
-    d3.select("#legendImage").attr("transform",""); //reset translation of tweet group
+    d3.select("#legendImage").attr("transform",""); //reset translation of image
 
     if(d3.select("#media"+d.name.substring(1)).classed("selectedMedia")){
       d3.select("#media"+d.name.substring(1)).classed("selectedMedia", false);

@@ -52,6 +52,7 @@ var countryChecked; //bool
 var categoryChecked; //bool
 // Global variable that contains the number of categories displayed
 var nbCategoriesDisplayed; //1, 2, 3 or 6
+var previousNbCategoriesDisplayed; //1, 2, 3 or 6
 
 // TWEETS BUBBLE CHART
 

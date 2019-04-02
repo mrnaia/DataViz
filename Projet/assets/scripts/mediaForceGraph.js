@@ -54,6 +54,7 @@ function mediaTicked(d,bubbleGroups,x) {
 
 function filterMediaBubbles(simulation, forceStrength){
   updateFilterCheck();
+  console.log("Old Nb Categ  "+ previousNbCategoriesDisplayed);
   //Changed attraction center
   simulation.force('y', d3.forceY().strength(forceStrength*3).y((d => getMediaYPosition(d.Pays, d.Categorie))))
   .velocityDecay(0.4)
