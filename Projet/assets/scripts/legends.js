@@ -3,7 +3,7 @@ function legend(svg){
   const legendHeight = topMediaMarginY-50;
   const horizontalLegendMargin = 5;
 
-  const columnSizes = [120, 69+20, 97]; //in px
+  const columnSizes = [120, 89, 85]; //in px
   const nbColumns = columnSizes.length;
 
   const circleDiameter = 10;
@@ -11,8 +11,8 @@ function legend(svg){
 
   const legendFontSize = 13;
 
-  var xPos = [svgBounds.width - columnSizes[0]]; //xPos is inverted, legend completion direction <--
   columnSizes.reverse();
+  var xPos = [svgBounds.width - columnSizes[0]]; //xPos is inverted, legend completion direction <--
   for (let i = 1 ; i < nbColumns ; i++){
     xPos.push(xPos[i-1] - columnSizes[i]);
   }
@@ -29,7 +29,7 @@ function legend(svg){
   var categoriesYMargin = getInterMargin(legendHeight, nbCategories, circleDiameter);
 
   //DEBUG
-  //debugLegend(legendGroup, xPos, columnSizes, legendHeight);
+  debugLegend(legendGroup, xPos, columnSizes, legendHeight);
 
   var counter = 0;
   categories.forEach(function(category){
