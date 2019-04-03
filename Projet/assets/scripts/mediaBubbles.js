@@ -11,62 +11,13 @@ function domainMediaXPosition(x,source){
   x.domain([-maxAbsSentiment, maxAbsSentiment]);
 }
 
-
-
-/**
- * Crée les axes horizontaux du graphique à bulles des médias.
- *
- * @param g       Le groupe SVG dans lequel l'axe doit être dessiné.
- * @param y   La position en Y de l'axe à afficher.
- * @param x1   L'abscisse gauche du début de l'axe.
- * @param x2  L'abscisse droit de la fin de l'axe.
- */
-function createMediaBubblesXAxis(g, xAxisMetadata) {
-  // Dessiner l'axe des abscisses du graphique.
-  var xAxisLine = g.selectAll("g")
-    .data(xAxisMetadata)
-    .enter()
-    .append("g");
-
-
-  xAxisLine.append("line")
-    .attr("x1", xMediasPositions.min - axisMarginX)
-    .attr("x2", xMediasPositions.max + axisMarginX)
-    .attr("y1", d => getMediaYPosition(d.country, d.category))
-    .attr("y2", d => getMediaYPosition(d.country, d.category))
-    .attr("stroke", "grey")
-    //.attr("stroke-width", "1px")
-    .attr("opacity", 0.5);
-
-    xAxisLine.append("text")
-    .text(d=>d.country)
-    .attr("text-anchor", "middle")
-    .attr("x", 30)
-    .attr("y", d => getMediaYPosition(d.country, d.category)-10)
-    .attr("fill", "black")
-    .attr("class", "textCountry")
-    .attr("opacity",0);
-
-    xAxisLine.append("text")
-    .text(d=>d.category)
-    .attr("text-anchor", "middle")
-    .attr("x", 30)
-    .attr("y", d => getMediaYPosition(d.country, d.category)+25)
-    .attr("fill", "black")
-    .attr("class", "textCategory")
-    .attr("opacity",0);
-
-}
-
-function createMediaBubblesYAxis(g, xMedias) {
+function createSentimentArrow(g, xMedias) {
   var longueurArrow = 40;
-  // Dessiner les axes verticaux du graphique.
-  var verticalAxisBoundValues = {min: xMedias.invert(xMediasPositions.min - axisMarginX), max: xMedias.invert(xMediasPositions.max + axisMarginX)};
   var axisTitle = g.append("text")
     .text("sentiment")
     .attr("text-anchor", "middle")
     .attr("x", xMedias(0))
-    .attr("y", yMediasPosition - axisMarginY - 30)
+    .attr("y", yMediasPosition - axisMarginY - 27)
     .attr("fill", "grey")
     .attr("font-size", "0.8em")
   var legendAxis = g.append("g");
@@ -112,8 +63,56 @@ function createMediaBubblesYAxis(g, xMedias) {
     .attr("x", xMedias(0)+30+longueurArrow/2)
     .attr("y", yMediasPosition - axisMarginY - 30)
     .attr("fill", "grey")
+}
+
+/**
+ * Crée les axes horizontaux du graphique à bulles des médias.
+ *
+ * @param g       Le groupe SVG dans lequel l'axe doit être dessiné.
+ * @param y   La position en Y de l'axe à afficher.
+ * @param x1   L'abscisse gauche du début de l'axe.
+ * @param x2  L'abscisse droit de la fin de l'axe.
+ */
+function createMediaBubblesXAxis(g, xAxisMetadata) {
+  // Dessiner l'axe des abscisses du graphique.
+  var xAxisLine = g.selectAll("g")
+    .data(xAxisMetadata)
+    .enter()
+    .append("g");
 
 
+  xAxisLine.append("line")
+    .attr("x1", xMediasPositions.min - axisMarginX)
+    .attr("x2", xMediasPositions.max + axisMarginX)
+    .attr("y1", d => getMediaYPosition(d.country, d.category))
+    .attr("y2", d => getMediaYPosition(d.country, d.category))
+    .attr("stroke", "grey")
+    .attr("opacity", 0.5);
+
+    xAxisLine.append("text")
+    .text(d => categoriesNames[d.country])
+    .attr("text-anchor", "middle")
+    .attr("x", 40)
+    .attr("fill", "black")
+    .attr("class", "textCountry")
+    .attr("opacity",0)
+    .attr("font-size", "13px")
+
+    xAxisLine.append("text")
+    .text(d => categoriesNames[d.category])
+    .attr("text-anchor", "middle")
+    .attr("x", 40)
+    .attr("fill", "black")
+    .attr("class", "textCategory")
+    .attr("opacity", 0)
+    .attr("font-size", "13px")
+
+}
+
+function createMediaBubblesYAxis(g, xMedias) {
+
+  // Dessiner les axes verticaux du graphique.
+  var verticalAxisBoundValues = {min: xMedias.invert(xMediasPositions.min - axisMarginX), max: xMedias.invert(xMediasPositions.max + axisMarginX)};
 
   for (let i=-10 ; i<=10 ; i++) {
     let sentimentValue = i/10;
@@ -175,12 +174,12 @@ function updateMediaBubblesXAxis() {
   var textsCategory = g.selectAll("text.textCategory")
       .transition()
       .duration(transitionAxisDuration)
-      .attr("y", d => getMediaYPosition(d.country, d.category)+25)
+      .attr("y", d => getMediaYPosition(d.country, d.category)+15)
       .attr("opacity", d=> categoryChecked?1:0);
   var textsCountry = g.selectAll("text.textCountry")
       .transition()
       .duration(transitionAxisDuration)
-      .attr("y", d => getMediaYPosition(d.country, d.category)-10)
+      .attr("y", d => getMediaYPosition(d.country, d.category)-5)
       .attr("opacity", d=> countryChecked?1:0);
 
   //France doesn't move
@@ -256,14 +255,7 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
   var mediaBubbleGroups = g.selectAll("g").data(mediaSources);
   var countryColor = colorCountry();
   var borderColor = colorCategory();
-  //console.log("createMediaBubbleChart");
-  //console.log(mediaBubbleGroups);
-  g.append("text")
-  .text("Sentiment moyen des tweets par journal")
-  .attr("x",(svgBounds.width-largeur_legende)/2)
-  .attr("y", hauteur_legende)
-  .style("font-weight", "bold")
-  .attr("text-anchor", "middle");
+
   var mediaG = mediaBubbleGroups.enter().append("g"); //mediaG is the group over each media circle
   //pour chaque media on crée un cercle
   mediaG.append("circle")

@@ -64,7 +64,9 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
       updateMediaBubblesAxis();
       //place filters
       var grouptweetChartLegend = svg.append("g").attr("class", "chartTweetAndLgend")
-      legend(svg, svgBounds, grouptweetChartLegend); // a besoin d'etre appelé avant createMediaBubbleChart car set une valur utilisée pour psitionner le titre du chart
+      legend(svg); // a besoin d'etre appelé avant createMediaBubbleChart car set une valur utilisée pour psitionner le titre du chart
+      legendTweet(svg, grouptweetChartLegend);
+      createSentimentArrow(svg, xMedias);
       createMediaBubbleChart(mediaBubblesGroup, mediaSources, tweetsChartGroup, tweetSources, xMedias, localization.getFormattedNumber,scaleBubbleSizeMediaChart, scaleBubbleSizeTweetChart, mediasData);
       d3.select(".filtres")
       .attr("transform","translate("+svgBounds.x+","+svgBounds.y+")")

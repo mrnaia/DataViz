@@ -28,10 +28,10 @@ function runTweetSimulation(source,bubbleGroups,xBubbleScale){
   var simulationTweet = d3.forceSimulation()
     .velocityDecay(0.3)
     .force('x', d3.forceX().strength(forceStrengthTweet).x(d => {
-      return attractionCenterX(d) + (Math.random()-0.5)*2 * svgBounds.width * 0.05 * (d.sentiment == 0)*2;
+      return attractionCenterX(d) + (Math.random()-0.5)*2 * svgBounds.width * 0.05 * ((d.sentiment == 0)*2 + (d.sentiment != 0)*0.5);
     }))
     .force('y', d3.forceY().strength(forceStrengthTweet).y(d => {
-        return attractionCenterY() + (Math.random()-0.5)*2 * svgBounds.width * 0.05 * (d.sentiment == 0)*2;
+        return attractionCenterY() + (Math.random()-0.5)*2 * svgBounds.width * 0.05 *((d.sentiment == 0)*2 + (d.sentiment != 0)*0.5);
       }))
     .force('collide', d3.forceCollide(d => Math.sqrt(xBubbleScale(+d.retweet_count)) + collisionTweetMargin))
     .on('tick', d => tweetTicked(d,bubbleGroups,xBubbleScale,simulationTweet.alpha()));
