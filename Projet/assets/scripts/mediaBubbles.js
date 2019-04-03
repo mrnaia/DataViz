@@ -342,7 +342,8 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
   })
   .on('mouseout', function(d){
     d3.selectAll("#mediaBubbles circle").classed("notHoveredMedia",false);
-    if(tweetsG.selectAll("g")._groups[0].length !== 0){
+    console.log(tweetsG.selectAll("g")._groups[0].length);
+    if(tweetsG.selectAll("g")._groups[0].length > 1){ //1 for legend at the begining
       d3.select(this).classed("notSelectedMedia",true);
     };
     mediaTip.hide(d);
