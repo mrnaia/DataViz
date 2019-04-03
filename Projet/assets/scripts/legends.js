@@ -1,90 +1,141 @@
+function legend(svg){
 
-function legend(svg, svgBounds, groupeTweetChart){
-  //Object.keys(countriesColors)
-  //console.log(countriesColors[])
-  //categoriesColors
+  const legendHeight = topMediaMarginY-50;
+  const horizontalLegendMargin = 5;
 
-  var circleRadius = 5;
-  var interLegendYMargin = 3;
-  //var borderMargin = 5/100*svgBounds.width;
-  var interLegendYMargin = 5;
+  const columnSizes = [120, 69+20, 97]; //in px
+  const nbColumns = columnSizes.length;
 
+  const circleDiameter = 10;
+  const diameters = [circleDiameter+5, circleDiameter, circleDiameter-5];
 
-  var diametre_circle=10;
-  var hauteur_legende_cat = 3*diametre_circle + 2*interLegendYMargin;
-  var hauteur_legende_color = 2*diametre_circle + interLegendYMargin;
+  const legendFontSize = 13;
 
-  var x_col2 = svgBounds.width-100;//-borderMargin;
-  var x_col1 = x_col2-90;
-  var legend = svg.select('g').append("g").
-  attr("class", "legend");
-  hauteur_legende =  hauteur_legende_cat+diametre_circle + interLegendYMargin;
-  largeur_legende = 170;
-  legend.append("rect")
-  .attr("x",x_col1 - 2 - diametre_circle)
-  .attr("y", 0)
-  .attr("width", largeur_legende)
-  .attr("height",hauteur_legende)
-  .attr("stroke", "black")
-  .style("fill", "white")
-  .attr("stroke-width", 0.5);
+  var xPos = [svgBounds.width - columnSizes[0]]; //xPos is inverted, legend completion direction <--
+  columnSizes.reverse();
+  for (let i = 1 ; i < nbColumns ; i++){
+    xPos.push(xPos[i-1] - columnSizes[i]);
+  }
 
-//console.log(svgBounds.right);
+  var legendGroup = svg.append("g")
+    .attr("class", "legend");
+
+  //For the 2 last columns, write the list of countries and categories
+
+  //Type of media
+  var legendMediaType = legendGroup.append("g");
+  var categories = Object.keys(categoriesColors);
+  var nbCategories = categories.length;
+  var categoriesYMargin = getInterMargin(legendHeight, nbCategories, circleDiameter);
+
+  //DEBUG
+  //debugLegend(legendGroup, xPos, columnSizes, legendHeight);
+
   var counter = 0;
-  var legendColors = legend.append("g");
-  Object.keys(countriesColors).forEach(function(element){
+  categories.forEach(function(category){
+    counter++;
+    legendMediaType.append("circle")
+      .attr("cx", xPos[0] + circleDiameter/2)
+      .attr("cy", counter*categoriesYMargin + (counter-1)*circleDiameter + circleDiameter/2)
+      .attr("r", circleDiameter/2)
+      .attr("stroke", categoriesColors[category])
+      .attr("stroke-width", 3)
+      .style("fill","white");
 
-    counter+=1;
-    legendColors.append("circle")
-    .attr("cx",x_col1)
-    .attr("cy",(diametre_circle+interLegendYMargin)*counter+(hauteur_legende_cat-hauteur_legende_color)/2)
-    .attr("r",diametre_circle/2)
-    .attr("stroke", "black")
-    .attr("stroke-width", 0.5)
-    .style("fill", countriesColors[element]);
-
-    legendColors.append("text")
-    .attr("x", x_col1+diametre_circle)
-    .attr("y", (diametre_circle+interLegendYMargin)*counter+(hauteur_legende_cat-hauteur_legende_color)/2+interLegendYMargin)
-    .attr("font-size", "15px")
-    .text(element);
-
-  })
-  var legendCat = legend.append("g");
-  counter=0;
-  Object.keys(categoriesColors).forEach(function(element){
-
-    counter+=1;
-    legendCat.append("circle")
-    .attr("cx",x_col2)
-    .attr("cy",(diametre_circle+interLegendYMargin)*counter)
-    .attr("r",diametre_circle/2)
-    .attr("stroke", categoriesColors[element])
-    .attr("stroke-width",2)
-    .style("fill","white");
-
-    legendCat.append("text")
-    .attr("x", x_col2 + diametre_circle)
-    .attr("y", (diametre_circle+interLegendYMargin)*counter+interLegendYMargin)
-    .attr("font-size", "15px")
-    .text(element);
-
+    legendMediaType.append("text")
+    .attr("x", xPos[0] + circleDiameter + horizontalLegendMargin)
+    .attr("y", counter*categoriesYMargin + (counter-1)*circleDiameter + circleDiameter)
+    .attr("font-size", legendFontSize+"px")
+    .text(categoriesNames[category]);
   })
 
-  legendTweet(svg,groupeTweetChart)
+  //Type of media
+  var legendCountry = legendGroup.append("g");
+  var countries = Object.keys(countriesColors);
+  var nbCountries = countries.length;
+  var countriesYMargin = getInterMargin(legendHeight, nbCountries, circleDiameter);
+
+  counter = 0;
+  countries.forEach(function(country){
+    counter++;
+    legendCountry.append("circle")
+      .attr("cx", xPos[1] + circleDiameter/2)
+      .attr("cy", counter*countriesYMargin + (counter-1)*circleDiameter + circleDiameter/2)
+      .attr("r", circleDiameter/2)
+      .attr("stroke", "grey")
+      .attr("stroke-width", 1)
+      .style("fill", countriesColors[country]);
+
+    legendCountry.append("text")
+    .attr("x", xPos[1] + circleDiameter + horizontalLegendMargin)
+    .attr("y", counter*countriesYMargin + (counter-1)*circleDiameter + circleDiameter)
+    .attr("font-size", legendFontSize+"px")
+    .text(categoriesNames[country]);
+  })
+
+  //Size of bubbles signification
+  var legendBubbleSize = legendGroup.append("g");
+  var bubbleSizeYMargin = (legendHeight - 15 - diameters[2])/3;
+  var newYPos = bubbleSizeYMargin*2 + 15 + diameters[2]/2;
+  legendBubbleSize.append("text")
+    .attr("text-anchor", "middle")
+    .attr("x", xPos[2] + columnSizes[2]/2)
+    .attr("y", bubbleSizeYMargin)
+    .attr("font-size", legendFontSize+"px")
+    .text("Popularité")
+  legendBubbleSize.append("text")
+    .attr("text-anchor", "middle")
+    .attr("x", xPos[2] + columnSizes[2]/2)
+    .attr("y", bubbleSizeYMargin + 15)
+    .attr("font-size", legendFontSize+"px")
+    .text("Twitter")
+  diameters.forEach(d => {
+    legendBubbleSize.append("circle")
+      .attr("cx", xPos[2] + columnSizes[2]/2 - diameters[2]/2)
+      .attr("cy", newYPos)
+      .attr("r", d)
+      .attr("fill", "rgb(255, 255, 255, 0.8)")
+      .attr("stroke", "grey")
+    newYPos += circleDiameter/2;
+  })
+
 
 }
 
-function legendTweet(svg,g){
-/*d3.interpolateRdYlGn(sentiment/2 +0.5)
+function getInterMargin(totalSize, nbElements, elementSize) {
+  return (totalSize - nbElements*elementSize)/(nbElements+1);
+}
 
-  <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="0%" style="stop-color:rgb(255,255,0);stop-opacity:1" />
-        <stop offset="100%" style="stop-color:rgb(255,0,0);stop-opacity:1" />
-      </linearGradient>*/
-  //var gradient = svg.append("interpolateRdYlGn").attr('id', 'gradient');
-  //var legendImg  = new Image();
-  //legendImg.onload()= function(){
+function debugLegend(legendGroup, xPos, columnSizes, legendHeight) {
+  //DEBUG
+  legendGroup.append("rect")
+  .attr("x", xPos[0])
+  .attr("y", 0)
+  .attr("width", columnSizes[0])
+  .attr("height", legendHeight)
+  .attr("stroke", "black")
+  .style("fill", "none")
+  .attr("stroke-width", 0.5);
+  legendGroup.append("rect")
+  .attr("x", xPos[1])
+  .attr("y", 0)
+  .attr("width", columnSizes[1])
+  .attr("height", legendHeight)
+  .attr("stroke", "black")
+  .style("fill", "none")
+  .attr("stroke-width", 0.5);
+  legendGroup.append("rect")
+  .attr("x", xPos[2])
+  .attr("y", 0)
+  .attr("width", columnSizes[2])
+  .attr("height", legendHeight)
+  .attr("stroke", "black")
+  .style("fill", "none")
+  .attr("stroke-width", 0.5);
+}
+
+function legendTweet(svg,g){
+
   var heightSvg = yMediasPosition + interCategorySpace*nbCategoriesDisplayed + axisMarginY + tweetVerticalMargin;
   updateSvgSize();
   var marginWidth = 4/100*svgBounds.width;
@@ -145,12 +196,4 @@ function legendTweet(svg,g){
     .attr("text-anchor", "middle")
 
 
-  //}
-  //legendImg.src = "../assets/images/echelleCouleurs.png";
-  /*g.append("rect")
-  .attr("width",svgBounds.width)
-  .attr("height",20)
-  .attr("x",0)
-  .attr("y",0)
-  .style("fill","url(#gradient)");*/
 }

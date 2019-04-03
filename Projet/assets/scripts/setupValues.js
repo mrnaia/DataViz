@@ -12,8 +12,8 @@ const countries_population = {France: 67190000, Quebec: 8390000};
 //Bubble colors legend
 const countriesColors = {France: "#000", Quebec: "#ddd"};
 const categoriesColors = {Tele: "#9adb0f", Ecrit: "#1ad5f2", Radio: "#ed8210"};
-var hauteur_legende;
-var largeur_legende;
+const categoriesNames = {France: "France", Quebec: "Québec", Tele: "Télévisuelle", Ecrit: "Ecrite", Radio: "Radio"};
+
 // Percentage value must be setup, the other one is calculated at init
 
 // How many pixels of horizontal axis are beyond the range of bubbles ?
@@ -32,7 +32,7 @@ var mediaBubblesSize; //Computed at init, {min: px, max: px}
 var xMediasPositions; //computed at init {min: px, max: px}
 
 //Margin over the media chart for title and legend
-const topMediaMarginY = 100; //px
+const topMediaMarginY = 130; //px
 // Y position (from the top of SVG) of the first media chart
 var yMediasPosition;
 
