@@ -63,7 +63,7 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
       createMediaBubblesYAxis(mediaYAxisGroup, xMedias);
       updateMediaBubblesAxis();
       //place filters
-      var grouptweetChartLegend = svg.append("g").attr("class", "chartTweetAndLgend")
+      var grouptweetChartLegend = tweetsChartGroup.append("g").attr("class", "chartTweetAndLgend")
       legend(svg); // a besoin d'etre appelé avant createMediaBubbleChart car set une valur utilisée pour psitionner le titre du chart
       legendTweet(svg, grouptweetChartLegend);
       createSentimentArrow(svg, xMedias);
