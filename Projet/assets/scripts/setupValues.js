@@ -76,7 +76,7 @@ var tweetHeight = 500; //Calculated for each media // TODO
 
 // Separation between media chart and tweet chart in px
 const tweetVerticalMargin = 100;
-const tweetLegendMargin = 10;
+const tweetLegendMargin = 5;
 // Simulation setup values
 var forceStrengthTweet = 0.07;
 var tweetChartActive = false;
