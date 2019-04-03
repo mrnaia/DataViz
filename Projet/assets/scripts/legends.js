@@ -91,10 +91,10 @@ function legend(svg){
     .text("Twitter")
   diameters.forEach(d => {
     legendBubbleSize.append("circle")
-      .attr("cx", xPos[2] + columnSizes[2]/2 - diameters[2]/2)
+      .attr("cx", xPos[2] + columnSizes[2]/2)
       .attr("cy", newYPos)
       .attr("r", d)
-      .attr("fill", "rgb(255, 255, 255, 0.8)")
+      .attr("fill", "#f8f8f8")
       .attr("stroke", "grey")
     newYPos += circleDiameter/2;
   })
