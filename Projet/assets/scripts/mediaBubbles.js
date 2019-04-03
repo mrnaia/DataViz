@@ -377,7 +377,8 @@ function scrollToTweet(){
   var distanceToScroll =  attractionCenterY() - window.pageYOffset;
   var timer = setTimeout(function(){
     d3.select("body").style("cursor","default");
-    window.scrollBy(0, distanceToScroll/nb_scroll);
+    window.scrollTo(0,attractionCenterY()+(tweetVerticalMargin+tweetLegendMargin)*2)
+    //window.scrollBy(0, distanceToScroll/nb_scroll);
   },500);
 }
   // https://stackoverflow.com/questions/11978995/how-to-change-color-of-svg-image-using-css-jquery-svg-image-replacement
