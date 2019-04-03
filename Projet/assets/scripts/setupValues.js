@@ -60,6 +60,11 @@ var previousNbCategoriesDisplayed; //1, 2, 3 or 6
 const tweetBubblesSizePercentage = {min: 5, max: 300};
 // Min and Max values of tweets bubbles sizes
 var tweetBubblesSize;
+// Colors
+var middleColor = "#cccccc";
+var redColor = "#ad0000";
+var greenColor = "#00ad19";
+
 
 // Percentage of svg width between right svg border and left attractor center
 const leftPositionPercentageAttractionPoint = 20;

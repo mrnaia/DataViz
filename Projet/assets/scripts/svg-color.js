@@ -2,6 +2,16 @@
  * Replace all SVG images with inline SVG
  */
 function replaceSVG($svg,imgID, x, y, r,sentiment) {
+  var colorRedMiddle = d3.scaleLinear()
+          .domain([-1, 0])
+          .range([redColor, middleColor])
+          .interpolate(d3.interpolateHcl);
+
+  var colorMiddleGreen = d3.scaleLinear()
+          .domain([0, 1])
+          .range([middleColor, greenColor])
+          .interpolate(d3.interpolateHcl);
+
   var $circle = $("#"+imgID);
   var $imgGroup = $circle.parent("g");
 
@@ -16,7 +26,11 @@ function replaceSVG($svg,imgID, x, y, r,sentiment) {
   $localSvg.attr("y",birdTransform.y);
   var style = $localSvg.attr("style");
   $localSvg.attr("style",style)
-  $localSvg.find("path").attr("style", "fill:"+d3.interpolateRdYlGn(sentiment/2 +0.5)+";");
+  if(sentiment<0){
+    $localSvg.find("path").attr("style", "fill:"+colorRedMiddle(sentiment)+";");
+  } else{
+    $localSvg.find("path").attr("style", "fill:"+colorMiddleGreen(sentiment)+";");
+  }
   $imgGroup.remove("div")
 }
 
