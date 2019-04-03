@@ -29,7 +29,7 @@ function legend(svg){
   var categoriesYMargin = getInterMargin(legendHeight, nbCategories, circleDiameter);
 
   //DEBUG
-  debugLegend(legendGroup, xPos, columnSizes, legendHeight);
+  //debugLegend(legendGroup, xPos, columnSizes, legendHeight);
 
   var counter = 0;
   categories.forEach(function(category){
