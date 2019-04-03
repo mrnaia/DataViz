@@ -28,8 +28,10 @@ function replaceSVG($svg,imgID, x, y, r,sentiment) {
   $localSvg.attr("style",style)
   if(sentiment<0){
     $localSvg.find("path").attr("style", "fill:"+colorRedMiddle(sentiment)+";");
+    $imgGroup.find("circle").attr("stroke",colorRedMiddle(sentiment));
   } else{
     $localSvg.find("path").attr("style", "fill:"+colorMiddleGreen(sentiment)+";");
+    $imgGroup.find("circle").attr("stroke",colorMiddleGreen(sentiment));
   }
   $imgGroup.remove("div")
 }

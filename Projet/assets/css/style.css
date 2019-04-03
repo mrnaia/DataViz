@@ -72,8 +72,9 @@ h4{
 
 #tweetBubbleChart circle {
   fill: rgba(250,250,250,1);
-  stroke : rgba(240,240,240,1);
-  stroke-width: 2px;
+  /*stroke : rgba(240,240,240,1);*/
+  stroke-opacity: 0.5;
+  stroke-width: 1px;
 }
 
 #tweetBubbleChart g:hover circle {
