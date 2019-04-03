@@ -10,7 +10,7 @@ var svgBounds;
 const countries_population = {France: 67190000, Quebec: 8390000};
 
 //Bubble colors legend
-const countriesColors = {France: "#000", Quebec: "#ddd"};
+const countriesColors = {France: "#555", Quebec: "#ddd"};
 const categoriesColors = {Tele: "#9adb0f", Ecrit: "#1ad5f2", Radio: "#ed8210"};
 const categoriesNames = {France: "France", Quebec: "Québec", Tele: "Télévisuelle", Ecrit: "Ecrite", Radio: "Radio"};
 
@@ -24,7 +24,7 @@ const axisMarginYPercentage = 10;
 var axisMarginY; //computed at init, px
 
 // Min and max of radius of media bubbles in % of svg width
-const mediaBubblesSizePercentage = {min:0.5, max: 10};
+const mediaBubblesSizePercentage = {min:0.7, max: 10};
 // Min and max in pixels of the radius of media bubbles
 var mediaBubblesSize; //Computed at init, {min: px, max: px}
 
