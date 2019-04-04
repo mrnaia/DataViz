@@ -87,3 +87,6 @@ var collisionTweetMargin = 1;
 
 // Height of the gradient rectangle for color legend of tweets in px
 const tweetLegendHeight = 45;
+
+//Bucket variables
+var numberBucket = 10;
