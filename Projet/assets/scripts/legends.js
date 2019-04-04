@@ -9,7 +9,7 @@ function legend(svg){
   const circleDiameter = 10;
   const diameters = [circleDiameter+5, circleDiameter, circleDiameter-5];
 
-  const legendFontSize = 13;
+
 
   columnSizes.reverse();
   var xPos = [svgBounds.width - columnSizes[0]]; //xPos is inverted, legend completion direction <--
@@ -239,20 +239,20 @@ function legendTweet(svg,g){
       var xCentre =  leftMargin - gradientWidth/2;
       legendTweetBubbleSize.append("text")
         .attr("text-anchor", "middle")
-        .attr("x", xPos[2] + columnSizes[2]/2)
-        .attr("y", bubbleSizeYMargin)
+        .attr("x",  leftMargin+gradientWidth/2)
+        .attr("y", bubbleSizeYMargin- tweetHeight-gradientHeight)
         .attr("font-size", legendFontSize+"px")
         .text("Nombre de")
       legendTweetBubbleSize.append("text")
         .attr("text-anchor", "middle")
-        .attr("x", xPos[2] + columnSizes[2]/2)
-        .attr("y", bubbleSizeYMargin + 15)
+        .attr("x", leftMargin+gradientWidth/2)
+        .attr("y", bubbleSizeYMargin + 15- tweetHeight-gradientHeight)
         .attr("font-size", legendFontSize+"px")
         .text("retweets")
       diameters.forEach(d => {
         legendTweetBubbleSize.append("circle")
-          .attr("cx", xPos[2] + columnSizes[2]/2)
-          .attr("cy", newYPos)
+          .attr("cx", leftMargin+gradientWidth/2)
+          .attr("cy", newYPos- tweetHeight-gradientHeight)
           .attr("r", d)
           .attr("fill", "#f8f8f8")
           .attr("stroke", "grey")
