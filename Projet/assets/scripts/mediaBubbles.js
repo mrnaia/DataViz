@@ -315,7 +315,7 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
 
       d3.select("body").style("cursor","progress");
 
-      launchTweetsBubbleChart(tweetsG,scaleBubbleSizeTweetChart,tweetSources[d.name].tweets,initPosition,formatNumber, d.fullName)
+      launchTweetsBubbleChart(tweetsG,scaleBubbleSizeTweetChart,tweetSources[d.name].buckets,initPosition,formatNumber, d.fullName)
 
       scrollToTweet();
 
@@ -342,7 +342,6 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
   })
   .on('mouseout', function(d){
     d3.selectAll("#mediaBubbles circle").classed("notHoveredMedia",false);
-    console.log(tweetsG.selectAll("g")._groups[0].length);
     if(tweetsG.selectAll("g")._groups[0].length > 1){ //1 for legend at the begining
       d3.select(this).classed("notSelectedMedia",true);
     };

@@ -90,3 +90,4 @@ const tweetLegendHeight = 45;
 
 //Bucket variables
 var numberBucket = 10;
+var tweetsSquareSize = 20;

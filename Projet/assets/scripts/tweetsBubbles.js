@@ -8,7 +8,7 @@
  * @param initPosition
  * @param svg
  */
-function createTweetsBubbleChart(g,x,source,initPosition,$svg,tip, mediaName){
+function createTweetsBubbleChart(g, x, sourceBuckets, initPosition,$svg, tip, mediaName){
   g.selectAll("g").remove()
   g.select("#titreTweetChart").remove();
   g.append("text")
@@ -18,33 +18,57 @@ function createTweetsBubbleChart(g,x,source,initPosition,$svg,tip, mediaName){
   .attr("y", attractionCenterY() - tweetHeight/2 - tweetLegendMargin)
   .style("font-weight", "bold")
   .attr("text-anchor", "middle");
+  tip.html(function(d) {
+    return getTweetTipText.call(this, d, formatNumber)
+  });
+  var bucketIndex = 0;
+  var bucketsGroup = g.append("g")
 
-  var bubbleGroups = g.selectAll("g").data(source);
-  var tweetG = bubbleGroups.enter().append("g")
-  .on('mouseover',function(d){
-    if(tweetSimuDone){
-      tip.show(d);
-    }
-  }) //affiche les infobulles quand on passe la souris sur un cercle
-  .on("mouseout", tip.hide);
-  //pour chaque tweet on crée un cercle
-  tweetG.append("circle")
-  .attr("r", (d) => Math.sqrt(x(+d.retweet_count))) //dont le rayon dépend du nombre de retweets --> Y a pas des modifs à faire sur source avant pour avoir un seul exemplaire de chaque tweet et le bon nombre de retweets ou c'est fait sur python avant ?
-  .attr("cx",100)
-  .attr("cy",100)
-  .attr("id",d => d.id)
-  .datum(function(d){
-    var randomx = (Math.random()-0.5)*2*50;
-    if(d.sentiment==0){
-      randomx = (Math.random()-0.5)*2*250
-    }
-    d.x = initPosition.x+ +d.sentiment*1000 + randomx;
-    d.y = initPosition.y+(Math.random()-0.5)*2 *250;
-    replaceSVG($svg, d.id, 100, 100, Math.sqrt(x(+d.retweet_count)),+d.sentiment); //on le place dans le groupe correspondant à son sentiment (positif, neutre, negatif)
-    return d;
+  sourceBuckets.forEach((bucket) => {
+    var bucketG = bucketsGroup.append("g");
+    var bubbleGroups = bucketG.selectAll("g").data(bucket);
+    var tweetG = bubbleGroups.enter().append("g")
+    .on('mouseover',function(d){
+      if(tweetSimuDone){
+        tip.show(d);
+      }
+    }) //affiche les infobulles quand on passe la souris sur un cercle
+    .on("mouseout", tip.hide);
+    //pour chaque tweet on crée un rect
+    var tweetTransitionTime = 4000;
+    var tweetRect = tweetG.append("rect")
+    .attr("width", tweetsSquareSize) //dont le rayon dépend du nombre de retweets --> Y a pas des modifs à faire sur source avant pour avoir un seul exemplaire de chaque tweet et le bon nombre de retweets ou c'est fait sur python avant ?
+    .attr("height", tweetsSquareSize) //dont le rayon dépend du nombre de retweets --> Y a pas des modifs à faire sur source avant pour avoir un seul exemplaire de chaque tweet et le bon nombre de retweets ou c'est fait sur python avant ?
+    .attr("x",initPosition.x)
+    .attr("y", initPosition.y)
+    .attr("id",d => d.id)
+    .datum(function(d){
+      replaceSVG($svg, d.id, initPosition.x, initPosition.y, d.retweet_count); //on le place dans le groupe correspondant à son sentiment (positif, neutre, negatif)
+      return d;
+    })
+    tweetRect.transition()
+    .duration(tweetTransitionTime)
+    .attr("x",function(d) {
+      d3.select(d3.select(this).node().parentNode).select("svg")
+      .transition()
+      .duration(tweetTransitionTime)
+      .attr("x",bucketIndex/numberBucket * svgBounds.width)
+      return bucketIndex/numberBucket * svgBounds.width
+    })
+    .attr("y", function(d){
+      d3.select(d3.select(this).node().parentNode).select("svg")
+      .transition()
+      .duration(tweetTransitionTime)
+      .attr("y",svgBounds.height/2 + +d.retweet_count)
+      return svgBounds.height/2 + +d.retweet_count
+    })
+
+
+    bubbleGroups = bubbleGroups.merge(tweetG);
+    bucketIndex++;
   })
-  bubbleGroups = bubbleGroups.merge(tweetG);
-  return bubbleGroups;
+  bucketsGroup.call(tip);
+  return bucketsGroup;
 }
 //récupère l'image de l'oiseau puis crée le graphique
 function launchTweetsBubbleChart(bubbleChartGroup,xBubbleScale,source,initPosition,formatNumber, mediaName){
@@ -56,11 +80,8 @@ function launchTweetsBubbleChart(bubbleChartGroup,xBubbleScale,source,initPositi
         .attr('width',100)
         .offset([-10, 0]);
       var bubbleGroups = createTweetsBubbleChart(bubbleChartGroup,xBubbleScale,source,initPosition,$svg,tip, mediaName);
-      tip.html(function(d) {
-        return getTweetTipText.call(this, d, formatNumber)
-      });
-      bubbleGroups.call(tip);
-      runTweetSimulation(source,bubbleGroups,xBubbleScale);
+
+      //runTweetSimulation(source,bubbleGroups,xBubbleScale);
     },'xml');
 }
   // https://stackoverflow.com/questions/11978995/how-to-change-color-of-svg-image-using-css-jquery-svg-image-replacement

@@ -1,10 +1,10 @@
 /*
  * Replace all SVG images with inline SVG
  */
-function replaceSVG($svg,imgID, x, y, r,sentiment) {
+function replaceSVG($svg,imgID, x, y, nbRetweet) {
   var colorRedMiddle = d3.scaleLinear()
-          .domain([-1, 0])
-          .range([redColor, middleColor])
+          .domain([1, 39000])
+          .range([middleColor,redColor])
           .interpolate(d3.interpolateHcl);
 
   var colorMiddleGreen = d3.scaleLinear()
@@ -12,31 +12,26 @@ function replaceSVG($svg,imgID, x, y, r,sentiment) {
           .range([middleColor, greenColor])
           .interpolate(d3.interpolateHcl);
 
-  var $circle = $("#"+imgID);
-  var $imgGroup = $circle.parent("g");
+  var $rect = $("#"+imgID);
+  var $imgGroup = $rect.parent("g");
 
   $imgGroup.append($svg.clone())
   $localSvg = $imgGroup.find("svg")
 
   $localSvg.attr('id', imgID);
-  var birdTransform = placeBird(x,y,r)
+  var birdTransform = placeBird(x,y)
   $localSvg.attr("width",birdTransform.width);
   $localSvg.attr("height",birdTransform.height);
-  $localSvg.attr("x",birdTransform.x);
-  $localSvg.attr("y",birdTransform.y);
+  $localSvg.attr("x",x)//birdTransform.x);
+  $localSvg.attr("y",y)//birdTransform.y);
   var style = $localSvg.attr("style");
   $localSvg.attr("style",style)
-  if(sentiment<0){
-    $localSvg.find("path").attr("style", "fill:"+colorRedMiddle(sentiment)+";");
-    $imgGroup.find("circle").attr("stroke",colorRedMiddle(sentiment));
-  } else{
-    $localSvg.find("path").attr("style", "fill:"+colorMiddleGreen(sentiment)+";");
-    $imgGroup.find("circle").attr("stroke",colorMiddleGreen(sentiment));
-  }
+  $localSvg.find("path").attr("style", "fill:"+colorRedMiddle(nbRetweet)+";");
+  $imgGroup.find("rect").attr("stroke",colorRedMiddle(nbRetweet));
   $imgGroup.remove("div")
 }
 
-function placeBird(x,y,r){
-  var margin = r* 0.4;
-  return {"x":x-r+margin/2,"y":y-r+margin/2,"width":2*r-margin,"height":2*r-margin}
+function placeBird(x,y){
+  var margin = tweetsSquareSize* 0.4;
+  return {"x":x-tweetsSquareSize+margin/2,"y":y-tweetsSquareSize+margin/2,"width":2*tweetsSquareSize-margin,"height":2*tweetsSquareSize-margin}
 }
