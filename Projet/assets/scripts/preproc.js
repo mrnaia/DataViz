@@ -44,6 +44,7 @@ function createSources(data){
       tweet["id"] = id;
       id++;
     })
+    sources[media].tweets = sources[media].tweets.sort((tweetA,tweetB) => +tweetA.sentiment>+tweetB.sentiment)
   }
   return sources;
 }
