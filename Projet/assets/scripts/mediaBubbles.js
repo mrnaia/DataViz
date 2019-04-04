@@ -342,7 +342,8 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
   })
   .on('mouseout', function(d){
     d3.selectAll("#mediaBubbles circle").classed("notHoveredMedia",false);
-    if(tweetsG.selectAll("g")._groups[0].length !== 0){
+    console.log(tweetsG.selectAll("g")._groups[0].length);
+    if(tweetsG.selectAll("g")._groups[0].length > 1){ //1 for legend at the begining
       d3.select(this).classed("notSelectedMedia",true);
     };
     mediaTip.hide(d);
@@ -376,7 +377,8 @@ function scrollToTweet(){
   var distanceToScroll =  attractionCenterY() - window.pageYOffset;
   var timer = setTimeout(function(){
     d3.select("body").style("cursor","default");
-    window.scrollBy(0, distanceToScroll/nb_scroll);
+    window.scrollTo(0,attractionCenterY()+(tweetVerticalMargin+tweetLegendMargin)*2)
+    //window.scrollBy(0, distanceToScroll/nb_scroll);
   },500);
 }
   // https://stackoverflow.com/questions/11978995/how-to-change-color-of-svg-image-using-css-jquery-svg-image-replacement
