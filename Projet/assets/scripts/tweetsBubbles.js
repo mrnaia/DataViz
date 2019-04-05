@@ -15,7 +15,7 @@ function createTweetsBubbleChart(g, x, sourceBuckets, initPosition,$svg, tip, me
   .attr("id", "titreTweetChart")
   .text("Sentiments des tweets du journal "+mediaName)
   .attr("x",svgBounds.width/2)
-  .attr("y", attractionCenterY() - tweetHeight - tweetLegendMargin)
+  .attr("y", attractionCenterY() - tweetHeight/2 - tweetLegendMargin)
   .style("font-weight", "bold")
   .attr("text-anchor", "middle");
   tip.html(function(d) {
@@ -23,6 +23,8 @@ function createTweetsBubbleChart(g, x, sourceBuckets, initPosition,$svg, tip, me
   });
   var bucketIndex = 0;
   var bucketsGroup = g.append("g")
+  var tweetRankDelay = -1;
+  var inBetweenTweetDelay = 2;
 
   sourceBuckets.forEach((bucket) => {
     var bucketG = bucketsGroup.append("g");
@@ -49,9 +51,13 @@ function createTweetsBubbleChart(g, x, sourceBuckets, initPosition,$svg, tip, me
     var tweetRankx = -1;
     var tweetRanky = -1;
     var bucketSize = svgBounds.width / numberBucket;
-    var lastSquareYPos = attractionCenterY();
+    var lastSquareYPos = attractionCenterY() - tweetHeight/2;
     tweetRect.transition()
     .duration(tweetTransitionTime)
+    .delay(d => {
+      tweetRankDelay++
+      return inBetweenTweetDelay*tweetRankDelay;
+    })
     .attr("x",function(d) {
       tweetRankx++;
       var xCoordMod = tweetRankx % (Math.floor(bucketSize/tweetsSquareSize));
@@ -67,7 +73,7 @@ function createTweetsBubbleChart(g, x, sourceBuckets, initPosition,$svg, tip, me
     .attr("y", function(d){
       tweetRanky++;
       if(tweetRanky % (Math.floor(bucketSize/tweetsSquareSize)) == 0 ){
-        lastSquareYPos -= tweetsSquareSize;
+        lastSquareYPos += tweetsSquareSize;
       }
       /*
       d3.select(d3.select(this).node().parentNode).select("svg")

@@ -292,6 +292,7 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
   .on("click", function(d){
     var mouseCoordinates= d3.mouse(this);
     let initPosition = {"x":mouseCoordinates[0], "y":mouseCoordinates[1]}
+    initPosition = {"x":d3.select(this).attr("cx"),"y":d3.select(this).attr("cy")}
     tweetsG.attr("transform",""); //reset translation of tweet group
     d3.select("#legendImage").attr("transform",""); //reset translation of image
 
