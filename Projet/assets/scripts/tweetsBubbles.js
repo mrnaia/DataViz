@@ -86,9 +86,9 @@ function createTweetsBubbleChart(g, x, sourceBuckets, initPosition,$svg, tip, me
 
 
     bubbleGroups = bubbleGroups.merge(tweetG);
-    tweetG.call(tip);
     bucketIndex++;
   })
+  bucketsGroup.call(tip);
   return bucketsGroup;
 }
 //récupère l'image de l'oiseau puis crée le graphique
