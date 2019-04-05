@@ -46,21 +46,32 @@ function createTweetsBubbleChart(g, x, sourceBuckets, initPosition,$svg, tip, me
       replaceSVG($svg, d.id, initPosition.x, initPosition.y, d.retweet_count); //on le place dans le groupe correspondant à son sentiment (positif, neutre, negatif)
       return d;
     })
+    var tweetRankx = -1;
+    var tweetRanky = -1;
+    var bucketSize = svgBounds.width / numberBucket;
+    var lastSquareYPos = attractionCenterY();
     tweetRect.transition()
     .duration(tweetTransitionTime)
     .attr("x",function(d) {
+      tweetRankx++;
+      var xCoordMod = tweetRankx % (Math.floor(bucketSize/tweetsSquareSize));
+      var xCoord = bucketIndex/numberBucket * svgBounds.width + xCoordMod*tweetsSquareSize;
       d3.select(d3.select(this).node().parentNode).select("svg")
       .transition()
       .duration(tweetTransitionTime)
-      .attr("x",bucketIndex/numberBucket * svgBounds.width)
-      return bucketIndex/numberBucket * svgBounds.width
+      .attr("x",xCoord)
+      return xCoord
     })
     .attr("y", function(d){
+      tweetRanky++;
+      if(tweetRanky % (Math.floor(bucketSize/tweetsSquareSize)) == 0 ){
+        lastSquareYPos -= tweetsSquareSize;
+      }
       d3.select(d3.select(this).node().parentNode).select("svg")
       .transition()
       .duration(tweetTransitionTime)
-      .attr("y",svgBounds.height/2 + +d.retweet_count)
-      return svgBounds.height/2 + +d.retweet_count
+      .attr("y",lastSquareYPos)// +d.retweet_count)
+      return lastSquareYPos;
     })
 
 

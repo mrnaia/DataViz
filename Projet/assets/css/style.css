@@ -73,6 +73,7 @@ h4{
 #tweetBubbleChart rect {
   fill: none;
   /*stroke : rgba(240,240,240,1);*/
+  fill : rgba(240,240,240,0.2);
   stroke-opacity: 0.5;
   stroke-width: 1px;
 }
