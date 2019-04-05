@@ -31,11 +31,18 @@ function createTweetsBubbleChart(g, x, sourceBuckets, initPosition,$svg, tip, me
     var bubbleGroups = bucketG.selectAll("g").data(bucket);
     var tweetG = bubbleGroups.enter().append("g")
     .on('mouseover',function(d){
-      if(tweetSimuDone){
-        tip.show(d);
-      }
+      var rectSon = d3.select(this).select("rect");
+      d3.select(".tweetTip").select("p").html(getTweetTipText(d, localization.getFormattedNumber))
+      .style("transform","translate("+rectSon.attr("x")+"px,"+rectSon.attr("y") + "px)")
+      d3.select(".tweetTip")
+      .style("opacity","1")
+      .style("z-index","2")
     }) //affiche les infobulles quand on passe la souris sur un cercle
-    .on("mouseout", tip.hide);
+    .on('mouseout',d => {
+      d3.select(".tweetTip")
+      .style("opacity","0")
+      .style("z-index","-1")
+    })
     //pour chaque tweet on crée un rect
     var tweetTransitionTime = 1000;
     var tweetRect = tweetG.append("rect")
@@ -85,10 +92,10 @@ function createTweetsBubbleChart(g, x, sourceBuckets, initPosition,$svg, tip, me
     })
 
 
-    bubbleGroups = bubbleGroups.merge(tweetG);
+    //bubbleGroups = bubbleGroups.merge(tweetG);
     bucketIndex++;
   })
-  bucketsGroup.call(tip);
+  //bucketsGroup.call(tip);
   return bucketsGroup;
 }
 //récupère l'image de l'oiseau puis crée le graphique

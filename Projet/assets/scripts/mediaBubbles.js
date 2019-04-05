@@ -373,11 +373,9 @@ function getMediaTipText(d, formatNumber){
 
 function scrollToTweet(){
   d3.select("body").style("cursor","progress");
-  var nb_scroll = 1;
-  var distanceToScroll =  attractionCenterY() + tweetHeight/2 - window.pageYOffset;
   var timer = setTimeout(function(){
     d3.select("body").style("cursor","default");
-    window.scrollTo(0,attractionCenterY()+ tweetHeight/2 )
+    window.scrollTo(0,attractionCenterY()+ tweetHeight/2 - tweetLegendMargin*2 - tweetVerticalMargin/2)
     //window.scrollBy(0, distanceToScroll/nb_scroll);
   },500);
 }

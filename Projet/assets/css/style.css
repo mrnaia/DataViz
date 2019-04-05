@@ -14,6 +14,7 @@ svg {
   width: 100%;
   margin: auto;
   overflow: hidden;
+  position: relative;
 }
 
 article {
@@ -47,7 +48,12 @@ h4{
   background: rgba(0, 0, 0, 0.8);
   border-radius: 10px;
 }
-
+.tweetTip{
+  width: auto;
+  position: absolute;
+  transform: translate(-50%, -100%);
+  opacity: 0;
+}
 #mediaBubbleChart circle:hover {
   cursor: pointer;
 /*  opacity: 1 !important;*/
@@ -78,7 +84,7 @@ h4{
   stroke-width: 1px;
 }
 
-#tweetBubbleChart g g g:hover rect {
+#tweetBubbleChart g g rect:hover {
   /*fill: rgba(100,100,100,1) !important;*/
   stroke: rgba(70,70,70,1) !important;
   stroke-width: 2px;
@@ -94,6 +100,7 @@ h4{
   background-color: #f5f5f5;
   border: dashed 0px;
   border-radius: 5px;
+  z-index: 1;
   /*
   left: 12%;
   top: 5%;
