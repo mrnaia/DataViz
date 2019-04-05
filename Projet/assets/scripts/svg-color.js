@@ -2,9 +2,8 @@
  * Replace all SVG images with inline SVG
  */
 function replaceSVG($svg,imgID, x, y, nbRetweet) {
-  var colorRedMiddle = d3.scaleLog()
-          .base(10)
-          .domain([1, 3900])
+  var colorRedMiddle = d3.scaleLinear()
+          .domain([1, 500])
           .range([middleColor,redColor])
           .interpolate(d3.interpolateHcl);
 
@@ -15,7 +14,7 @@ function replaceSVG($svg,imgID, x, y, nbRetweet) {
 
   var $rect = $("#"+imgID);
   var $imgGroup = $rect.parent("g");
-
+  /*
   $imgGroup.append($svg.clone())
   $localSvg = $imgGroup.find("svg")
 
@@ -27,7 +26,8 @@ function replaceSVG($svg,imgID, x, y, nbRetweet) {
   $localSvg.attr("y",birdTransform.y);
   var style = $localSvg.attr("style");
   $localSvg.attr("style",style)
-  $localSvg.find("path").attr("style", "fill:"+colorRedMiddle(nbRetweet)+";");
+  $localSvg.find("path").attr("style", "fill:"+colorRedMiddle(nbRetweet)+";");*/
+  $imgGroup.find("rect").attr("style", "fill:"+colorRedMiddle(nbRetweet)+";");
   $imgGroup.find("rect").attr("stroke",colorRedMiddle(nbRetweet));
   $imgGroup.remove("div")
 }

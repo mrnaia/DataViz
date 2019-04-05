@@ -15,7 +15,7 @@ function createTweetsBubbleChart(g, x, sourceBuckets, initPosition,$svg, tip, me
   .attr("id", "titreTweetChart")
   .text("Sentiments des tweets du journal "+mediaName)
   .attr("x",svgBounds.width/2)
-  .attr("y", attractionCenterY() - tweetHeight/2 - tweetLegendMargin)
+  .attr("y", attractionCenterY() - tweetHeight - tweetLegendMargin)
   .style("font-weight", "bold")
   .attr("text-anchor", "middle");
   tip.html(function(d) {
@@ -35,7 +35,7 @@ function createTweetsBubbleChart(g, x, sourceBuckets, initPosition,$svg, tip, me
     }) //affiche les infobulles quand on passe la souris sur un cercle
     .on("mouseout", tip.hide);
     //pour chaque tweet on crée un rect
-    var tweetTransitionTime = 4000;
+    var tweetTransitionTime = 1000;
     var tweetRect = tweetG.append("rect")
     .attr("width", tweetsSquareSize) //dont le rayon dépend du nombre de retweets --> Y a pas des modifs à faire sur source avant pour avoir un seul exemplaire de chaque tweet et le bon nombre de retweets ou c'est fait sur python avant ?
     .attr("height", tweetsSquareSize) //dont le rayon dépend du nombre de retweets --> Y a pas des modifs à faire sur source avant pour avoir un seul exemplaire de chaque tweet et le bon nombre de retweets ou c'est fait sur python avant ?
@@ -56,10 +56,12 @@ function createTweetsBubbleChart(g, x, sourceBuckets, initPosition,$svg, tip, me
       tweetRankx++;
       var xCoordMod = tweetRankx % (Math.floor(bucketSize/tweetsSquareSize));
       var xCoord = bucketIndex/numberBucket * svgBounds.width + xCoordMod*tweetsSquareSize;
+      /*
       d3.select(d3.select(this).node().parentNode).select("svg")
       .transition()
       .duration(tweetTransitionTime)
       .attr("x",xCoord)
+      */
       return xCoord
     })
     .attr("y", function(d){
@@ -67,10 +69,12 @@ function createTweetsBubbleChart(g, x, sourceBuckets, initPosition,$svg, tip, me
       if(tweetRanky % (Math.floor(bucketSize/tweetsSquareSize)) == 0 ){
         lastSquareYPos -= tweetsSquareSize;
       }
+      /*
       d3.select(d3.select(this).node().parentNode).select("svg")
       .transition()
       .duration(tweetTransitionTime)
       .attr("y",lastSquareYPos)// +d.retweet_count)
+      */
       return lastSquareYPos;
     })
 

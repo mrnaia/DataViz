@@ -376,7 +376,7 @@ function scrollToTweet(){
   var distanceToScroll =  attractionCenterY() - window.pageYOffset;
   var timer = setTimeout(function(){
     d3.select("body").style("cursor","default");
-    window.scrollTo(0,attractionCenterY()+(tweetVerticalMargin+tweetLegendMargin)*2)
+    window.scrollTo(0,attractionCenterY())
     //window.scrollBy(0, distanceToScroll/nb_scroll);
   },500);
 }

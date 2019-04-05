@@ -89,5 +89,6 @@ var collisionTweetMargin = 1;
 const tweetLegendHeight = 45;
 
 //Bucket variables
-var numberBucket = 10;
+var nbColumnPerBucket = 10;
+var numberBucket;
 var tweetsSquareSize = 10;

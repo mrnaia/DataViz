@@ -3,12 +3,7 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
   d3.dsv("|","./data/QuebecMedia.csv").then(function(quebec_data) {
     d3.dsv(",", "./data/categories.csv").then(function(medias_data) {
 
-      //Preprocessing
-      var mediasData = formatMediasData(medias_data);
-      //console.log(mediasData);
-      var tweetSources = createSources(france_data.concat(quebec_data));
-      var mediaSources = createMediaSources(tweetSources, mediasData);
-      var mediaSplitMetadata = createMediaSplitMetadata();
+
 
       //Init filter checkbox values
       updateFilterCheck();
@@ -38,6 +33,15 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
 
       updateWindowSize(svg);
       window.addEventListener("resize", function() { updateWindowSize(svg); });
+      numberBucket = Math.floor(svgBounds.width / (nbColumnPerBucket * tweetsSquareSize));
+      console.log(numberBucket);
+
+      //Preprocessing
+      var mediasData = formatMediasData(medias_data);
+      //console.log(mediasData);
+      var tweetSources = createSources(france_data.concat(quebec_data));
+      var mediaSources = createMediaSources(tweetSources, mediasData);
+      var mediaSplitMetadata = createMediaSplitMetadata();
 
       //ajout d'un titre
 
@@ -57,6 +61,8 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
       domainTweetBubbleSize(scaleBubbleSizeTweetChart, tweetSources);
 
 
+      //Bucket sizes
+      // Numb bucket = svgWidth / bucketsize
 
       // Création du mediaBubbles
       createMediaBubblesXAxis(mediaXAxisGroup, mediaSplitMetadata);
