@@ -9,6 +9,11 @@
  * @param svg
  */
 function createTweetsBubbleChart(g, x, sourceBuckets, initPosition,$svg, tip, mediaName){
+  var colorRedMiddle = d3.scaleLinear()
+          .domain([1, 500])
+          .range([middleColor,redColor])
+          .interpolate(d3.interpolateHcl);
+
   g.selectAll("g").remove()
   g.select("#titreTweetChart").remove();
   g.append("text")
@@ -25,6 +30,7 @@ function createTweetsBubbleChart(g, x, sourceBuckets, initPosition,$svg, tip, me
   var bucketsGroup = g.append("g")
   var tweetRankDelay = -1;
   var inBetweenTweetDelay = 2;
+  var tweetTransitionTime = 1000;
 
   sourceBuckets.forEach((bucket) => {
     var bucketG = bucketsGroup.append("g");
@@ -50,21 +56,17 @@ function createTweetsBubbleChart(g, x, sourceBuckets, initPosition,$svg, tip, me
       .style("z-index","-1")
     })
     //pour chaque tweet on crée un rect
-    var tweetTransitionTime = 1000;
     var tweetRect = tweetG.append("rect")
     .attr("width", tweetsSquareSize) //dont le rayon dépend du nombre de retweets --> Y a pas des modifs à faire sur source avant pour avoir un seul exemplaire de chaque tweet et le bon nombre de retweets ou c'est fait sur python avant ?
     .attr("height", tweetsSquareSize) //dont le rayon dépend du nombre de retweets --> Y a pas des modifs à faire sur source avant pour avoir un seul exemplaire de chaque tweet et le bon nombre de retweets ou c'est fait sur python avant ?
     .attr("x",initPosition.x)
     .attr("y", initPosition.y)
-    .attr("id",d => d.id)
-    .datum(function(d){
-      replaceSVG($svg, d.id, initPosition.x, initPosition.y, d.retweet_count); //on le place dans le groupe correspondant à son sentiment (positif, neutre, negatif)
-      return d;
-    })
+    .attr("fill", d =>colorRedMiddle(d.retweet_count))
+    .attr("stroke", d =>colorRedMiddle(d.retweet_count))
     var tweetRankx = -1;
     var tweetRanky = -1;
-    var bucketSize = svgBounds.width / numberBucket;
-    var lastSquareYPos = attractionCenterY() - tweetHeight/2;
+    var bucketSize = (svgBounds.width-2*tweetHorizontalMargin) / numberBucket;
+    var lastSquareYPos = attractionCenterY() - tweetHeight/2; //initial y position
     tweetRect.transition()
     .duration(tweetTransitionTime)
     .delay(d => {
@@ -74,7 +76,7 @@ function createTweetsBubbleChart(g, x, sourceBuckets, initPosition,$svg, tip, me
     .attr("x",function(d) {
       tweetRankx++;
       var xCoordMod = tweetRankx % (Math.floor(bucketSize/tweetsSquareSize));
-      var xCoord = bucketIndex/numberBucket * svgBounds.width + xCoordMod*tweetsSquareSize;
+      var xCoord = tweetHorizontalMargin + bucketIndex * bucketSize + xCoordMod*tweetsSquareSize;
       /*
       d3.select(d3.select(this).node().parentNode).select("svg")
       .transition()
@@ -101,6 +103,8 @@ function createTweetsBubbleChart(g, x, sourceBuckets, initPosition,$svg, tip, me
     //bubbleGroups = bubbleGroups.merge(tweetG);
     bucketIndex++;
   })
+  var axisGroup = g.append("g").classed("tweetAxis",true)
+  createTweetAxis(axisGroup,tweetTransitionTime)
   //bucketsGroup.call(tip);
   return bucketsGroup;
 }
@@ -126,4 +130,40 @@ function getTweetTipText(d, formatNumber){
   tipText += "<span>Nombre de retweets: <strong>" + formatNumber(+d.retweet_count) + "</strong></span><br>";
   tipText += "<span>Sentiment: <strong style='color:"+d3.interpolateRdYlGn((+d.sentiment/2+0.5))+"'>" + formatNumber(+d.sentiment) + "</strong></span><br>";
   return tipText;
+}
+
+function createTweetAxis(axisGroup,tweetTransitionTime){
+  var topTweetY = attractionCenterY()-tweetHeight/2;
+  for (var bucketIndex = 0; bucketIndex <= numberBucket; bucketIndex++) {
+    var xBucket = tweetHorizontalMargin + bucketIndex * (svgBounds.width-2*tweetHorizontalMargin) / numberBucket;
+    axisGroup.append("line")
+    .attr("x1",xBucket)
+    .attr("x2",xBucket)
+    .attr("y1",topTweetY)
+    .attr("y2",topTweetY)
+    .attr("stroke", "grey")
+    .attr("opacity", 0.5)
+    .style("stroke-dasharray", "3 3")
+    .transition()
+    .duration(tweetTransitionTime)
+    .delay(50*bucketIndex)
+    .attr("y2",topTweetY + tweetHeight);
+    axisGroup.append("text")
+    .attr("text-anchor", "middle")
+    .attr("x",xBucket)
+    .attr("y",topTweetY-6)
+    .text(localization.getFormattedNumber(bucketIndex/numberBucket*2-1))
+    .attr("fill","grey")
+    .style("font-size","10pt")
+  }
+  axisGroup.append("line")
+  .attr("stroke","black")
+  .style("opacity","0.5")
+  .attr("x1",0)
+  .attr("x2",0)
+  .attr("y1",topTweetY+tweetsSquareSize)
+  .attr("y2",topTweetY+tweetsSquareSize)
+  .transition()
+  .duration(tweetTransitionTime*2)
+  .attr("x2",svgBounds.width)
 }

@@ -33,7 +33,7 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
 
       updateWindowSize(svg);
       window.addEventListener("resize", function() { updateWindowSize(svg); });
-      tweetsSquareSize = svgBounds.width / (numberBucket * nbColumnPerBucket);
+      tweetsSquareSize = (svgBounds.width - 2*tweetHorizontalMargin) / (numberBucket * nbColumnPerBucket);
       //numberBucket = Math.floor(svgBounds.width / (nbColumnPerBucket * tweetsSquareSize));
       //console.log(numberBucket);
 

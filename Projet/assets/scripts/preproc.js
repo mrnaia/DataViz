@@ -37,7 +37,8 @@ function createSources(data){
     //sentiment
     sources[tweet.searchTerm].cumul_sentiment += +tweet.sentiment*(1 + +tweet.retweet_count);
     //ajout de la ligne des données du tweets dans le tableau de sortie
-    sources[tweet.searchTerm].tweets = sources[tweet.searchTerm].tweets.concat([tweet]);
+
+    //sources[tweet.searchTerm].tweets = sources[tweet.searchTerm].tweets.concat([tweet]);
 
     //Buckets
     var bucketIndex = Math.floor(numberBucket/2*(+tweet.sentiment+1));
@@ -46,12 +47,14 @@ function createSources(data){
   //pour chaque media, on calcule son sentiment moyen
   for(var media in sources){
     sources[media].mean_sentiment = +sources[media].cumul_sentiment / +sources[media].number_tweets_and_RT;
+    /*
     var id = 0;
     sources[media].tweets.forEach(tweet => {
       tweet["id"] = id;
       id++;
     })
     sources[media].tweets = sources[media].tweets.sort((tweetA,tweetB) => +tweetA.sentiment - +tweetB.sentiment)
+    */
     for (var i = 0; i < numberBucket; i++) {
       sources[media].buckets[i] = sources[media].buckets[i].sort((tweetA,tweetB) => +tweetB.retweet_count - +tweetA.retweet_count)
     }
