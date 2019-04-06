@@ -294,7 +294,7 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
     let initPosition = {"x":mouseCoordinates[0], "y":mouseCoordinates[1]}
     initPosition = {"x":d3.select(this).attr("cx"),"y":d3.select(this).attr("cy")}
     tweetsG.attr("transform",""); //reset translation of tweet group
-    d3.select("#legendImage").attr("transform",""); //reset translation of image
+    //d3.select("#legendImage").attr("transform",""); //reset translation of image
 
     if(d3.select("#media"+d.name.substring(1)).classed("selectedMedia")){
       d3.select("#media"+d.name.substring(1)).classed("selectedMedia", false);
@@ -302,7 +302,7 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
       mediaG.selectAll("circle").classed("notSelectedMedia", false);
       tweetChartActive = false;
       updateSvgSize();
-      d3.select("#legendImage").transition().duration(500).attr("opacity",0);
+      d3.select("#legendImage").attr("opacity",0);
       tweetsG.select("#titreTweetChart").remove();
     }
     else{
@@ -323,16 +323,7 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
       tweetChartActive = true;
       updateMediaBubblesAxis();
 
-      var heightSvg = yMediasPosition + interCategorySpace*nbCategoriesDisplayed + axisMarginY + tweetVerticalMargin;
-      var marginHeight = 2/100*heightSvg;
-      //var yMainImg = heightSvg - marginHeight - tweetLegendHeight + tweetHeight;
-      var yMainImg = yMediasPosition + (nbCategoriesDisplayed-1)*interCategorySpace + axisMarginY + tweetVerticalMargin + tweetLegendMargin + tweetHeight/2 + tweetHeight/2 + tweetLegendMargin;
-      //let valueTransform = yMainImg-d3.select("#legendImage").attr("transform").split(",")[1].split(")")[0];
-      var transformLegend = "translate(0,"+yMainImg+")";
 
-
-      d3.select("#legendImage").attr("transform", transformLegend);
-      d3.select("#legendImage").transition().duration(500).attr("opacity",1);
     }
   })
   .on('mouseover', function(d){

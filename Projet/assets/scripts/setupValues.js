@@ -62,7 +62,7 @@ const tweetBubblesSizePercentage = {min: 5, max: 300};
 var tweetBubblesSize;
 // Colors
 var middleColor = "#cccccc";
-var redColor = "#1dcaff";
+var redColor = "#f00";
 var greenColor = "#00ad19";
 
 

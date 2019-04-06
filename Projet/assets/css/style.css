@@ -78,8 +78,8 @@ h4{
 
 #tweetBubbleChart rect {
   /*stroke : rgba(240,240,240,1);*/
-  fill-opacity: 0.5;/* : rgba(240,240,240,0.2);*/
-  stroke-opacity: 0.5;
+  fill-opacity: 0.8;/* : rgba(240,240,240,0.2);*/
+  stroke-opacity: 1;
   stroke-width: 1px;
 }
 

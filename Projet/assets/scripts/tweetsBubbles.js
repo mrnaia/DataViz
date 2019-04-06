@@ -31,7 +31,7 @@ function createTweetsBubbleChart(g, x, sourceBuckets, initPosition,$svg, tip, me
   var tweetRankDelay = -1;
   var inBetweenTweetDelay = 2;
   var tweetTransitionTime = 1000;
-
+  var lowestSquareY = 0;
   sourceBuckets.forEach((bucket) => {
     var bucketG = bucketsGroup.append("g");
     var bubbleGroups = bucketG.selectAll("g").data(bucket);
@@ -90,6 +90,7 @@ function createTweetsBubbleChart(g, x, sourceBuckets, initPosition,$svg, tip, me
       if(tweetRanky % (Math.floor(bucketSize/tweetsSquareSize)) == 0 ){
         lastSquareYPos += tweetsSquareSize;
       }
+      lowestSquareY = Math.max(lowestSquareY,lastSquareYPos)
       /*
       d3.select(d3.select(this).node().parentNode).select("svg")
       .transition()
@@ -104,7 +105,20 @@ function createTweetsBubbleChart(g, x, sourceBuckets, initPosition,$svg, tip, me
     bucketIndex++;
   })
   var axisGroup = g.append("g").classed("tweetAxis",true)
+  //// DEBUG:
+  /*
+  axisGroup.append("line")
+  .attr("stroke","black")
+  .style("opacity","0.5")
+  .attr("x1",0)
+  .attr("x2",svgBounds.width)
+  .attr("y1",lowestSquareY+tweetsSquareSize)
+  .attr("y2",lowestSquareY+tweetsSquareSize)
+  */
+  tweetHeight = lowestSquareY+tweetsSquareSize - (attractionCenterY()-tweetHeight/2);
   createTweetAxis(axisGroup,tweetTransitionTime)
+  updateSvgSize()
+  updateTweetLegends();
   //bucketsGroup.call(tip);
   return bucketsGroup;
 }
@@ -143,11 +157,11 @@ function createTweetAxis(axisGroup,tweetTransitionTime){
     .attr("y2",topTweetY)
     .attr("stroke", "grey")
     .attr("opacity", 0.5)
-    .style("stroke-dasharray", "3 3")
+    .style("stroke-dasharray",tweetsSquareSize/2+" "+tweetsSquareSize/2) //For each square 1 dash 1 hole
     .transition()
     .duration(tweetTransitionTime)
     .delay(50*bucketIndex)
-    .attr("y2",topTweetY + tweetHeight);
+    .attr("y2",topTweetY + tweetHeight +2*tweetsSquareSize);
     axisGroup.append("text")
     .attr("text-anchor", "middle")
     .attr("x",xBucket)
@@ -166,4 +180,15 @@ function createTweetAxis(axisGroup,tweetTransitionTime){
   .transition()
   .duration(tweetTransitionTime*2)
   .attr("x2",svgBounds.width)
+}
+
+function updateTweetLegends(){
+  var heightSvg = yMediasPosition + interCategorySpace*nbCategoriesDisplayed + axisMarginY + tweetVerticalMargin;
+  var marginHeight = 2/100*heightSvg;
+  //var yMainImg = heightSvg - marginHeight - tweetLegendHeight + tweetHeight;
+  var yMainImg = yMediasPosition + (nbCategoriesDisplayed-1)*interCategorySpace + axisMarginY + tweetVerticalMargin + tweetLegendMargin + tweetHeight/2 + tweetHeight/2 + tweetLegendMargin;
+  //let valueTransform = yMainImg-d3.select("#legendImage").attr("transform").split(",")[1].split(")")[0];
+  var transformLegend = "translate(0,"+yMainImg+")";
+  d3.select("#legendImage").attr("transform", transformLegend);
+  d3.select("#legendImage").transition().duration(500).attr("opacity",1);
 }
