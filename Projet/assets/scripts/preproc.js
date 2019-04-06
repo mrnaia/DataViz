@@ -51,9 +51,9 @@ function createSources(data){
       tweet["id"] = id;
       id++;
     })
-    sources[media].tweets = sources[media].tweets.sort((tweetA,tweetB) => +tweetA.sentiment>+tweetB.sentiment)
+    sources[media].tweets = sources[media].tweets.sort((tweetA,tweetB) => +tweetA.sentiment - +tweetB.sentiment)
     for (var i = 0; i < numberBucket; i++) {
-      sources[media].buckets[i] = sources[media].buckets[i].sort((tweetA,tweetB) => +tweetA.retweet_count<+tweetB.retweet_count)
+      sources[media].buckets[i] = sources[media].buckets[i].sort((tweetA,tweetB) => +tweetB.retweet_count - +tweetA.retweet_count)
     }
   }
   return sources;
