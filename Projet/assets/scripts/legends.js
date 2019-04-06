@@ -135,7 +135,6 @@ function debugLegend(legendGroup, xPos, columnSizes, legendHeight) {
 }
 
 function legendTweet(svg,g){
-  console.log("LEGEND TWEET");
   var heightSvg = yMediasPosition + interCategorySpace*nbCategoriesDisplayed + axisMarginY + tweetVerticalMargin;
   updateSvgSize();
   var marginWidth = 4/100*svgBounds.width;
