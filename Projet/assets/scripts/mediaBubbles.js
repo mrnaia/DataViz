@@ -316,7 +316,7 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
 
       d3.select("body").style("cursor","progress");
 
-      launchTweetsBubbleChart(tweetsG,scaleBubbleSizeTweetChart,tweetSources[d.name].buckets,initPosition,formatNumber, d.fullName)
+      createTweetsBubbleChart(tweetsG,scaleBubbleSizeTweetChart,tweetSources[d.name].buckets,initPosition, d.fullName)
 
       scrollToTweet();
 

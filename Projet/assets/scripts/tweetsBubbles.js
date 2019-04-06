@@ -8,12 +8,11 @@
  * @param initPosition
  * @param svg
  */
-function createTweetsBubbleChart(g, x, sourceBuckets, initPosition,$svg, tip, mediaName){
+function createTweetsBubbleChart(g, x, sourceBuckets, initPosition, mediaName){
   var colorRedMiddle = d3.scaleLinear()
           .domain([0, Math.log10(39000)])
           .range([middleColor,redColor])
           .interpolate(d3.interpolateHcl);
-
   g.selectAll("g").remove()
   g.select("#titreTweetChart").remove();
   g.append("text")
@@ -23,9 +22,6 @@ function createTweetsBubbleChart(g, x, sourceBuckets, initPosition,$svg, tip, me
   .attr("y", attractionCenterY() - tweetHeight/2 - tweetLegendMargin)
   .style("font-weight", "bold")
   .attr("text-anchor", "middle");
-  tip.html(function(d) {
-    return getTweetTipText.call(this, d, formatNumber)
-  });
   var bucketIndex = 0;
   var bucketsGroup = g.append("g")
   var tweetRankDelay = -1;
@@ -77,31 +73,16 @@ function createTweetsBubbleChart(g, x, sourceBuckets, initPosition,$svg, tip, me
       tweetRankx++;
       var xCoordMod = tweetRankx % (Math.floor(bucketSize/tweetsSquareSize));
       var xCoord = tweetHorizontalMargin + bucketIndex * bucketSize + xCoordMod*tweetsSquareSize;
-      /*
-      d3.select(d3.select(this).node().parentNode).select("svg")
-      .transition()
-      .duration(tweetTransitionTime)
-      .attr("x",xCoord)
-      */
       return xCoord
     })
     .attr("y", function(d){
       tweetRanky++;
       if(tweetRanky % (Math.floor(bucketSize/tweetsSquareSize)) == 0 ){
         lastSquareYPos += tweetsSquareSize;
+        lowestSquareY = Math.max(lowestSquareY,lastSquareYPos)
       }
-      lowestSquareY = Math.max(lowestSquareY,lastSquareYPos)
-      /*
-      d3.select(d3.select(this).node().parentNode).select("svg")
-      .transition()
-      .duration(tweetTransitionTime)
-      .attr("y",lastSquareYPos)// +d.retweet_count)
-      */
       return lastSquareYPos;
     })
-
-
-    //bubbleGroups = bubbleGroups.merge(tweetG);
     bucketIndex++;
   })
   var axisGroup = g.append("g").classed("tweetAxis",true)
@@ -119,22 +100,7 @@ function createTweetsBubbleChart(g, x, sourceBuckets, initPosition,$svg, tip, me
   createTweetAxis(axisGroup,tweetTransitionTime)
   updateSvgSize()
   updateTweetLegends();
-  //bucketsGroup.call(tip);
   return bucketsGroup;
-}
-//récupère l'image de l'oiseau puis crée le graphique
-function launchTweetsBubbleChart(bubbleChartGroup,xBubbleScale,source,initPosition,formatNumber, mediaName){
-    tweetChartActive = true;
-    jQuery.get("assets/images/bird.svg", function(svgData) {
-      var $svg = jQuery(svgData).find('svg');
-      var tip = d3.tip()
-        .attr('class', 'd3-tip')
-        .attr('width',100)
-        .offset([-10, 0]);
-      var bubbleGroups = createTweetsBubbleChart(bubbleChartGroup,xBubbleScale,source,initPosition,$svg,tip, mediaName);
-
-      //runTweetSimulation(source,bubbleGroups,xBubbleScale);
-    },'xml');
 }
   // https://stackoverflow.com/questions/11978995/how-to-change-color-of-svg-image-using-css-jquery-svg-image-replacement
   // https://stackoverflow.com/questions/24933430/img-src-svg-changing-the-fill-color
