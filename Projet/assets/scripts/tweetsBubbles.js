@@ -35,12 +35,18 @@ function createTweetsBubbleChart(g, x, sourceBuckets, initPosition,$svg, tip, me
       d3.select(".tweetTip").select("p").html(getTweetTipText(d, localization.getFormattedNumber))
       .style("transform","translate("+rectSon.attr("x")+"px,"+rectSon.attr("y") + "px)")
       d3.select(".tweetTip")
-      .style("opacity","1")
       .style("z-index","2")
+      .transition()
+      .duration(100)
+      .style("opacity","1")
     }) //affiche les infobulles quand on passe la souris sur un cercle
     .on('mouseout',d => {
       d3.select(".tweetTip")
+      .transition()
+      .duration(100)
       .style("opacity","0")
+      .transition()
+      .delay(100)
       .style("z-index","-1")
     })
     //pour chaque tweet on crée un rect
