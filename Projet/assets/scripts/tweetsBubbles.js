@@ -38,8 +38,10 @@ function createTweetsBubbleChart(g, x, sourceBuckets, initPosition, mediaName){
     var tweetG = bubbleGroups.enter().append("g")
     .on('mouseover',function(d){
       var rectSon = d3.select(this).select("rect");
+      var translationFilter = (nbCategoriesDisplayed-previousNbCategoriesDisplayed)*interCategorySpace;
+      var yCoord = +rectSon.attr("y")+translationFilter;
       d3.select(".tweetTip").select("p").html(getTweetTipText(d, localization.getFormattedNumber))
-      .style("transform","translate("+rectSon.attr("x")+"px,"+rectSon.attr("y") + "px)")
+      .style("transform","translate("+rectSon.attr("x")+"px,"+yCoord+ "px)")
       d3.select(".tweetTip")
       .style("z-index","2")
       .transition()

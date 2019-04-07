@@ -290,6 +290,7 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
   .attr("cx", d => d.x)
   .attr("cy", d => d.y)
   .on("click", function(d){
+    updateFilterCheck();
     var mouseCoordinates= d3.mouse(this);
     let initPosition = {"x":mouseCoordinates[0], "y":mouseCoordinates[1]}
     initPosition = {"x":d3.select(this).attr("cx"),"y":d3.select(this).attr("cy")}
