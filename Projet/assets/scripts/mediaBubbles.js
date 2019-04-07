@@ -302,7 +302,7 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
 
     if(d3.select("#media"+d.name.substring(1)).classed("selectedMedia")){
       d3.select("#media"+d.name.substring(1)).classed("selectedMedia", false);
-      tweetsG.selectAll("g:not(.chartTweetAndLgend)").remove();
+      tweetsG.selectAll("g").remove();
       d3.select(".chartTweetAndLgend").transition().duration(250)
       .attr("opacity","0")
       mediaG.selectAll("circle").classed("notSelectedMedia", false);
@@ -383,8 +383,8 @@ function createAnnotations(g){
   var annotationGroup = g.append("g").classed("annotations",true)
   d3.xml("https://gadiben.github.io/DatavizAlter/assets/images/arrow.svg").then(data => {
     $(".annotations").append(data.documentElement)
-    var annotationx = svgBounds.width/3;
-    var annotationy = topMediaMarginY+10;
+    var annotationx = svgBounds.width/3 +10;
+    var annotationy = topMediaMarginY+30;
     annotationGroup.select("svg")
     .attr('width', 50)
     .attr('height', 50)

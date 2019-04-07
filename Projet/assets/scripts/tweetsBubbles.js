@@ -9,12 +9,16 @@
  * @param svg
  */
 function createTweetsBubbleChart(g, x, sourceBuckets, initPosition, mediaName){
+  g.selectAll("g").remove()
+  g.select("#titreTweetChart").remove();
+
+  var legendGroup = g.append("g").classed("chartTweetAndLgend",true)
+  createTweetLegend(legendGroup);
   var colorRedMiddle = d3.scaleLinear()
           .domain([0, Math.log10(39000)])
           .range([middleColor,redColor])
           .interpolate(d3.interpolateHcl);
-  g.selectAll("g:not(.chartTweetAndLgend)").remove()
-  g.select("#titreTweetChart").remove();
+
   g.append("text")
   .attr("id", "titreTweetChart")
   .text("Sentiments des tweets du journal "+mediaName)

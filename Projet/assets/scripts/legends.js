@@ -186,6 +186,8 @@ function legendTweet(svg,g){
     .attr("y", rectHeight+accoladeTextHeight)
     .attr("text-anchor", "middle")
   }
+}
+function createTweetLegend(g){
   var linearGradient = g.append("defs")
               .append("linearGradient")
               .attr("id", "linear-gradient");
@@ -223,5 +225,5 @@ function legendTweet(svg,g){
             .attr("x",svgBounds.width - leftMargin)
             .attr("y", yGradient + gradientHeight*3)
             .attr("text-anchor", "middle");
-  g.attr("opacity","0")
+  g.attr("opacity","1")
 }
