@@ -13,7 +13,7 @@ function createTweetsBubbleChart(g, x, sourceBuckets, initPosition, mediaName){
           .domain([0, Math.log10(39000)])
           .range([middleColor,redColor])
           .interpolate(d3.interpolateHcl);
-  g.selectAll("g").remove()
+  g.selectAll("g:not(.chartTweetAndLgend)").remove()
   g.select("#titreTweetChart").remove();
   g.append("text")
   .attr("id", "titreTweetChart")

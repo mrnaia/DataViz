@@ -294,11 +294,17 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
     let initPosition = {"x":mouseCoordinates[0], "y":mouseCoordinates[1]}
     initPosition = {"x":d3.select(this).attr("cx"),"y":d3.select(this).attr("cy")}
     tweetsG.attr("transform",""); //reset translation of tweet group
+    d3.select(".annotations")
+    .transition()
+    .duration(500)
+    .attr("opacity","0")
     //d3.select("#legendImage").attr("transform",""); //reset translation of image
 
     if(d3.select("#media"+d.name.substring(1)).classed("selectedMedia")){
       d3.select("#media"+d.name.substring(1)).classed("selectedMedia", false);
-      tweetsG.selectAll("g").remove();
+      tweetsG.selectAll("g:not(.chartTweetAndLgend)").remove();
+      d3.select(".chartTweetAndLgend").transition().duration(250)
+      .attr("opacity","0")
       mediaG.selectAll("circle").classed("notSelectedMedia", false);
       tweetChartActive = false;
       updateSvgSize();
@@ -313,7 +319,8 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
       d3.select("#media"+d.name.substring(1)).classed("selectedMedia", true);
       d3.select("#media"+d.name.substring(1)).classed("notSelectedMedia", false);
       d3.selectAll("#mediaBubbles circle").classed("notHoveredMedia",true);
-
+      d3.select(".chartTweetAndLgend").transition().duration(500)
+      .attr("opacity","1")
       d3.select("body").style("cursor","progress");
 
       createTweetsBubbleChart(tweetsG,scaleBubbleSizeTweetChart,tweetSources[d.name].buckets,initPosition, d.fullName)
@@ -345,6 +352,7 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
   mediaBubbleGroups.call(mediaTip);
 
   runMediaSimulation(mediaSources, mediaBubbleGroups, scaleBubbleSizeMediaChart, mediaXScale, mediasData);
+  createAnnotations(g);
 }
 
 function updateFilterCheck() {
@@ -369,6 +377,27 @@ function scrollToTweet(){
     window.scrollTo(0,attractionCenterY()+ tweetHeight/2 - tweetLegendMargin*2 - tweetVerticalMargin/2)
     //window.scrollBy(0, distanceToScroll/nb_scroll);
   },500);
+}
+
+function createAnnotations(g){
+  var annotationGroup = g.append("g").classed("annotations",true)
+  d3.xml("https://gadiben.github.io/DatavizAlter/assets/images/arrow.svg").then(data => {
+    $(".annotations").append(data.documentElement)
+    var annotationx = svgBounds.width/3;
+    var annotationy = topMediaMarginY+10;
+    annotationGroup.select("svg")
+    .attr('width', 50)
+    .attr('height', 50)
+    .attr("x",annotationx)
+    .attr("y",annotationy)
+    annotationGroup.append("text")
+    .attr("x",annotationx)
+    .attr("y",annotationy)
+    .attr("text-anchor", "middle")
+    .attr('width', 100)
+    .text("Cliquer pour voir les tweets")
+    //console.log(g.select("g circle").attr("x"));
+  })
 }
   // https://stackoverflow.com/questions/11978995/how-to-change-color-of-svg-image-using-css-jquery-svg-image-replacement
   // https://stackoverflow.com/questions/24933430/img-src-svg-changing-the-fill-color

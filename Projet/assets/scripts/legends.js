@@ -138,94 +138,90 @@ function legendTweet(svg,g){
   var heightSvg = yMediasPosition + interCategorySpace*nbCategoriesDisplayed + axisMarginY + tweetVerticalMargin;
   updateSvgSize();
   var marginWidth = 4/100*svgBounds.width;
-    var width = svgBounds.width-marginWidth;
-    var marginHeight = 2/100*heightSvg;
-    var yMainImg = heightSvg - marginHeight - tweetLegendHeight + tweetHeight;
-    var rectHeight = (tweetLegendHeight-marginHeight)/2;
-    var accoladeTextHeight = (tweetLegendHeight-marginHeight)/2;
-    var transform = "translate("+0+","+yMainImg+")";
-    //console.log(transform);
-    var grp = svg.append("g").attr("id", "legendImage").attr("opacity", 0).attr("transform",transform).attr("height", tweetLegendHeight);
-    //console.log(d3.select("#legendImage").attr("transform").split(",")[1].split(")")[0]);
+  var width = svgBounds.width-marginWidth;
+  var marginHeight = 2/100*heightSvg;
+  var yMainImg = heightSvg - marginHeight - tweetLegendHeight + tweetHeight;
+  var rectHeight = (tweetLegendHeight-marginHeight)/2;
+  var accoladeTextHeight = (tweetLegendHeight-marginHeight)/2;
+  var transform = "translate("+0+","+yMainImg+")";
+  //console.log(transform);
+  var grp = svg.append("g").attr("id", "legendImage").attr("opacity", 0).attr("transform",transform).attr("height", tweetLegendHeight);
+  //console.log(d3.select("#legendImage").attr("transform").split(",")[1].split(")")[0]);
+  /*
+  grp.append("svg:image")
+  .attr("class", "imgLegend")
+  .attr("xlink:href", "assets/images/echelleCouleurs.png")
+  .attr("x",marginWidth/2)
+  .attr("preserveAspectRatio", "none")
+  .attr("width",width )
+  .attr('height', rectHeight);
+  */
+
+  for(var i=0; i<3;i++){
+    var grplegende=grp.append("g");
     /*
-    grp.append("svg:image")
-    .attr("class", "imgLegend")
-    .attr("xlink:href", "assets/images/echelleCouleurs.png")
-    .attr("x",marginWidth/2)
+    grplegende.append("svg:image")
+    .attr("class", "imgAccolade")
+    .attr("xlink:href", "assets/images/accolade.png")
+    .attr("x",marginWidth/2+i*width/3)
+    .attr("y",rectHeight)
     .attr("preserveAspectRatio", "none")
-    .attr("width",width )
-    .attr('height', rectHeight);
+    .attr("width", 1/3*width)
+    .attr('height', accoladeTextHeight/2);
     */
-
-    for(var i=0; i<3;i++){
-      var grplegende=grp.append("g");
-      /*
-      grplegende.append("svg:image")
-      .attr("class", "imgAccolade")
-      .attr("xlink:href", "assets/images/accolade.png")
-      .attr("x",marginWidth/2+i*width/3)
-      .attr("y",rectHeight)
-      .attr("preserveAspectRatio", "none")
-      .attr("width", 1/3*width)
-      .attr('height', accoladeTextHeight/2);
-      */
-      grplegende.append("text")
-      .text(function(d){
-        if(i==0){
-          return "Sentiment négatif";
-        }
-        if(i==1){
-          return "Neutre";
-        }
-        if(i==2){
-          return "Sentiment positif";
-        }
-        return;
-      })
-      .attr("x",marginWidth/2+(i+1/2)*width/3)
-      .attr("y", rectHeight+accoladeTextHeight)
-      .attr("text-anchor", "middle")
-    }
-    /*
-    var linearGradient = grplegende.append("defs")
-                .append("linearGradient")
-                .attr("id", "linear-gradient");
-    linearGradient.append("stop")
-                  .attr("offset", "0%")
-                  .attr("stop-color", redColor);
-    linearGradient.append("stop")
-                  .attr("offset", "50%")
-                  .attr("stop-color", middleColor);
-    linearGradient.append("stop")
-                  .attr("offset", "100%")
-                  .attr("stop-color", greenColor);
-
-    var gradientHeight = 10;
-    var gradientWidth = svgBounds.width * 0.10;
-    var leftMargin = 10;
-    grplegende.append("rect")
-          .attr("width", gradientWidth)
-          .attr("height",gradientHeight)
-          .style("fill", "url(#linear-gradient)")
-          .attr("x",svgBounds.width - gradientWidth - leftMargin)
-          .attr("y",- tweetHeight)
-
     grplegende.append("text")
-              .text("-1")
-              .attr("x",svgBounds.width - gradientWidth - leftMargin)
-              .attr("y", - tweetHeight + gradientHeight*3)
-              .attr("text-anchor", "middle");
+    .text(function(d){
+      if(i==0){
+        return "Sentiment négatif";
+      }
+      if(i==1){
+        return "Neutre";
+      }
+      if(i==2){
+        return "Sentiment positif";
+      }
+      return;
+    })
+    .attr("x",marginWidth/2+(i+1/2)*width/3)
+    .attr("y", rectHeight+accoladeTextHeight)
+    .attr("text-anchor", "middle")
+  }
+  var linearGradient = g.append("defs")
+              .append("linearGradient")
+              .attr("id", "linear-gradient");
+  linearGradient.append("stop")
+                .attr("offset", "0%")
+                .attr("stop-color", middleColor);
+  linearGradient.append("stop")
+                .attr("offset", "100%")
+                .attr("stop-color", redColor);
 
-    grplegende.append("text")
-              .text("0")
-              .attr("x",svgBounds.width - gradientWidth/2 - leftMargin)
-              .attr("y", - tweetHeight + gradientHeight*3)
-              .attr("text-anchor", "middle");
+  var gradientHeight = 10;
+  var gradientWidth = svgBounds.width * 0.10;
+  var leftMargin = 100;
+  var yGradient = yMediasPosition + (nbCategoriesDisplayed-1)*interCategorySpace + axisMarginY + tweetVerticalMargin;
+  g.append("rect")
+        .attr("width", gradientWidth)
+        .attr("height",gradientHeight)
+        .style("fill", "url(#linear-gradient)")
+        .attr("x",svgBounds.width - gradientWidth - leftMargin)
+        .attr("y", yGradient)
+  g.append("text")
+            .text("0")
+            .attr("x",svgBounds.width - gradientWidth - leftMargin)
+            .attr("y", yGradient + gradientHeight*3)
+            .attr("text-anchor", "middle");
 
-    grplegende.append("text")
-              .text("+1")
-              .attr("x",svgBounds.width - leftMargin)
-              .attr("y", - tweetHeight + gradientHeight*3)
-              .attr("text-anchor", "middle");
-              */
+  g.append("text")
+            .text("Nombre de retweets")
+            .attr("x",svgBounds.width - gradientWidth/2 - leftMargin)
+            .attr("y", yGradient - gradientHeight)
+            .attr("text-anchor", "middle");
+
+  g.append("text")
+            .text("++")
+            .attr("x",svgBounds.width - leftMargin)
+            .attr("y", yGradient + gradientHeight*3)
+            .attr("text-anchor", "middle");
+  g.attr("opacity","0")
 }
