@@ -39,7 +39,7 @@ function runTweetSimulation(source,bubbleGroups,xBubbleScale){
   simulationTweet.nodes(source);
   d3.selectAll("#tweetBubbleChart g").style("cursor","wait");
 }
-
+/*
 function updateTweetChart(){
   d3.selectAll("#tweetBubbleChart g").style("cursor","default");
   d3.select("#tweetBubbleChart")
@@ -62,7 +62,6 @@ function updateTweetChart(){
   })
   updateSvgSize();
 }
-
 function computeTranslateeTransform(d3Node,translation){
   var nodeTransform = d3Node.attr("transform");
   if(nodeTransform){
@@ -72,6 +71,7 @@ function computeTranslateeTransform(d3Node,translation){
   return "translate(0," + translation + ")";
 }
 
+*/
 function tweetTicked(d,bubbleGroups,x,alpha) {
   if(!tweetSimuDone && alpha<fractionToShowTip){
     tweetSimuDone = true;

@@ -161,3 +161,34 @@ function updateTweetLegends(){
   d3.select("#legendImage").attr("transform", transformLegend);
   d3.select("#legendImage").transition().duration(500).attr("opacity",1);
 }
+
+function updateTweetChart(){
+  d3.selectAll("#tweetBubbleChart g").style("cursor","default");
+  d3.select("#tweetBubbleChart")
+  .transition()
+  .ease(d3.easeSin)
+  .duration(transitionAxisDuration)
+  .attr("transform", function(){
+    //To use to translate bubbles and images
+    var translation = (nbCategoriesDisplayed-previousNbCategoriesDisplayed)*interCategorySpace
+
+    //Legend Image
+    var legendImageBar = d3.select("#legendImage")
+    legendImageBar.transition()
+    .ease(d3.easeSin)
+    .duration(transitionAxisDuration)
+    .attr("transform", computeTranslateTransform(legendImageBar,translation));
+
+    //transform bubble group
+    return computeTranslateTransform(d3.select(this),translation);
+  })
+  updateSvgSize();
+}
+function computeTranslateTransform(d3Node,translation){
+  var nodeTransform = d3Node.attr("transform");
+  if(nodeTransform){
+    var oldTranslate = nodeTransform.split(",")[1].split(")")[0];
+    translation += +oldTranslate;
+  }
+  return "translate(0," + translation + ")";
+}

@@ -95,5 +95,6 @@ var numberBucket = 21;
 var tweetsSquareSize;
 
 function attractionCenterY(){
+  //Gives the middle point of the tweet chart
   return yMediasPosition + (nbCategoriesDisplayed-1)*interCategorySpace + axisMarginY + tweetVerticalMargin + tweetLegendMargin + tweetHeight/2 ;
 }
