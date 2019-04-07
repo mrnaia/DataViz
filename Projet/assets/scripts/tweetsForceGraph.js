@@ -17,8 +17,11 @@ function seperateTweets(d){
 function attractionCenterX(d){
   return attractionPoints[seperateTweets(d)+1][0];
 }
-
-
+/*
+function attractionCenterY(){
+  return yMediasPosition + (nbCategoriesDisplayed-1)*interCategorySpace + axisMarginY + tweetVerticalMargin + tweetLegendMargin + tweetHeight/2 ;
+}
+*/
 //fonction qui maintient les cercles de chaque tweet d'un même groupe ensemble
 function runTweetSimulation(source,bubbleGroups,xBubbleScale){
   tweetSimuDone = false;
