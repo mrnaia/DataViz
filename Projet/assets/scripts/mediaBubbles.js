@@ -245,7 +245,7 @@ function updateMediaBubblesAxis() {
  * @param tweetSources  les donneés : les tweets associiés à un média (issus du fichier csv non modifié)
  */
 
-function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXScale,formatNumber,scaleBubbleSizeMediaChart, scaleBubbleSizeTweetChart, mediasData){
+function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXScale,formatNumber,scaleBubbleSizeMediaChart, tweetColorScale, mediasData){
   var mediaTip = d3.tip()
     .attr('class', 'd3-tip')
     .attr('width', 100)
@@ -324,7 +324,7 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
       .attr("opacity","1")
       d3.select("body").style("cursor","progress");
 
-      createTweetsBubbleChart(tweetsG,scaleBubbleSizeTweetChart,tweetSources[d.name].buckets,initPosition, d.fullName)
+      createTweetsBubbleChart(tweetsG,tweetColorScale,tweetSources[d.name].buckets,initPosition, d.fullName)
 
       scrollToTweet();
 

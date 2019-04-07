@@ -8,16 +8,13 @@
  * @param initPosition
  * @param svg
  */
-function createTweetsBubbleChart(g, x, sourceBuckets, initPosition, mediaName){
+function createTweetsBubbleChart(g, tweetColorScale, sourceBuckets, initPosition, mediaName){
   g.selectAll("g").remove()
   g.select("#titreTweetChart").remove();
 
   var legendGroup = g.append("g").classed("chartTweetAndLgend",true)
   createTweetLegend(legendGroup);
-  var colorRedMiddle = d3.scaleLinear()
-          .domain([0, Math.log10(39000)])
-          .range([middleColor,redColor])
-          .interpolate(d3.interpolateHcl);
+
 
   g.append("text")
   .attr("id", "titreTweetChart")
@@ -63,8 +60,8 @@ function createTweetsBubbleChart(g, x, sourceBuckets, initPosition, mediaName){
     .attr("height", tweetsSquareSize) //dont le rayon dépend du nombre de retweets --> Y a pas des modifs à faire sur source avant pour avoir un seul exemplaire de chaque tweet et le bon nombre de retweets ou c'est fait sur python avant ?
     .attr("x",initPosition.x)
     .attr("y", initPosition.y)
-    .attr("fill", d =>colorRedMiddle(Math.log10(d.retweet_count+1)))
-    .attr("stroke", d =>colorRedMiddle(Math.log10(d.retweet_count+1)))
+    .attr("fill", d =>tweetColorScale(Math.log10(d.retweet_count+1)))
+    .attr("stroke", d =>tweetColorScale(Math.log10(d.retweet_count+1)))
     var tweetRankx = -1;
     var tweetRanky = -1;
     var bucketSize = (svgBounds.width-2*tweetHorizontalMargin) / numberBucket;

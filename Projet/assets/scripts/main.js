@@ -2,9 +2,6 @@
 d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
   d3.dsv("|","./data/QuebecMedia.csv").then(function(quebec_data) {
     d3.dsv(",", "./data/categories.csv").then(function(medias_data) {
-
-
-
       //Init filter checkbox values
       updateFilterCheck();
 
@@ -52,14 +49,15 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
       var scaleBubbleSizeMediaChart =  d3.scaleLinear().range([mediaBubblesSize.min, mediaBubblesSize.max]);
       var xMedias = d3.scaleLinear().range([xMediasPositions.min, xMediasPositions.max]);
       //Tweets
-      var scaleBubbleSizeTweetChart =  d3.scaleLinear().range([tweetBubblesSize.min, tweetBubblesSize.max]);
-
+      var tweetColorScale = d3.scaleLinear()
+              .range([middleColor,redColor])
+              .interpolate(d3.interpolateHcl);
       //DOMAIN definitions
       //Medias
       domainMediaBubbleSize(scaleBubbleSizeMediaChart, medias_data, countries_population);
       domainMediaXPosition(xMedias, mediaSources);
       //Tweets
-      domainTweetBubbleSize(scaleBubbleSizeTweetChart, tweetSources);
+      domainTweetColorScale(tweetColorScale, tweetSources);
 
 
       //Bucket sizes
@@ -74,7 +72,7 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
       legend(svg); // a besoin d'etre appelé avant createMediaBubbleChart car set une valur utilisée pour psitionner le titre du chart
       legendTweet(svg, grouptweetChartLegend);
       createSentimentArrow(svg, xMedias);
-      createMediaBubbleChart(mediaBubblesGroup, mediaSources, tweetsChartGroup, tweetSources, xMedias, localization.getFormattedNumber,scaleBubbleSizeMediaChart, scaleBubbleSizeTweetChart, mediasData);
+      createMediaBubbleChart(mediaBubblesGroup, mediaSources, tweetsChartGroup, tweetSources, xMedias, localization.getFormattedNumber,scaleBubbleSizeMediaChart, tweetColorScale, mediasData);
       d3.select(".filtres")
       .attr("transform","translate("+svgBounds.x+","+svgBounds.y+")")
       .attr("hidden",null)

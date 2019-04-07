@@ -117,10 +117,12 @@ function domainMediaBubbleSize(scale, data, pays){
   scale.domain([min,max]);
 }
 
-function domainTweetBubbleSize(scale, tweetsSources){
-  let min = d3.min(Object.values(tweetsSources), d => d3.min(d.tweets, tweet => +tweet.retweet_count));
-  let max = d3.max(Object.values(tweetsSources), d => d3.max(d.tweets, tweet => +tweet.retweet_count));
-  scale.domain([min, max]);
+function domainTweetColorScale(scale, tweetsSources){
+  var maxRetweet = 0;
+  for(const media in tweetsSources){
+    maxRetweet = Math.max(maxRetweet,d3.max(tweetsSources[media].buckets,d=>d3.max(d,d1=>+d1.retweet_count)));
+  };
+  scale.domain([0, Math.log10(maxRetweet)]);
 }
 
 
