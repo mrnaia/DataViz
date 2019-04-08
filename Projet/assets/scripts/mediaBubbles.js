@@ -375,13 +375,9 @@ function scrollToTweet(){
   d3.select("body").style("cursor","progress");
   var bodyRect = document.body.getBoundingClientRect();
   var svgRect = d3.select("svg").node().getBoundingClientRect();
-  console.log(bodyRect);
-  console.log(svgRect);
   var timer = setTimeout(function(){
     d3.select("body").style("cursor","default");
     window.scrollTo(0,svgRect.top - bodyRect.top + attractionCenterY() - tweetHeight/2 - tweetLegendMargin - tweetVerticalMargin);
-    //window.scrollTo(0,attractionCenterY()+ tweetHeight/2 + svgBounds.y);// - tweetLegendMargin*2 - tweetVerticalMargin/2)
-    //window.scrollBy(0, distanceToScroll/nb_scroll);
   },500);
 }
 
