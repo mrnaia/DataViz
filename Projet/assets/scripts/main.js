@@ -32,8 +32,12 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
       window.addEventListener("resize", function() { updateWindowSize(svg); });
       tweetsSquareSize = (svgBounds.width - 2*tweetHorizontalMargin) / (numberBucket * nbColumnPerBucket);
       //numberBucket = Math.floor(svgBounds.width / (nbColumnPerBucket * tweetsSquareSize));
-      //console.log(numberBucket);
-
+      console.log(tweetsSquareSize);
+      if(tweetsSquareSize<3){
+        nbColumnPerBucket = Math.floor(nbColumnPerBucket/2);
+        numberBucket = Math.floor(numberBucket/2)+1;
+        tweetsSquareSize = (svgBounds.width - 2*tweetHorizontalMargin) / (numberBucket * nbColumnPerBucket);
+      }
       //Preprocessing
       var mediasData = formatMediasData(medias_data);
       //console.log(mediasData);
