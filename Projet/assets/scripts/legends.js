@@ -1,5 +1,6 @@
+//legende du media chart
 function legend(svg){
-
+  //parametres pour la position
   const legendHeight = topMediaMarginY-50;
   const horizontalLegendMargin = 5;
 
@@ -16,11 +17,9 @@ function legend(svg){
   for (let i = 1 ; i < nbColumns ; i++){
     xPos.push(xPos[i-1] - columnSizes[i]);
   }
-
+  //creation du groupe
   var legendGroup = svg.append("g")
     .attr("class", "legend");
-
-  //For the 2 last columns, write the list of countries and categories
 
   //Type of media
   var legendMediaType = legendGroup.append("g");
@@ -31,6 +30,7 @@ function legend(svg){
   //DEBUG
   //debugLegend(legendGroup, xPos, columnSizes, legendHeight);
 
+  //pour chaque categorie, on crée un cercle et un texte
   var counter = 0;
   categories.forEach(function(category){
     counter++;
@@ -134,7 +134,10 @@ function debugLegend(legendGroup, xPos, columnSizes, legendHeight) {
   .attr("stroke-width", 0.5);
 }
 
+//legende du tweet chart pour le sentiment
+//appelee par le main
 function legendTweet(svg,g){
+  //variables pour le positionnement
   var heightSvg = yMediasPosition + interCategorySpace*nbCategoriesDisplayed + axisMarginY + tweetVerticalMargin;
   updateSvgSize();
   var marginWidth = 4/100*svgBounds.width;
@@ -144,31 +147,12 @@ function legendTweet(svg,g){
   var rectHeight = (tweetLegendHeight-marginHeight)/2;
   var accoladeTextHeight = (tweetLegendHeight-marginHeight)/2;
   var transform = "translate("+0+","+yMainImg+")";
-  //console.log(transform);
+  //creation du groupe
   var grp = svg.append("g").attr("id", "legendImage").attr("opacity", 0).attr("transform",transform).attr("height", tweetLegendHeight);
-  //console.log(d3.select("#legendImage").attr("transform").split(",")[1].split(")")[0]);
-  /*
-  grp.append("svg:image")
-  .attr("class", "imgLegend")
-  .attr("xlink:href", "assets/images/echelleCouleurs.png")
-  .attr("x",marginWidth/2)
-  .attr("preserveAspectRatio", "none")
-  .attr("width",width )
-  .attr('height', rectHeight);
-  */
-
+  //ajout des 3 textes
   for(var i=0; i<3;i++){
-    var grplegende=grp.append("g");
-    /*
-    grplegende.append("svg:image")
-    .attr("class", "imgAccolade")
-    .attr("xlink:href", "assets/images/accolade.png")
-    .attr("x",marginWidth/2+i*width/3)
-    .attr("y",rectHeight)
-    .attr("preserveAspectRatio", "none")
-    .attr("width", 1/3*width)
-    .attr('height', accoladeTextHeight/2);
-    */
+    var grplegende=grp.append("g"); //on cree un groupe pour chaque car contenait aussi les accolades dans la version précédente
+
     grplegende.append("text")
     .text(function(d){
       if(i==0){
@@ -187,7 +171,11 @@ function legendTweet(svg,g){
     .attr("text-anchor", "middle")
   }
 }
+
+//tweet legend nombre de retweets
+//appelée par createTweetsBubbleChart
 function createTweetLegend(g){
+  //linear gradient pour la legende des couleurs
   var linearGradient = g.append("defs")
               .append("linearGradient")
               .attr("id", "linear-gradient");
@@ -197,17 +185,19 @@ function createTweetLegend(g){
   linearGradient.append("stop")
                 .attr("offset", "100%")
                 .attr("stop-color", redColor);
-
+  //variables de positionnement
   var gradientHeight = 10;
   var gradientWidth = svgBounds.width * 0.10;
   var leftMargin = 100;
   var yGradient = yMediasPosition + (nbCategoriesDisplayed-1)*interCategorySpace + axisMarginY + tweetVerticalMargin;
+  //rectangle legende de couleur
   g.append("rect")
         .attr("width", gradientWidth)
         .attr("height",gradientHeight)
         .style("fill", "url(#linear-gradient)")
         .attr("x",svgBounds.width - gradientWidth - leftMargin)
         .attr("y", yGradient)
+  //textes
   g.append("text")
             .text("0")
             .attr("x",svgBounds.width - gradientWidth - leftMargin)

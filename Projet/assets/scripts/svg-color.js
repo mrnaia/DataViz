@@ -1,3 +1,6 @@
+//DEPRECATED
+// Servait pour la version 1 à mettre les bulles des tweets de la bonne couleur
+
 /*
  * Replace all SVG images with inline SVG
  */

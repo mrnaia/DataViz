@@ -4,12 +4,15 @@
  * Fichier permettant de traiter les données provenant du fichier CSV.
  */
 
+//FORMATAGE DES DONNEES
+
  /**
   *
   * @param data      Données provenant du fichier CSV.
   * @return Object
   *                    {
   *                      "@NomDuMedia": {
+                          buckets :
   *                      number_tweets_and_RT: number //How many tweets + retweets
   *                      cumul_sentiment: number //The total sentiment score weighted by the retweet_count
                           mean_sentiment
@@ -47,14 +50,6 @@ function createSources(data){
   //pour chaque media, on calcule son sentiment moyen
   for(var media in sources){
     sources[media].mean_sentiment = +sources[media].cumul_sentiment / +sources[media].number_tweets_and_RT;
-    /*
-    var id = 0;
-    sources[media].tweets.forEach(tweet => {
-      tweet["id"] = id;
-      id++;
-    })
-    sources[media].tweets = sources[media].tweets.sort((tweetA,tweetB) => +tweetA.sentiment - +tweetB.sentiment)
-    */
     for (var i = 0; i < numberBucket; i++) {
       sources[media].buckets[i] = sources[media].buckets[i].sort((tweetA,tweetB) => +tweetB.retweet_count - +tweetA.retweet_count)
     }
@@ -69,12 +64,20 @@ function createSources(data){
  /**
   *
   * @param tweetSources      L'object au format de la sortie de la fonction précedente
+  * @param mediasData       Les informations sur tous les medias issues du fichier csv
   * @return Object
   *                    [
   *                      {
-  *                        name: $NomDuMedia$
+  *                        fullName: $NomDuMedia$ en string
   *                        number_tweets_and_RT: number //How many tweets + retweets
   *                        mean_sentiment : number
+                           categorie : string
+                           Pays : string
+                           name : "@Nom"
+                           vx :
+                           vy :
+                           x :
+                           y :
   *                      }
   *                      ...
   *                    ]
@@ -85,16 +88,15 @@ function createMediaSources(tweetSources, mediasData){
     var mediaInfo = mediasData[media];
     mediaSources.push({name: media,fullName: mediaInfo.Nom, Pays:mediaInfo.Pays, Categorie: mediaInfo.Categorie, number_tweets_and_RT:tweetSources[media].number_tweets_and_RT,mean_sentiment:tweetSources[media].mean_sentiment})
   }
+  console.log(mediaSources);
   return mediaSources;
 }
 
+//relie le compte d'un media avec ses autres informations
 function formatMediasData(data){
   var output = {};
   data.forEach((media) => {
-    //console.log(media);
-
     output[media.Compte] = {Categorie : media.Categorie, Followers : media.Followers, Nom : media.Nom, Pays : media.Pays};
-    //output[media.Compte] = {Categorie : media.Categorie, Followers : media.Followers, Pays : media.Pays};
   })
   return output;
 }
@@ -111,12 +113,15 @@ function createMediaSplitMetadata() {
   return axisData;
 }
 
+//DOMAINES DES SCALES
 function domainMediaBubbleSize(scale, data, pays){
-  let min = d3.min(data, d => Math.sqrt(d.Followers/pays[d.Pays])); // la plus petite date des datas
-  let max = d3.max(data, d => Math.sqrt(d.Followers/pays[d.Pays])); // la date la plus récente
+  //la taille des bulles depend du nombre de followers divisé par la population
+  let min = d3.min(data, d => Math.sqrt(d.Followers/pays[d.Pays]));
+  let max = d3.max(data, d => Math.sqrt(d.Followers/pays[d.Pays]));
   scale.domain([min,max]);
 }
 
+//couleur des tweets depend du nombre de retweets
 function domainTweetColorScale(scale, tweetsSources){
   var maxRetweet = 0;
   for(const media in tweetsSources){
@@ -125,7 +130,7 @@ function domainTweetColorScale(scale, tweetsSources){
   scale.domain([0, Math.log10(maxRetweet)]);
 }
 
-
+//CREATION DES SCALES DE COULEURS
 function colorCountry(){
   var scale = d3.scaleOrdinal().range(Object.values(countriesColors)).domain(Object.keys(countriesColors));
   return scale;

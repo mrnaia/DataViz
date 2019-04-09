@@ -1,16 +1,13 @@
 "use strict";
-/*
-function mediaSizeScaleDomain(x,source){
-  // TODO: Change size in respect with popularity
-  x.domain([d3.min(source,(d) => +d.number_tweets_and_RT),d3.max(source,(d) => +d.number_tweets_and_RT)]);
-}
-*/
+//Fonctions relatives au media chart (celui du haut)
 
+//domaine pour la scale en x
 function domainMediaXPosition(x,source){
   var maxAbsSentiment = d3.max(source, d => Math.abs(+d.mean_sentiment));
   x.domain([-maxAbsSentiment, maxAbsSentiment]);
 }
 
+//fleches pour la legende de l'axe x
 function createSentimentArrow(g, xMedias) {
   var longueurArrow = 40;
   var axisTitle = g.append("text")
@@ -69,18 +66,16 @@ function createSentimentArrow(g, xMedias) {
  * Crée les axes horizontaux du graphique à bulles des médias.
  *
  * @param g       Le groupe SVG dans lequel l'axe doit être dessiné.
- * @param y   La position en Y de l'axe à afficher.
- * @param x1   L'abscisse gauche du début de l'axe.
- * @param x2  L'abscisse droit de la fin de l'axe.
+ * @param xAxisMetadata
  */
 function createMediaBubblesXAxis(g, xAxisMetadata) {
   // Dessiner l'axe des abscisses du graphique.
+  //creer le groupe
   var xAxisLine = g.selectAll("g")
     .data(xAxisMetadata)
     .enter()
     .append("g");
-
-
+  //create line
   xAxisLine.append("line")
     .attr("x1", xMediasPositions.min - axisMarginX)
     .attr("x2", xMediasPositions.max + axisMarginX)
@@ -88,7 +83,7 @@ function createMediaBubblesXAxis(g, xAxisMetadata) {
     .attr("y2", d => getMediaYPosition(d.country, d.category))
     .attr("stroke", "grey")
     .attr("opacity", 0.5);
-
+    //texte legende country
     xAxisLine.append("text")
     .text(d => categoriesNames[d.country])
     .attr("text-anchor", "middle")
@@ -97,7 +92,7 @@ function createMediaBubblesXAxis(g, xAxisMetadata) {
     .attr("class", "textCountry")
     .attr("opacity",0)
     .attr("font-size", "13px")
-
+    //texte legende categorie
     xAxisLine.append("text")
     .text(d => categoriesNames[d.category])
     .attr("text-anchor", "middle")
@@ -109,6 +104,9 @@ function createMediaBubblesXAxis(g, xAxisMetadata) {
 
 }
 
+/**
+* Cette fonction crée les pointillés verticaux qui indiquent la valeur en x tout au long de la viz
+*/
 function createMediaBubblesYAxis(g, xMedias) {
 
   // Dessiner les axes verticaux du graphique.
@@ -137,8 +135,6 @@ function createMediaBubblesYAxis(g, xMedias) {
         .attr("y", yMediasPosition - axisMarginY - 5)
         .attr("fill", "grey")
 
-
-
       // Add invisible labels at bottom
       var sentimentLabelBottom = g.append("text")
         .text(sentimentValue)
@@ -160,8 +156,13 @@ function createMediaBubblesYAxis(g, xMedias) {
   }
 }
 
+/**
+* Met à jour la position des différents axes x et legendes quand on utilise les filtres
+*/
 function updateMediaBubblesXAxis() {
   var g = d3.select("#mediaXAxis");
+  //on recupere toutes les lignes crees precedemment en faisant attention a exclure les lignes qui servent a la legende
+  //on transitionne jusqu'à la nouvelle position de chaque axe (selon l'origine/le type qui lui est associé et le nombre de filtres activés)
   var lines = g.selectAll("line").filter(function() {
       return !this.classList.contains('legend_arrow')
     })
@@ -170,7 +171,7 @@ function updateMediaBubblesXAxis() {
     .duration(transitionAxisDuration)
     .attr("y1", d => getMediaYPosition(d.country, d.category))
     .attr("y2", d => getMediaYPosition(d.country, d.category));
-
+  //on transitionne aussi sur la position des textes de legendes (categorie/origine)
   var textsCategory = g.selectAll("text.textCategory")
       .transition()
       .duration(transitionAxisDuration)
@@ -182,9 +183,11 @@ function updateMediaBubblesXAxis() {
       .attr("y", d => getMediaYPosition(d.country, d.category)-5)
       .attr("opacity", d=> countryChecked?1:0);
 
-  //France doesn't move
 }
 
+/**
+* Met à jour la longueur des traits pointilles qui aident à voir la valeur en x meme quand on scrolle pour s'adapter au nombre de filtres activés
+*/
 function updateMediaBubblesYAxis() {
   var g = d3.select("#mediaYAxis");
 
@@ -202,6 +205,9 @@ function updateMediaBubblesYAxis() {
     .attr("y", yMediasPosition + interCategorySpace*(nbCategoriesDisplayed-1) + axisMarginY + 17)
 }
 
+/**
+* Met a jour la taille du svg en fonction des filtres utilisés
+*/
 function updateSvgSize(){
   var svg = d3.select("#mediaSVG")
   var height = yMediasPosition + interCategorySpace*(nbCategoriesDisplayed-1) + axisMarginY + tweetVerticalMargin;
@@ -215,6 +221,11 @@ function updateSvgSize(){
 
 }
 
+/**
+* Regarde quels sont les filtres activés/désactivés
+* Met a jour le nombre de lignes affichées pour la representation du media chart
+* Aide au positionnement de tout le reste
+*/
 function updateNbCategoriesDisplayed() {
   previousNbCategoriesDisplayed = nbCategoriesDisplayed;
   if (countryChecked && categoryChecked) {
@@ -228,8 +239,8 @@ function updateNbCategoriesDisplayed() {
   }
 }
 
+//appelle les autres sous-fonctions de mise a jour
 function updateMediaBubblesAxis() {
-  //updateNbCategoriesDisplayed();
   updateMediaBubblesXAxis();
   updateMediaBubblesYAxis();
   updateSvgSize();
@@ -240,11 +251,14 @@ function updateMediaBubblesAxis() {
  *
  * @param g       Le groupe dans lequel le graphique à bulles doit être dessiné.
  * @param mediaSources  les donneés : les tweets associiés à un média (issus du fichier csv non modifié + un id)
- * @param initPosition
- * @param tweetsGg       Le groupe dans lequel le graphique à bulles des tweets doit être dessiné.
- * @param tweetSources  les donneés : les tweets associiés à un média (issus du fichier csv non modifié)
+ * @param tweetsG       Le groupe dans lequel le graphique à bulles des tweets doit être dessiné.
+ * @param tweetSourcesles donneés : les tweets associés à un média (issus du fichier csv non modifié)
+ * @param mediaXScale
+ * @param formatNumber
+ * @param scaleBubbleSizeMediaChart
+ * @param tweetColorScale
+ * @âram mediasData
  */
-
 function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXScale,formatNumber,scaleBubbleSizeMediaChart, tweetColorScale, mediasData){
   var mediaTip = d3.tip()
     .attr('class', 'd3-tip')
@@ -269,7 +283,6 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
         return 10;
       }
     })
-  //.attr("r", (d) => 10)//Math.sqrt(x(d.retweet_count))) //dont le rayon dépend du nombre de retweets --> Y a pas des modifs à faire sur source avant pour avoir un seul exemplaire de chaque tweet et le bon nombre de retweets ou c'est fait sur python avant ?
   .attr("style","opacity:1")
   .attr("fill",function(d){
     if([d.name] in mediasData){
@@ -299,7 +312,7 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
     .transition()
     .duration(500)
     .attr("opacity","0")
-    //d3.select("#legendImage").attr("transform",""); //reset translation of image
+
 
     if(d3.select("#media"+d.name.substring(1)).classed("selectedMedia")){
       d3.select("#media"+d.name.substring(1)).classed("selectedMedia", false);
@@ -356,12 +369,14 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
   createAnnotations(g);
 }
 
+//Verifie quel filtre vient d'etre coché/décoché et met a jour les valeurs assoicées
 function updateFilterCheck() {
   countryChecked = d3.select("#filterCountry").property("checked");
   categoryChecked = d3.select("#filterCategory").property("checked");
   updateNbCategoriesDisplayed();
 }
 
+//tips
 function getMediaTipText(d, formatNumber){
   var tipText = "";
   tipText += "<span><strong>"+ d.fullName +"</strong> - <em>"+ d.name + "</em></span><br>";
@@ -371,6 +386,7 @@ function getMediaTipText(d, formatNumber){
 
 }
 
+//scroll automatiquement quand on clique pour afficher les tweets
 function scrollToTweet(){
   d3.select("body").style("cursor","progress");
   var bodyRect = document.body.getBoundingClientRect();
@@ -381,6 +397,7 @@ function scrollToTweet(){
   },500);
 }
 
+//annotation qui indique de cliquer pour afficher les tweets
 function createAnnotations(g){
   var annotationGroup = g.append("g").classed("annotations",true)
   d3.xml("https://gadiben.github.io/DatavizAlter/assets/images/arrow.svg").then(data => {
@@ -398,8 +415,6 @@ function createAnnotations(g){
     .attr("text-anchor", "middle")
     .attr('width', 100)
     .text("Cliquer pour voir les tweets")
-    //console.log(g.select("g circle").attr("x"));
+
   })
 }
-  // https://stackoverflow.com/questions/11978995/how-to-change-color-of-svg-image-using-css-jquery-svg-image-replacement
-  // https://stackoverflow.com/questions/24933430/img-src-svg-changing-the-fill-color

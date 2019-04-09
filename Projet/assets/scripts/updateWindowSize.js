@@ -25,7 +25,7 @@ function updateWindowSize(svg) {
   tweetBubblesSize = {min: tweetBubblesSizePercentage.min/100 * svgBounds.width, max: tweetBubblesSizePercentage.max/100 * svgBounds.width};
 
   tweetsYPosition = yMediasPosition + interCategorySpace*nbCategoriesDisplayed + axisMarginY + tweetVerticalMargin + tweetHeight/2;
-  // TODO : A calculer de nouveau pour chaque media, pas à mettre ici
+
   attractionPoints = [[svgBounds.width*leftPositionPercentageAttractionPoint/100, 1000], [svgBounds.width/2, 1000], [svgBounds.width*(1-leftPositionPercentageAttractionPoint/100), 1000]];
 
 

@@ -1,10 +1,12 @@
 "use strict";
+
 function ticked() {
   bubbles
     .attr('cx', function (d) { return nodes[d.id].x; })
     .attr('cy', function (d) { return nodes[d.id].y; });
 }
 
+//calcule la position selon l'origine et la catégorie associée à l'élément et le nombre de filtres utilisés actuellement
 function getMediaYPosition(country, category) {
   var locationIndex = 0;
   if(country == "Quebec" && countryChecked){
