@@ -57,16 +57,9 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
               .range([middleColor,redColor])
               .interpolate(d3.interpolateHcl);
 
-      //search bar
-      var mediaFullNames = Object.keys(mediaSources).map(d=>mediaSources[d].fullName);
-      $("#mediaTags").autocomplete({
-        source: mediaFullNames,
-        select: function(a, b) {
-          let name = (mediaSources.filter(function(d){return d.fullName == b.item.value}))[0].name;
-          selectNewMedia(name, b.item.value, mediaChartGroup, tweetsChartGroup, tweetColorScale, tweetSources);
-        }
-      });
-      
+      //search bar initialisation
+      initSearchMediasBar(mediaSources, mediaChartGroup, tweetsChartGroup, tweetColorScale, tweetSources);
+
       //DOMAIN definitions
       //Medias
       domainMediaBubbleSize(scaleBubbleSizeMediaChart, medias_data, countries_population);
