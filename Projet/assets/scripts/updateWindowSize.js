@@ -29,4 +29,7 @@ function updateWindowSize(svg) {
   attractionPoints = [[svgBounds.width*leftPositionPercentageAttractionPoint/100, 1000], [svgBounds.width/2, 1000], [svgBounds.width*(1-leftPositionPercentageAttractionPoint/100), 1000]];
 
 
+
+
+
 }

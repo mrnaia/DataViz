@@ -45,6 +45,11 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
       var mediaSources = createMediaSources(tweetSources, mediasData);
       var mediaSplitMetadata = createMediaSplitMetadata();
 
+      var mediaNames = Object.keys(mediaSources).map(d=>mediaSources[d].fullName);
+      $("#tags").autocomplete({
+        source: mediaNames
+      });
+
       //RANGE definitions
       //Medias
       var scaleBubbleSizeMediaChart =  d3.scaleLinear().range([mediaBubblesSize.min, mediaBubblesSize.max]); //scale pour la taille des bulles
