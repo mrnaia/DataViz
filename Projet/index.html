@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Media Opinion Analysis</title>
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/blitzer/jquery-ui.css" />
+
   </head>
   <body>
     <article>
@@ -22,6 +24,9 @@
       <h3>Analyse des sentiments des tweets addressés à différents médias en France et au Québec</h3>
       <h4>Sentiment moyen des tweets par média</h4>
 
+      <div class="ui-widget">
+        <input id="mediaTags" placeholder="Rechercher un média">
+      </div>
       <div class="filtres" hidden>
         <label class="checkContainer"><input type="checkbox" id="filterCountry" name="filtre1" value="Country">
           <div class="checkbox">
@@ -35,10 +40,6 @@
           </div>
           <span>Séparer par type de média</span>
         </label><br>
-      </div>
-      <div class="ui-widget">
-        <label for="tags">Selectionner un média</label>
-        <input id="tags">
       </div>
       <div class="tweetTip"> <p class="d3-tip"></p> </div>
       <div id="sentimentViz"></div>

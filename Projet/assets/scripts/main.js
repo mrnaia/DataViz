@@ -32,6 +32,7 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
       updateWindowSize(svg);
       //pour être responsive
       window.addEventListener("resize", function() { updateWindowSize(svg); });
+
       //nombre de buckets du tweet chart depend de la taille de la fenetre
       tweetsSquareSize = (svgBounds.width - 2*tweetHorizontalMargin) / (numberBucket * nbColumnPerBucket);
       if(tweetsSquareSize<3){
@@ -39,14 +40,16 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
         numberBucket = Math.floor(numberBucket/2)+1;
         tweetsSquareSize = (svgBounds.width - 2*tweetHorizontalMargin) / (numberBucket * nbColumnPerBucket);
       }
+
       //Preprocessing
       var mediasData = formatMediasData(medias_data);
       var tweetSources = createSources(france_data.concat(quebec_data));
       var mediaSources = createMediaSources(tweetSources, mediasData);
       var mediaSplitMetadata = createMediaSplitMetadata();
 
+      //search bar
       var mediaNames = Object.keys(mediaSources).map(d=>mediaSources[d].fullName);
-      $("#tags").autocomplete({
+      $("#mediaTags").autocomplete({
         source: mediaNames
       });
 

@@ -157,6 +157,17 @@ label input:checked + .checkbox .checkmark {
   margin: auto;
 }
 
+#mediaTags {
+  display: block;
+  margin: auto;
+  padding: 5px;
+  border-radius: 5px;
+}
+/*
+.ui-menu{
+  list-style: none
+}
+*/
 @media only screen and (max-width: 700px) {
   article {
     width: 99%;
