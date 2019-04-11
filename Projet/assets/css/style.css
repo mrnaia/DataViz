@@ -163,11 +163,13 @@ label input:checked + .checkbox .checkmark {
   padding: 5px;
   border-radius: 5px;
 }
-/*
-.ui-menu{
-  list-style: none
+.ui-autocomplete {
+  max-height: 200px;
+  overflow-y: auto;
+  /* prevent horizontal scrollbar */
+  overflow-x: hidden;
 }
-*/
+
 @media only screen and (max-width: 700px) {
   article {
     width: 99%;

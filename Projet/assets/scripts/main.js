@@ -47,12 +47,6 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
       var mediaSources = createMediaSources(tweetSources, mediasData);
       var mediaSplitMetadata = createMediaSplitMetadata();
 
-      //search bar
-      var mediaNames = Object.keys(mediaSources).map(d=>mediaSources[d].fullName);
-      $("#mediaTags").autocomplete({
-        source: mediaNames
-      });
-
       //RANGE definitions
       //Medias
       var scaleBubbleSizeMediaChart =  d3.scaleLinear().range([mediaBubblesSize.min, mediaBubblesSize.max]); //scale pour la taille des bulles
@@ -62,6 +56,17 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
       var tweetColorScale = d3.scaleLinear()
               .range([middleColor,redColor])
               .interpolate(d3.interpolateHcl);
+
+      //search bar
+      var mediaFullNames = Object.keys(mediaSources).map(d=>mediaSources[d].fullName);
+      $("#mediaTags").autocomplete({
+        source: mediaFullNames,
+        select: function(a, b) {
+          let name = (mediaSources.filter(function(d){return d.fullName == b.item.value}))[0].name;
+          selectNewMedia(name, b.item.value, mediaChartGroup, tweetsChartGroup, tweetColorScale, tweetSources);
+        }
+      });
+      
       //DOMAIN definitions
       //Medias
       domainMediaBubbleSize(scaleBubbleSizeMediaChart, medias_data, countries_population);

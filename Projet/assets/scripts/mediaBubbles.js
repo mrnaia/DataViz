@@ -324,27 +324,8 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
       updateSvgSize();
       d3.select("#legendImage").attr("opacity",0);
       tweetsG.select("#titreTweetChart").remove();
-    }
-    else{
-
-      //Change style
-      mediaG.selectAll("circle").classed("selectedMedia", false);
-      mediaG.selectAll("circle").classed("notSelectedMedia", true);
-      d3.select("#media"+d.name.substring(1)).classed("selectedMedia", true);
-      d3.select("#media"+d.name.substring(1)).classed("notSelectedMedia", false);
-      d3.selectAll("#mediaBubbles circle").classed("notHoveredMedia",true);
-      d3.select(".chartTweetAndLgend").transition().duration(500)
-      .attr("opacity","1")
-      d3.select("body").style("cursor","progress");
-
-      createTweetsBubbleChart(tweetsG,tweetColorScale,tweetSources[d.name].buckets,initPosition, d.fullName)
-
-      scrollToTweet();
-
-      tweetChartActive = true;
-      updateMediaBubblesAxis();
-
-
+    } else {
+      selectNewMedia(d.name, d.fullName, mediaG, tweetsG, tweetColorScale, tweetSources);
     }
   })
   .on('mouseover', function(d){
@@ -395,6 +376,24 @@ function scrollToTweet(){
     d3.select("body").style("cursor","default");
     window.scrollTo(0,svgRect.top - bodyRect.top + attractionCenterY() - tweetHeight/2 - tweetLegendMargin - tweetVerticalMargin);
   },500);
+}
+
+function selectNewMedia(mediaName, mediaFullName, mediaG, tweetsG, tweetColorScale, tweetSources) {
+  //Change style
+  mediaG.selectAll("circle").classed("selectedMedia", false);
+  mediaG.selectAll("circle").classed("notSelectedMedia", true);
+  d3.select("#media"+mediaName.substring(1)).classed("selectedMedia", true);
+  d3.select("#media"+mediaName.substring(1)).classed("notSelectedMedia", false);
+  d3.selectAll("#mediaBubbles circle").classed("notHoveredMedia",true);
+  d3.select(".chartTweetAndLgend").transition().duration(500).attr("opacity","1")
+  d3.select("body").style("cursor","progress");
+
+  createTweetsBubbleChart(tweetsG, tweetColorScale, tweetSources[mediaName].buckets, initPosition, mediaFullName);
+
+  scrollToTweet();
+
+  tweetChartActive = true;
+  updateSvgSize();
 }
 
 //annotation qui indique de cliquer pour afficher les tweets
