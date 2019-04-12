@@ -1,5 +1,7 @@
-
-// Fonction qui update tous les setupValues non constants nécessaires lors d'un redimensionnement
+/**
+ * Mets à jour tous les setupValues non constants nécessaires lors d'un redimensionnement
+ * @param  {d3 selection} svg [description]
+ */
 function updateWindowSize(svg) {
   svgBounds = svg.node().getBoundingClientRect(); //To compute the new bounds after CSS applied
 
@@ -19,17 +21,10 @@ function updateWindowSize(svg) {
 
   updateFilterCheck();
 
-
   //TWEETS
-
   tweetBubblesSize = {min: tweetBubblesSizePercentage.min/100 * svgBounds.width, max: tweetBubblesSizePercentage.max/100 * svgBounds.width};
 
   tweetsYPosition = yMediasPosition + interCategorySpace*nbCategoriesDisplayed + axisMarginY + tweetVerticalMargin + tweetHeight/2;
 
   attractionPoints = [[svgBounds.width*leftPositionPercentageAttractionPoint/100, 1000], [svgBounds.width/2, 1000], [svgBounds.width*(1-leftPositionPercentageAttractionPoint/100), 1000]];
-
-
-
-
-
 }
