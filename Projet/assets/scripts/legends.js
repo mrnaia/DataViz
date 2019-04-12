@@ -135,7 +135,7 @@ function createTweetLegend(g){
   //rectangle legende de couleur
   g.append("rect")
     .attr("width", gradientWidth)
-    .attr("height",gradientHeight)
+    .attr("height", gradientHeight)
     .style("fill", "url(#linear-gradient)")
     .attr("x",svgBounds.width - gradientWidth - leftMargin)
     .attr("y", yGradient)
@@ -178,4 +178,13 @@ function createTweetLegend(g){
     .attr("text-anchor", "end");
 
   g.attr("opacity","1")
+
+  //Add the word cloud
+  //Button
+  g.append("rect")
+    .attr("width", gradientWidth)
+    .attr("height", "40px")
+    .style("classed", "wordCloudButton")
+    .attr("x", "0px")
+    .attr("y", yGradient)
 }
