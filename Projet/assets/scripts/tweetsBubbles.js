@@ -109,9 +109,9 @@ function createTweetsBubbleChart(g, tweetColorScale, sourceBuckets, initPosition
   // https://stackoverflow.com/questions/24933430/img-src-svg-changing-the-fill-color
 function getTweetTipText(d, formatNumber){
   var tipText = "";
-  tipText += "<span>Text: <strong>" + d.full_text + "</strong></span><br>";
-  tipText += "<span>Nombre de retweets: <strong>" + formatNumber(+d.retweet_count) + "</strong></span><br>";
-  tipText += "<span>Sentiment: <strong style='color:"+d3.interpolateRdYlGn((+d.sentiment/2+0.5))+"'>" + formatNumber(+d.sentiment) + "</strong></span><br>";
+  tipText += "<div id='tweetText'>" + d.full_text + "</div><br>";
+  tipText += "<span>Retweeté <strong>" + formatNumber(+d.retweet_count) + "</strong> fois</span><br>";
+  tipText += "<span>Sentiment : <strong style='color:" + d3.interpolateRdYlGn((+d.sentiment/2+0.5))+"'>" + formatNumber(+d.sentiment) + "</strong></span><br>";
   return tipText;
 }
 

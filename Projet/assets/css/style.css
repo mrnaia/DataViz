@@ -157,6 +157,12 @@ label input:checked + .checkbox .checkmark {
   margin: auto;
 }
 
+#tweetText {
+  padding: 10px;
+  background-color: rgb(70, 70, 70, 0.7);
+  border-radius: 4px;
+}
+
 #mediaTags {
   display: block;
   margin: auto;
