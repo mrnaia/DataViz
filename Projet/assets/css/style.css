@@ -176,6 +176,26 @@ label input:checked + .checkbox .checkmark {
   overflow-x: hidden;
 }
 
+.wordCloudButtonG {
+  fill: #ddd;
+  stroke-width: 0px;
+  transition: fill 1000ms, stroke-width 1000ms;
+}
+.wordCloudButtonG:hover {
+  fill: white;
+  stroke: #ccc;
+  stroke-width: 2px;
+  /*cursor: pointer;*/
+}
+.wordCloudButtonG > text {
+  fill: #444;
+  transition: fill 1000ms;
+}
+.wordCloudButtonG:hover > text {
+  fill: #888;
+  stroke-width: 0px;
+}
+
 @media only screen and (max-width: 700px) {
   article {
     width: 99%;

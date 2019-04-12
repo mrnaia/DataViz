@@ -132,6 +132,9 @@ function createTweetLegend(g){
   var gradientWidth = svgBounds.width * 0.10;
   var leftMargin = 3;
   var yGradient = yMediasPosition + (nbCategoriesDisplayed-1)*interCategorySpace + axisMarginY + tweetVerticalMargin;
+
+  gradientWidth = gradientWidth<140 ? 140 : gradientWidth;
+
   //rectangle legende de couleur
   g.append("rect")
     .attr("width", gradientWidth)
@@ -180,11 +183,17 @@ function createTweetLegend(g){
   g.attr("opacity","1")
 
   //Add the word cloud
+
   //Button
-  g.append("rect")
-    .attr("width", gradientWidth)
-    .attr("height", "40px")
-    .style("classed", "wordCloudButton")
-    .attr("x", "0px")
-    .attr("y", yGradient)
+  gradientWidth = gradientWidth<150 ? 150 : gradientWidth;
+  var buttonWCGroup = g.append("g").classed("wordCloudButtonG", "true")
+  buttonWCGroup.append("path")
+    .attr("d", rectBorderRadius(3, yGradient, gradientWidth, 30, 15))
+    .classed("wordCloudButton", "true")
+  buttonWCGroup.append("text")
+    .attr("text-anchor", "middle")
+    .attr("x", gradientWidth/2)
+    .attr("y", yGradient + 20)
+    .attr("fill", "white")
+    .text("Voir le wordcloud")
 }
