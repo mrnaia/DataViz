@@ -20,11 +20,4 @@ function updateWindowSize(svg) {
   interCategorySpace = mediaBubblesSize.max*interCategorySpaceCoef;
 
   updateFilterCheck();
-
-  //TWEETS
-  tweetBubblesSize = {min: tweetBubblesSizePercentage.min/100 * svgBounds.width, max: tweetBubblesSizePercentage.max/100 * svgBounds.width};
-
-  tweetsYPosition = yMediasPosition + interCategorySpace*nbCategoriesDisplayed + axisMarginY + tweetVerticalMargin + tweetHeight/2;
-
-  attractionPoints = [[svgBounds.width*leftPositionPercentageAttractionPoint/100, 1000], [svgBounds.width/2, 1000], [svgBounds.width*(1-leftPositionPercentageAttractionPoint/100), 1000]];
 }

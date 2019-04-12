@@ -2,8 +2,6 @@
 var svgSetup = {height: "0", width: "100%"};
 var svgBounds;
 
-
-
 // MEDIA BUBBLE CHART
 
 //Values of population for the 'countries'
@@ -54,40 +52,21 @@ var categoryChecked; //bool
 var nbCategoriesDisplayed; //1, 2, 3 or 6
 var previousNbCategoriesDisplayed; //1, 2, 3 or 6
 
-// TWEETS BUBBLE CHART
-
-// Min and Max values of tweets bubbles sizes in percentage
-const tweetBubblesSizePercentage = {min: 5, max: 300};
-// Min and Max values of tweets bubbles sizes
-var tweetBubblesSize;
+// TWEETS CHART
 // Colors
 var middleColor = "#cccccc";
 var redColor = "#f00";
 var greenColor = "#00ad19";
 
-
-// Percentage of svg width between right svg border and left attractor center
-const leftPositionPercentageAttractionPoint = 20;
-// X and Y values of the 3 attraction points for tweets
-var attractionPoints; //[[px, px], [px, px], [px, px]]
-var tweetsYPosition;
 // height tweets chart in px
-var tweetHeight = 500; //Calculated for each media // TODO
+var tweetHeight = 500;
 
 // Separation between media chart and tweet chart in px
 const tweetVerticalMargin = 100;
 const tweetHorizontalMargin = 20;
 const tweetLegendMargin = 60;
-// Simulation setup values
-var forceStrengthTweet = 0.07;
-var tweetChartActive = false;
-var tweetSimuDone; //bool that says if tweets are displayed or not
-var fractionToShowTip = 0.5;
-// Size of the collision Tweets margin
-var collisionTweetMargin = 1;
 
-// Height of the gradient rectangle for color legend of tweets in px
-const tweetLegendHeight = 45;
+var tweetChartActive = false; //Is the tweet chart active
 
 //Bucket variables
 var nbColumnPerBucket = 8;
