@@ -171,18 +171,17 @@ function updateTweetChart(){
   .ease(d3.easeSin)
   .duration(transitionAxisDuration)
   .attr("transform", function(){
-    //To use to translate bubbles and images
+    //To use to translate tweet group
     var translation = (nbCategoriesDisplayed-previousNbCategoriesDisplayed)*interCategorySpace
-    //transform bubble group
     return computeTranslateTransform(d3.select(this),translation);
   })
   updateSvgSize();
 }
 /**
- * [computeTranslateTransform description]
- * @param  {[type]} d3Node      [description]
- * @param  {[type]} translation [description]
- * @return {[type]}             [description]
+ * Translate un noeud d3 d'un certain nombre en tenant compte de la transform déjà existante
+ * @param  {d3 selection} d3Node Le noeud à translater
+ * @param  {number} translation De combien veut-on translater le noeud
+ * @return {string}             La nouvel valeur du transform
  */
 function computeTranslateTransform(d3Node,translation){
   var nodeTransform = d3Node.attr("transform");
@@ -193,7 +192,7 @@ function computeTranslateTransform(d3Node,translation){
   return "translate(0," + translation + ")";
 }
 /**
- * Gives the middle point of the tweet chart y wise
+ * Donne la coordonnée y du point au mileu du tweet chart
  * @return {number}
  */
 function tweetChartMiddle(){
