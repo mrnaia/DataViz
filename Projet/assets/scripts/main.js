@@ -35,7 +35,7 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
 
       //nombre de buckets du tweet chart depend de la taille de la fenetre
       tweetsSquareSize = (svgBounds.width - 2*tweetHorizontalMargin) / (numberBucket * nbColumnPerBucket);
-      if(tweetsSquareSize<3){
+      if(tweetsSquareSize<4){
         nbColumnPerBucket = Math.floor(nbColumnPerBucket/2);
         numberBucket = Math.floor(numberBucket/2)+1;
         tweetsSquareSize = (svgBounds.width - 2*tweetHorizontalMargin) / (numberBucket * nbColumnPerBucket);
@@ -73,8 +73,7 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
       updateMediaBubblesAxis();
       //place filters et legendes
       var grouptweetChartLegend = tweetsChartGroup.append("g").attr("class", "chartTweetAndLgend")
-      legend(svg); // a besoin d'etre appelé avant createMediaBubbleChart car set une valur utilisée pour psitionner le titre du chart
-      legendTweet(svg, grouptweetChartLegend);
+      mediaChartLegend(svg); // a besoin d'etre appelé avant createMediaBubbleChart car set une valeur utilisée pour psitionner le titre du chart
       createSentimentArrow(svg, xMedias);
 
       //creation du media chart
