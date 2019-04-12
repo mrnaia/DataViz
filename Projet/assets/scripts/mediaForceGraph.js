@@ -1,12 +1,10 @@
 "use strict";
-
-function ticked() {
-  bubbles
-    .attr('cx', function (d) { return nodes[d.id].x; })
-    .attr('cy', function (d) { return nodes[d.id].y; });
-}
-
-//calcule la position selon l'origine et la catégorie associée à l'élément et le nombre de filtres utilisés actuellement
+/**
+ * Calcule la position selon l'origine et la catégorie associée à l'élément et le nombre de filtres utilisés actuellement
+ * @param  {string} country  Le pays associé à cette bulle
+ * @param  {string} category La catégorie (televisuelle ...) associée à cette bulle
+ * @return {number}          Le point attracteur en y
+ */
 function getMediaYPosition(country, category) {
   var locationIndex = 0;
   if(country == "Quebec" && countryChecked){
@@ -23,7 +21,15 @@ function getMediaYPosition(country, category) {
   return yMediasPosition + locationIndex * interCategorySpace;
 }
 
-//fonction qui maintient les cercles de chaque tweet d'un même groupe ensemble
+//
+/**
+ * fonction qui maintient les cercles de chaque tweet d'un même groupe ensemble
+ * @param  {array}  source          La liste des médias.
+ * @param  {d3 selection} bubbleGroups    Le groupe des bulles des médias
+ * @param  {d3 scale} sizeBubbleScale L'echelle qui dicte la taille des médias en fonction de leur popularité
+ * @param  {d3 scale} xBubbleScale    L'échelle qui place les médias selon leur sentiment moyen
+ * @param  {array} mediasData      Les meta données sur les médias
+ */
 function runMediaSimulation(source,bubbleGroups,sizeBubbleScale, xBubbleScale, mediasData){
   var forceStrength = 0.05;
   var simulation = d3.forceSimulation()
@@ -39,7 +45,7 @@ function runMediaSimulation(source,bubbleGroups,sizeBubbleScale, xBubbleScale, m
       }
 
     }))
-    .on('tick', d => mediaTicked(d,bubbleGroups,xBubbleScale));
+    .on('tick', d => mediaTicked(d,bubbleGroups));
   simulation.nodes(source);
 
   //Rerun simulation to filter
@@ -47,13 +53,22 @@ function runMediaSimulation(source,bubbleGroups,sizeBubbleScale, xBubbleScale, m
   d3.select("#filterCategory").on("click", () => filterMediaBubbles(simulation, forceStrength));
 }
 
-
-function mediaTicked(d,bubbleGroups,x) {
+/**
+ * Met à jour la position du cercle représentant le média en fonction de la simulation
+ * @param  {Object} d            La donnée qui stocke la valeur de la simulation
+ * @param  {d3 selection} bubbleGroups Le groupe des bulles des médias
+ */
+function mediaTicked(d,bubbleGroups) {
     bubbleGroups.select("circle")
       .attr('cx', function (d) { return d.x; })
       .attr('cy', function (d) { return d.y; });
 }
 
+/**
+ * Lorsqu'un filtres est appliqué, relance la simulation
+ * @param  {d3 simulation} simulation    La force simulation
+ * @param  {number} forceStrength La puissance de la force d'attraction
+ */
 function filterMediaBubbles(simulation, forceStrength){
   updateFilterCheck();
   //Changed attraction center
