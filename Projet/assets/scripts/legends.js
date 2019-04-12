@@ -188,7 +188,7 @@ function createTweetLegend(g){
   //variables de positionnement
   var gradientHeight = 10;
   var gradientWidth = svgBounds.width * 0.10;
-  var leftMargin = 100;
+  var leftMargin = 3;
   var yGradient = yMediasPosition + (nbCategoriesDisplayed-1)*interCategorySpace + axisMarginY + tweetVerticalMargin;
   //rectangle legende de couleur
   g.append("rect")
@@ -211,7 +211,7 @@ function createTweetLegend(g){
             .attr("text-anchor", "middle");
 
   g.append("text")
-            .text("++")
+            .text("+")
             .attr("x",svgBounds.width - leftMargin)
             .attr("y", yGradient + gradientHeight*3)
             .attr("text-anchor", "middle");
