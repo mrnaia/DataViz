@@ -1,5 +1,8 @@
-//legende du media chart
-function legend(svg){
+/**
+ * Créer la légende du media chart
+ * @param  {d3 selection} svg Le svg global
+ */
+function mediaChartLegend(svg){
   //parametres pour la position
   const legendHeight = topMediaMarginY-50;
   const horizontalLegendMargin = 5;
@@ -98,82 +101,21 @@ function legend(svg){
       .attr("stroke", "grey")
     newYPos += circleDiameter/2;
   })
-
-
 }
-
+/**
+ * Calcul la marge vertical entre des elements
+ * @param  {number} totalSize   La taille total du conteneur
+ * @param  {number} nbElements  Le nombre d'éléments dans le conteneur
+ * @param  {number} elementSize La taille de chaque éléments
+ * @return {number}             La marge à mettre en chaque éléments de façon à bien les répartir
+ */
 function getInterMargin(totalSize, nbElements, elementSize) {
   return (totalSize - nbElements*elementSize)/(nbElements+1);
 }
-
-function debugLegend(legendGroup, xPos, columnSizes, legendHeight) {
-  //DEBUG
-  legendGroup.append("rect")
-  .attr("x", xPos[0])
-  .attr("y", 0)
-  .attr("width", columnSizes[0])
-  .attr("height", legendHeight)
-  .attr("stroke", "black")
-  .style("fill", "none")
-  .attr("stroke-width", 0.5);
-  legendGroup.append("rect")
-  .attr("x", xPos[1])
-  .attr("y", 0)
-  .attr("width", columnSizes[1])
-  .attr("height", legendHeight)
-  .attr("stroke", "black")
-  .style("fill", "none")
-  .attr("stroke-width", 0.5);
-  legendGroup.append("rect")
-  .attr("x", xPos[2])
-  .attr("y", 0)
-  .attr("width", columnSizes[2])
-  .attr("height", legendHeight)
-  .attr("stroke", "black")
-  .style("fill", "none")
-  .attr("stroke-width", 0.5);
-}
-
-//legende du tweet chart pour le sentiment
-//appelee par le main
-function legendTweet(svg,g){
-  //variables pour le positionnement
-  var heightSvg = yMediasPosition + interCategorySpace*nbCategoriesDisplayed + axisMarginY + tweetVerticalMargin;
-  updateSvgSize();
-  var marginWidth = 4/100*svgBounds.width;
-  var width = svgBounds.width-marginWidth;
-  var marginHeight = 2/100*heightSvg;
-  var yMainImg = heightSvg - marginHeight - tweetLegendHeight + tweetHeight;
-  var rectHeight = (tweetLegendHeight-marginHeight)/2;
-  var accoladeTextHeight = (tweetLegendHeight-marginHeight)/2;
-  var transform = "translate("+0+","+yMainImg+")";
-  //creation du groupe
-  var grp = svg.append("g").attr("id", "legendImage").attr("opacity", 0).attr("transform",transform).attr("height", tweetLegendHeight);
-  //ajout des 3 textes
-  for(var i=0; i<3;i++){
-    var grplegende=grp.append("g"); //on cree un groupe pour chaque car contenait aussi les accolades dans la version précédente
-
-    grplegende.append("text")
-    .text(function(d){
-      if(i==0){
-        return "Sentiment négatif";
-      }
-      if(i==1){
-        return "Neutre";
-      }
-      if(i==2){
-        return "Sentiment positif";
-      }
-      return;
-    })
-    .attr("x",marginWidth/2+(i+1/2)*width/3)
-    .attr("y", rectHeight+accoladeTextHeight)
-    .attr("text-anchor", "middle")
-  }
-}
-
-//tweet legend nombre de retweets
-//appelée par createTweetsBubbleChart
+/**
+ * Appelée par createTweetsBubbleChart, crée la légende des tweets
+ * @param  {d3 selection} g Le groupe qui contiendra la légende
+ */
 function createTweetLegend(g){
   //linear gradient pour la legende des couleurs
   var linearGradient = g.append("defs")
@@ -192,28 +134,48 @@ function createTweetLegend(g){
   var yGradient = yMediasPosition + (nbCategoriesDisplayed-1)*interCategorySpace + axisMarginY + tweetVerticalMargin;
   //rectangle legende de couleur
   g.append("rect")
-        .attr("width", gradientWidth)
-        .attr("height",gradientHeight)
-        .style("fill", "url(#linear-gradient)")
-        .attr("x",svgBounds.width - gradientWidth - leftMargin)
-        .attr("y", yGradient)
+    .attr("width", gradientWidth)
+    .attr("height",gradientHeight)
+    .style("fill", "url(#linear-gradient)")
+    .attr("x",svgBounds.width - gradientWidth - leftMargin)
+    .attr("y", yGradient)
   //textes
   g.append("text")
-            .text("0")
-            .attr("x",svgBounds.width - gradientWidth - leftMargin)
-            .attr("y", yGradient + gradientHeight*3)
-            .attr("text-anchor", "middle");
+    .text("0")
+    .attr("x",svgBounds.width - gradientWidth - leftMargin)
+    .attr("y", yGradient + gradientHeight*3)
+    .attr("text-anchor", "middle");
 
   g.append("text")
-            .text("Nombre de retweets")
-            .attr("x",svgBounds.width - leftMargin)
-            .attr("y", yGradient - gradientHeight)
-            .attr("text-anchor", "end");
+    .text("Nombre de retweets")
+    .attr("x",svgBounds.width - leftMargin)
+    .attr("y", yGradient - gradientHeight)
+    .attr("text-anchor", "end");
 
   g.append("text")
-            .text("+")
-            .attr("x",svgBounds.width - leftMargin)
-            .attr("y", yGradient + gradientHeight*3)
-            .attr("text-anchor", "middle");
+    .text("+")
+    .attr("x",svgBounds.width - leftMargin)
+    .attr("y", yGradient + gradientHeight*3)
+    .attr("text-anchor", "middle");
+
+  //Texte du bas
+  g.append("text")
+    .text("Sentiment négatif")
+    .attr("y",yGradient + tweetHeight + tweetLegendMargin*2)
+    .attr("x",tweetHorizontalMargin)
+    .attr("text-anchor", "begin");
+
+  g.append("text")
+    .text("Sentiment neutre")
+    .attr("y",yGradient + tweetHeight + tweetLegendMargin*2)
+    .attr("x",svgBounds.width/2)
+    .attr("text-anchor", "middle");
+
+  g.append("text")
+    .text("Sentiment positif")
+    .attr("y",yGradient + tweetHeight + tweetLegendMargin*2)
+    .attr("x",svgBounds.width - tweetHorizontalMargin)
+    .attr("text-anchor", "end");
+
   g.attr("opacity","1")
 }
