@@ -155,3 +155,14 @@ function colorCategory(){
   var scale = d3.scaleOrdinal().range(Object.values(categoriesColors)).domain(Object.keys(categoriesColors));
   return scale;
 }
+
+//domaine pour la scale en x
+/**
+ * Domaine pour l'échelle en x du media chart
+ * @param  {d3 scale} x      L'échelle pour le placement des media bubbles
+ * @param  {array} source    Les données
+ */
+function domainMediaXPosition(x,source){
+  var maxAbsSentiment = d3.max(source, d => Math.abs(+d.mean_sentiment));
+  x.domain([-maxAbsSentiment, maxAbsSentiment]);
+}

@@ -49,8 +49,7 @@ function runMediaSimulation(source,bubbleGroups,sizeBubbleScale, xBubbleScale, m
   simulation.nodes(source);
 
   //Rerun simulation to filter
-  d3.select("#filterCountry").on("click", () => filterMediaBubbles(simulation, forceStrength));
-  d3.select("#filterCategory").on("click", () => filterMediaBubbles(simulation, forceStrength));
+  d3.selectAll("#filterCountry, #filterCategory").on("click", () => filterMediaBubbles(simulation, forceStrength));
 }
 
 /**
