@@ -259,7 +259,7 @@ function updateMediaBubblesAxis() {
  * @param tweetColorScale
  * @âram mediasData
  */
-function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXScale,formatNumber,scaleBubbleSizeMediaChart, tweetColorScale, mediasData){
+function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXScale, formatNumber, scaleBubbleSizeMediaChart, tweetColorScale, mediasData){
   var mediaTip = d3.tip()
     .attr('class', 'd3-tip')
     .attr('width', 100)
@@ -305,8 +305,8 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
   .on("click", function(d){
     updateFilterCheck();
     var mouseCoordinates= d3.mouse(this);
-    let initPosition = {"x":mouseCoordinates[0], "y":mouseCoordinates[1]}
-    initPosition = {"x":d3.select(this).attr("cx"),"y":d3.select(this).attr("cy")}
+    let initPosition = {"x": d3.select(this).attr("cx") - tweetsSquareSize/2,
+                        "y": d3.select(this).attr("cy") - tweetsSquareSize/2};
     tweetsG.attr("transform",""); //reset translation of tweet group
     d3.select(".annotations")
     .transition()
@@ -379,14 +379,18 @@ function scrollToTweet(){
 }
 
 function selectNewMedia(mediaName, mediaFullName, mediaG, tweetsG, tweetColorScale, tweetSources) {
+  let idCircle = "#media"+mediaName.substring(1);
   //Change style
   mediaG.selectAll("circle").classed("selectedMedia", false);
   mediaG.selectAll("circle").classed("notSelectedMedia", true);
-  d3.select("#media"+mediaName.substring(1)).classed("selectedMedia", true);
-  d3.select("#media"+mediaName.substring(1)).classed("notSelectedMedia", false);
+  d3.select(idCircle).classed("selectedMedia", true);
+  d3.select(idCircle).classed("notSelectedMedia", false);
   d3.selectAll("#mediaBubbles circle").classed("notHoveredMedia",true);
   d3.select(".chartTweetAndLgend").transition().duration(500).attr("opacity","1")
   d3.select("body").style("cursor","progress");
+
+  let initPosition = {"x": d3.select(idCircle).attr("cx") - tweetsSquareSize/2,
+                      "y": d3.select(idCircle).attr("cy") - tweetsSquareSize/2};
 
   createTweetsBubbleChart(tweetsG, tweetColorScale, tweetSources[mediaName].buckets, initPosition, mediaFullName);
 
