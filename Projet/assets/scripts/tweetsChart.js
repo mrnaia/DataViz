@@ -107,10 +107,10 @@ function createTweetsBubbleChart(g, tweetColorScale, sourceBuckets, initPosition
   updateSvgSize()
 }
   /**
-   * [getTweetTipText description]
-   * @param  {[type]} d            [description]
-   * @param  {[type]} formatNumber [description]
-   * @return {[type]}              [description]
+   * Donne l'html du type pour un tweet
+   * @param  {data} d            Les données associé au tweet
+   * @param  {function} formatNumber Pour formatter les nombres
+   * @return {string}              Le résultat en html
    */
 function getTweetTipText(d, formatNumber){
   var tipText = "";
