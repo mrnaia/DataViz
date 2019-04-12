@@ -30,9 +30,6 @@ function mediaChartLegend(svg){
   var nbCategories = categories.length;
   var categoriesYMargin = getInterMargin(legendHeight, nbCategories, circleDiameter);
 
-  //DEBUG
-  //debugLegend(legendGroup, xPos, columnSizes, legendHeight);
-
   //pour chaque categorie, on crée un cercle et un texte
   var counter = 0;
   categories.forEach(function(category){
@@ -112,6 +109,66 @@ function mediaChartLegend(svg){
 function getInterMargin(totalSize, nbElements, elementSize) {
   return (totalSize - nbElements*elementSize)/(nbElements+1);
 }
+
+/**
+ * Créer la fléche de sentiment pour le media chart
+ * @param  {d3 selection} g       Le groupe qui va contenir la flêche
+ * @param  {d3 selection} xMedias L'échelle de placement des bulles du media chart
+ */
+function createSentimentArrow(g, xMedias) {
+  var longueurArrow = 40;
+  var axisTitle = g.append("text")
+    .text("sentiment")
+    .attr("text-anchor", "middle")
+    .attr("x", xMedias(0))
+    .attr("y", yMediasPosition - axisMarginY - 27)
+    .attr("fill", "grey")
+    .attr("font-size", "0.8em")
+  var legendAxis = g.append("g");
+  g.append("svg:defs").append("svg:marker")
+      .attr("id", "triangle")
+      .attr("refX", 6)
+      .attr("refY", 6)
+      .attr("markerWidth", 30)
+      .attr("markerHeight", 30)
+      .attr("orient", "auto")
+      .append("path")
+      .attr("d", "M 0 0 12 6 0 12 3 6")
+      .style("fill", "grey");
+
+  legendAxis.append("line")
+    .attr("class", "legend_arrow")
+    .attr("x1", xMedias(0)-30)
+    .attr("y1",yMediasPosition - axisMarginY - 30)
+    .attr("x2", xMedias(0)-30-longueurArrow)
+    .attr("y2", yMediasPosition - axisMarginY - 30)
+    .attr("stroke-width", 1)
+    .attr("stroke", "grey")
+    .attr("marker-end", "url(#triangle)");
+    legendAxis.append("text")
+    .text("-")
+    .attr("text-anchor", "middle")
+    .attr("x", xMedias(0)-30-longueurArrow/2)
+    .attr("y", yMediasPosition - axisMarginY - 30)
+    .attr("fill", "grey")
+
+  legendAxis.append("line")
+    .attr("class", "legend_arrow")
+    .attr("x1", xMedias(0)+30)
+    .attr("y1", yMediasPosition - axisMarginY - 30)
+    .attr("x2", xMedias(0)+30+longueurArrow)
+    .attr("y2", yMediasPosition - axisMarginY - 30)
+    .attr("stroke-width", 1)
+    .attr("stroke", "grey")
+    .attr("marker-end", "url(#triangle)");
+  legendAxis.append("text")
+    .text("+")
+    .attr("text-anchor", "middle")
+    .attr("x", xMedias(0)+30+longueurArrow/2)
+    .attr("y", yMediasPosition - axisMarginY - 30)
+    .attr("fill", "grey")
+}
+
 /**
  * Appelée par createTweetsBubbleChart, crée la légende des tweets
  * @param  {d3 selection} g Le groupe qui contiendra la légende
