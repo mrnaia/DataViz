@@ -103,7 +103,7 @@ function createTweetsBubbleChart(g, tweetColorScale, sourceBuckets, initPosition
   createTweetAxis(axisGroup,tweetTransitionTime)
   var legendGroup = g.append("g").classed("chartTweetAndLgend",true);
   createTweetLegend(legendGroup);
-
+  //Update global var
   updateSvgSize()
 }
   /**
@@ -173,14 +173,6 @@ function updateTweetChart(){
   .attr("transform", function(){
     //To use to translate bubbles and images
     var translation = (nbCategoriesDisplayed-previousNbCategoriesDisplayed)*interCategorySpace
-
-    //Legend Image
-    var legendImageBar = d3.select("#legendImage")
-    legendImageBar.transition()
-    .ease(d3.easeSin)
-    .duration(transitionAxisDuration)
-    .attr("transform", computeTranslateTransform(legendImageBar,translation));
-
     //transform bubble group
     return computeTranslateTransform(d3.select(this),translation);
   })
