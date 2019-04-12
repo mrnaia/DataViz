@@ -206,9 +206,9 @@ function createTweetLegend(g){
 
   g.append("text")
             .text("Nombre de retweets")
-            .attr("x",svgBounds.width - gradientWidth/2 - leftMargin)
+            .attr("x",svgBounds.width - leftMargin)
             .attr("y", yGradient - gradientHeight)
-            .attr("text-anchor", "middle");
+            .attr("text-anchor", "end");
 
   g.append("text")
             .text("+")
