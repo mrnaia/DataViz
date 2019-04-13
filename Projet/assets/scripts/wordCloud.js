@@ -30,6 +30,6 @@ function getTweetsWords(mediaName, buckets) {
 }
 
 function drawWordCloud(parentElt, mediaName, mediaSources) {
-  var my_color = d3.interpolateMagma;
+  var my_color = d3.interpolateCool;
   window.makeWordCloud(getTweetsWords(mediaName, mediaSources), parentElt, 500, "wordCloudMedia", "Impact", false, my_color);
 }
