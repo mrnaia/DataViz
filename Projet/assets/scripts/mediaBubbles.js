@@ -160,7 +160,7 @@ function scrollToTweet(){
   var svgRect = d3.select("svg").node().getBoundingClientRect();
   var timer = setTimeout(function(){
     d3.select("body").style("cursor","default");
-    window.scrollTo(0,svgRect.top - bodyRect.top + tweetChartMiddle() - tweetHeight/2 - tweetLegendMargin - tweetVerticalMargin);
+    window.scrollTo(0,svgRect.top - bodyRect.top + yMediasPosition + interCategorySpace*(nbCategoriesDisplayed-1) + axisMarginY);
   },500);
 }
 /**
