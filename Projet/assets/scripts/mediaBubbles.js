@@ -121,7 +121,7 @@ function selectNewMedia(mediaName, mediaFullName, mediaG, tweetsG, tweetColorSca
   let initPosition = {"x": d3.select(idCircle).attr("cx") - tweetsSquareSize/2,
                       "y": d3.select(idCircle).attr("cy") - tweetsSquareSize/2};
 
-  createTweetsBubbleChart(tweetsG, tweetColorScale, tweetSources[mediaName].buckets, initPosition, mediaFullName);
+  createTweetsBubbleChart(tweetsG, tweetColorScale, tweetSources[mediaName].buckets, initPosition, mediaFullName, mediaName);
 
   scrollToTweet();
 

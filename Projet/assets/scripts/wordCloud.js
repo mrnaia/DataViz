@@ -1,10 +1,9 @@
 "use strict";
 
-function getTweetsWords(mediaName, mediaSources) {
+function getTweetsWords(mediaName, buckets) {
   var dataWC = [];
   var wordsOccurences = {};
 
-  var buckets = mediaSources[mediaName].buckets;
   buckets.forEach(bucket => {
     bucket.forEach(tweet => {
       let wordList = tweet.full_text
@@ -31,6 +30,6 @@ function getTweetsWords(mediaName, mediaSources) {
 }
 
 function drawWordCloud(parentElt, mediaName, mediaSources) {
-  var my_color = d3.interpolateGnBu;
+  var my_color = d3.interpolateMagma;
   window.makeWordCloud(getTweetsWords(mediaName, mediaSources), parentElt, 500, "wordCloudMedia", "Impact", false, my_color);
 }

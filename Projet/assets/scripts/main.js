@@ -82,7 +82,7 @@ d3.dsv("|","./data/FranceMedia.csv").then(function(france_data) {
       .attr("transform","translate("+svgBounds.x+","+svgBounds.y+")")
       .attr("hidden",null)
 
-      //drawWordCloud(parentElt, "@BFMTV", tweetSources);
+      //drawWordCloud(d3.select(".worldCloudTip"), "@BFMTV", tweetSources);
     });
   });
 });

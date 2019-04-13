@@ -36,7 +36,7 @@ window.makeWordCloud = function(data, parent_elem, svgscale, svg_class, font, ro
 
 
       data = data.map(function(d) {
-        return {text: d.word, size: (10 + sizeScale(d.value) * svgscale) * 0.1, occ: d.value};
+        return {text: d.word, size: (60 + sizeScale(d.value) * svgscale) * 0.1, occ: d.value};
       })
 
       var layout = d3.layout.cloud()
@@ -64,7 +64,7 @@ var arcParameter = function(rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y
 };
 
 function rectBorderRadius( x, y, width, height, tr, br, bl, tl ) {
-  
+
   if (!br) {
     var br = tr;
     var bl = tr;

@@ -7,7 +7,7 @@
  * @param  {[type]} initPosition    La position initiale des carrés
  * @param  {[type]} mediaName       Le nom du mdia clické
  */
-function createTweetsBubbleChart(g, tweetColorScale, sourceBuckets, initPosition, mediaName){
+function createTweetsBubbleChart(g, tweetColorScale, sourceBuckets, initPosition, mediaName, mediaNameTwitter){
   //Repartir de zero
   g.selectAll("g").remove()
   g.select("#titreTweetChart").remove();
@@ -103,6 +103,28 @@ function createTweetsBubbleChart(g, tweetColorScale, sourceBuckets, initPosition
   createTweetAxis(axisGroup,tweetTransitionTime)
   var legendGroup = g.append("g").classed("chartTweetAndLgend",true);
   createTweetLegend(legendGroup);
+  //Create wordCloud
+  drawWordCloud(d3.select(".worldCloudTip"), mediaNameTwitter, sourceBuckets);
+  d3.select(".wordCloudButtonG")
+    .on("mouseover", function() {
+      var translate = yMediasPosition + (nbCategoriesDisplayed-1)*interCategorySpace + axisMarginY + tweetVerticalMargin + 30;
+      d3.select(".worldCloudTip")
+        .style("transform","translate(0px," +translate+"px)")
+        .style("z-index","3") //Devant les rect
+        .transition()
+        .duration(200)
+        .style("opacity","1")
+    })
+    .on("mouseout", function() {
+      d3.select(".worldCloudTip")
+        .transition()
+        .duration(200)
+        .style("opacity","0")
+        .transition()
+        .duration(200)
+        .style("z-index","-1") //placé derrière pour ne pas obstrue l'hover
+    })
+
   //Update global var
   updateSvgSize()
 }
