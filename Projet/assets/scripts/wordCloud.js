@@ -1,5 +1,10 @@
 "use strict";
-
+/**
+ * [getTweetsWords description]
+ * @param  {[type]} mediaName [description]
+ * @param  {[type]} buckets   [description]
+ * @return {[type]}           [description]
+ */
 function getTweetsWords(mediaName, buckets) {
   var dataWC = [];
   var wordsOccurences = {};
@@ -28,7 +33,12 @@ function getTweetsWords(mediaName, buckets) {
   //console.log(dataWC.sort((a,b) => b.value - a.value))
   return dataWC;
 }
-
+/**
+ * [drawWordCloud description]
+ * @param  {[type]} parentElt    [description]
+ * @param  {[type]} mediaName    [description]
+ * @param  {[type]} mediaSources [description]
+ */
 function drawWordCloud(parentElt, mediaName, mediaSources) {
   var my_color = d3.interpolateCool;
   window.makeWordCloud(getTweetsWords(mediaName, mediaSources), parentElt, 500, "wordCloudMedia", "Impact", false, my_color);
